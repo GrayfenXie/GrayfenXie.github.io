@@ -3,7 +3,7 @@
     <title>grayfen-blog</title>
     <link href="https://GrayfenXie.github.io/feed.xml" rel="self" />
     <link href="https://GrayfenXie.github.io" />
-    <updated>2024-10-27T23:58:19+08:00</updated>
+    <updated>2024-10-28T00:34:24+08:00</updated>
     <author>
         <name>grayfen</name>
     </author>
@@ -18,14 +18,10 @@
         <id>https://GrayfenXie.github.io/ce-shi.html</id>
 
         <updated>2024-10-27T23:58:19+08:00</updated>
-            <summary>
-                <![CDATA[
-                    这是一个测试
-                ]]>
-            </summary>
+            <summary></summary>
         <content type="html">
             <![CDATA[
-                <p>这是一个测试</p>
+                <p><img loading="lazy" src="https://cdn.grayfen.cn/ridebike.png" data-is-external-image="true"></p>
             ]]>
         </content>
     </entry>
