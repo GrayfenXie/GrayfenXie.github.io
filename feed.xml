@@ -3,10 +3,30 @@
     <title>grayfen-blog</title>
     <link href="https://grayfen.github.io/feed.xml" rel="self" />
     <link href="https://grayfen.github.io" />
-    <updated>1970-01-01T08:00:00+08:00</updated>
+    <updated>2024-10-27T23:58:19+08:00</updated>
     <author>
         <name>grayfen</name>
     </author>
     <id>https://grayfen.github.io</id>
 
+    <entry>
+        <title>测试</title>
+        <author>
+            <name>grayfen</name>
+        </author>
+        <link href="https://grayfen.github.io/ce-shi.html"/>
+        <id>https://grayfen.github.io/ce-shi.html</id>
+
+        <updated>2024-10-27T23:58:19+08:00</updated>
+            <summary>
+                <![CDATA[
+                    这是一个测试
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                <p>这是一个测试</p>
+            ]]>
+        </content>
+    </entry>
 </feed>
