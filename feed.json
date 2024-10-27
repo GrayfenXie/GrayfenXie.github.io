@@ -2,16 +2,16 @@
     "version": "https://jsonfeed.org/version/1",
     "title": "grayfen-blog",
     "description": "",
-    "home_page_url": "https://grayfen.github.io",
-    "feed_url": "https://grayfen.github.io/feed.json",
+    "home_page_url": "https://GrayfenXie.github.io",
+    "feed_url": "https://GrayfenXie.github.io/feed.json",
     "user_comment": "",
     "author": {
         "name": "grayfen"
     },
     "items": [
         {
-            "id": "https://grayfen.github.io/ce-shi.html",
-            "url": "https://grayfen.github.io/ce-shi.html",
+            "id": "https://GrayfenXie.github.io/ce-shi.html",
+            "url": "https://GrayfenXie.github.io/ce-shi.html",
             "title": "测试",
             "summary": "这是一个测试",
             "content_html": "<p>这是一个测试</p>",

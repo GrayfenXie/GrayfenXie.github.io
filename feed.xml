@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
     <title>grayfen-blog</title>
-    <link href="https://grayfen.github.io/feed.xml" rel="self" />
-    <link href="https://grayfen.github.io" />
+    <link href="https://GrayfenXie.github.io/feed.xml" rel="self" />
+    <link href="https://GrayfenXie.github.io" />
     <updated>2024-10-27T23:58:19+08:00</updated>
     <author>
         <name>grayfen</name>
     </author>
-    <id>https://grayfen.github.io</id>
+    <id>https://GrayfenXie.github.io</id>
 
     <entry>
         <title>测试</title>
         <author>
             <name>grayfen</name>
         </author>
-        <link href="https://grayfen.github.io/ce-shi.html"/>
-        <id>https://grayfen.github.io/ce-shi.html</id>
+        <link href="https://GrayfenXie.github.io/ce-shi.html"/>
+        <id>https://GrayfenXie.github.io/ce-shi.html</id>
 
         <updated>2024-10-27T23:58:19+08:00</updated>
             <summary>
