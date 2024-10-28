@@ -3,10 +3,26 @@
     <title>grayfen-blog</title>
     <link href="https://GrayfenXie.github.io/feed.xml" rel="self" />
     <link href="https://GrayfenXie.github.io" />
-    <updated>1970-01-01T08:00:00+08:00</updated>
+    <updated>2024-10-28T23:37:46+08:00</updated>
     <author>
         <name>grayfen</name>
     </author>
     <id>https://GrayfenXie.github.io</id>
 
+    <entry>
+        <title>追风少年</title>
+        <author>
+            <name>grayfen</name>
+        </author>
+        <link href="https://GrayfenXie.github.io/zhui-feng-shao-nian-3.html"/>
+        <id>https://GrayfenXie.github.io/zhui-feng-shao-nian-3.html</id>
+
+        <updated>2024-10-28T23:37:46+08:00</updated>
+            <summary></summary>
+        <content type="html">
+            <![CDATA[
+                <figure class="post__image"><img loading="lazy"  src="https://cdn.grayfen.cn/ridebike.png" alt="" width="1920" height="1080" data-is-external-image="true"></figure>
+            ]]>
+        </content>
+    </entry>
 </feed>
