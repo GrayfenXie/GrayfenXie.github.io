@@ -3,7 +3,7 @@
     <title>grayfen-blog</title>
     <link href="https://GrayfenXie.github.io/feed.xml" rel="self" />
     <link href="https://GrayfenXie.github.io" />
-    <updated>2024-10-28T23:45:54+08:00</updated>
+    <updated>2024-10-28T23:47:49+08:00</updated>
     <author>
         <name>grayfen</name>
     </author>
@@ -21,11 +21,6 @@
 
         <updated>2024-10-28T23:37:46+08:00</updated>
             <summary></summary>
-        <content type="html">
-            <![CDATA[
-                    <p><img src="https://GrayfenXie.github.io/media/posts/4/ridebike.png" class="type:primaryImage" alt="" /></p>
-                <figure class="post__image"><img loading="lazy"  src="https://cdn.grayfen.cn/ridebike.png" alt="" width="1920" height="1080" data-is-external-image="true"></figure>
-            ]]>
-        </content>
+        <content></content>
     </entry>
 </feed>
