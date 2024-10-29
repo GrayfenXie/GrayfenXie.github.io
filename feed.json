@@ -10,6 +10,20 @@
     },
     "items": [
         {
+            "id": "https://GrayfenXie.github.io/xia-ri-lu-ying.html",
+            "url": "https://GrayfenXie.github.io/xia-ri-lu-ying.html",
+            "title": "夏日露营",
+            "image": "https://GrayfenXie.github.io/media/posts/6/babiq.png",
+            "author": {
+                "name": "grayfen"
+            },
+            "tags": [
+                   "插画作品"
+            ],
+            "date_published": "2024-10-29T21:36:32+08:00",
+            "date_modified": "2024-10-29T21:36:32+08:00"
+        },
+        {
             "id": "https://GrayfenXie.github.io/dui-xue-ren.html",
             "url": "https://GrayfenXie.github.io/dui-xue-ren.html",
             "title": "堆雪人",
