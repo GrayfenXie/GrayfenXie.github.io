@@ -3,12 +3,40 @@
     <title>grayfen-blog</title>
     <link href="https://GrayfenXie.github.io/feed.xml" rel="self" />
     <link href="https://GrayfenXie.github.io" />
-    <updated>2024-10-29T21:36:32+08:00</updated>
+    <updated>2024-10-29T21:50:01+08:00</updated>
     <author>
         <name>grayfen</name>
     </author>
     <id>https://GrayfenXie.github.io</id>
 
+    <entry>
+        <title>未知的相遇</title>
+        <author>
+            <name>grayfen</name>
+        </author>
+        <link href="https://GrayfenXie.github.io/wei-zhi-de-xiang-yu.html"/>
+        <id>https://GrayfenXie.github.io/wei-zhi-de-xiang-yu.html</id>
+        <media:content url="https://GrayfenXie.github.io/media/posts/8/littlepark.png" medium="image" />
+            <category term="插画作品"/>
+
+        <updated>2024-10-29T21:48:53+08:00</updated>
+            <summary></summary>
+        <content></content>
+    </entry>
+    <entry>
+        <title>秋日记忆</title>
+        <author>
+            <name>grayfen</name>
+        </author>
+        <link href="https://GrayfenXie.github.io/qiu-ri-ji-yi.html"/>
+        <id>https://GrayfenXie.github.io/qiu-ri-ji-yi.html</id>
+        <media:content url="https://GrayfenXie.github.io/media/posts/7/camera.png" medium="image" />
+            <category term="插画作品"/>
+
+        <updated>2024-10-29T21:47:21+08:00</updated>
+            <summary></summary>
+        <content></content>
+    </entry>
     <entry>
         <title>夏日露营</title>
         <author>
