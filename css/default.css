@@ -3,6 +3,9 @@
 	padding: 0;
     box-sizing: border-box;
 }
+body{
+    background: #f3f3f3; 
+}
 ul,ol{
     list-style: none;
 }
@@ -26,18 +29,21 @@ a{
     padding: 50px 0;
 }
 .works{
-    width: 80%;
+    width: 72%;
     margin: 0 auto;
     height: auto;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 .works li{
+    width: 32%;
     border-radius: var(--border-radius);
-    display: block;
-    margin: 0;
+    box-sizing: border-box;
     overflow: hidden;
-    position: relative;
+    padding: 10px 0;
+    cursor: pointer;
 }
 .works li:hover img{
     transform: scale(1.1);
@@ -52,7 +58,7 @@ a{
 footer {
     text-align:center;
     width: 100%;
-    padding-bottom: 32px;
+    padding: 32px 0;
     color:#858585;
 }
 .links a{
