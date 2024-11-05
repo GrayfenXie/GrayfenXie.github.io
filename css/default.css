@@ -26,13 +26,19 @@ a{
 #mainpart .title{
     text-align: center; 
     font-size: 40px;
-    padding: 20px 0 0 0;
+    padding: 40px 0 0 0;
 }
 #mainpart .slogen{
     text-align: center; 
-    font-size: 14px;    
-    color: #686868;
+    font-size: 16px;    
+    color: #9f9f9f;
     padding: 8px 0;
+}
+#mainpart .line{
+    width: 8%;
+    margin: 0 auto;
+    margin: 30px auto;
+    border: 1px solid #c9c9c9;
 }
 #works{
     width: 72%;
@@ -41,14 +47,14 @@ a{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: left;
 }
 #works li{
     width: 33%;
     border-radius: var(--border-radius);
     box-sizing: border-box;
     overflow: hidden;
-    padding: 10px 0;
+    padding: 10px;
     cursor: pointer;
     display:none;
 }
@@ -58,7 +64,7 @@ a{
     object-fit: cover;
     object-position: top;
     transition: all 0.6s;
-    transform: scale(0.9);
+    transform: scale(0.8);
 }
 #works li:hover img{
     transform: scale(1.1)!important;

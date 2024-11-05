@@ -11,6 +11,18 @@ var imageArray = [
     'https://cdn.grayfen.cn/pinkspring.png',
     'https://cdn.grayfen.cn/ridethebike.png',
     'https://cdn.grayfen.cn/thelittlepark.png',
+    'https://cdn.grayfen.cn/camera.png',
+    'https://cdn.grayfen.cn/adventure.png',
+    'https://cdn.grayfen.cn/rowboat.png',
+    'https://cdn.grayfen.cn/snowmoon.png',
+    'https://cdn.grayfen.cn/spring.png',
+    'https://cdn.grayfen.cn/summer.png',
+    'https://cdn.grayfen.cn/nextlife.png',
+    'https://cdn.grayfen.cn/winter.png',
+    'https://cdn.grayfen.cn/coolman.png',
+    'https://cdn.grayfen.cn/blood.png',
+    'https://cdn.grayfen.cn/smile.png',
+    'https://cdn.grayfen.cn/umbrella.png',
 ]
 var newArr = [];
 while (imageArray.length != 0) {
