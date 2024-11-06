@@ -7,6 +7,25 @@
     <meta name="referrer" content="no-referrer"/>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="css/default.css">
+    <style>
+        .works-item {
+            position: relative;
+        }
+        .works-item__text {
+            opacity: 0;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: #ccc;
+            position: absolute;
+            transition: all 0.5s;
+        }
+        
+        .works-item:hover .works-item__text {
+            opacity: 1;
+        }
+    </style>
     <script src="js/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function(){
@@ -26,8 +45,8 @@
         <div class="links">友情链接：
             <a href="https://kooritea.moe/" target="_blank"> 冰茶的糖果罐 </a>
             <a href="https://weitheworld.cn/" target="_blank"> Lusir blog </a>
-            <a href="https://www.d1n910.com/" target="_blank" style="pointer-events:none;color:#939393;"> 蛋糕博客(已失效) </a>
-            <a href="https://blog.leoon.cn/" target="_blank" style="pointer-events:none;color:#939393;"> 唠叨Leoon(已失效) </a>
+            <a href="https://www.d1n910.com/" target="_blank" style="pointer-events:none;color:#939393;text-decoration-line: line-through;"> 蛋糕博客(已失效) </a>
+            <a href="https://blog.leoon.cn/" target="_blank" style="pointer-events:none;color:#939393;text-decoration-line: line-through;"> 唠叨Leoon(已失效) </a>
         </div>
         <div class="links">特别鸣谢：
             <a href="https://wangyuan.info/" target="_blank"> 网园资讯工作室 </a>
