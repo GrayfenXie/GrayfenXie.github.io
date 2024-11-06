@@ -1,46 +1,61 @@
-*{
-	margin: 0;
-	padding: 0;
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
-body{
-    background: #f3f3f3; 
+
+body {
+    background: #f3f3f3;
 }
-ul,ol,li{
+
+ul,
+ol,
+li {
     list-style: none;
 }
-:root{
+
+:root {
     --border-radius: 4px;
 }
-img{
+
+img {
     vertical-align: top;
     border: none;
 }
-a{
-	text-decoration: none;
-	color: #000;
+
+a {
+    text-decoration: none;
+    color: #000;
 }
-#mainpart{
+
+.no-scroll {
+    overflow: hidden;
+}
+#mainpart {
     height: 100%;
 }
-#mainpart .title{
-    text-align: center; 
+
+#mainpart .title {
+    text-align: center;
     font-size: 40px;
     padding: 40px 0 0 0;
 }
-#mainpart .slogen{
-    text-align: center; 
-    font-size: 16px;    
+
+#mainpart .slogen {
+    text-align: center;
+    font-size: 16px;
     color: #9f9f9f;
     padding: 8px 0;
 }
-#mainpart .line{
+
+#mainpart .line {
     width: 8%;
     margin: 0 auto;
     margin: 30px auto;
     border: 1px solid #c9c9c9;
 }
-#works{
+
+#works {
     width: 72%;
     margin: 0 auto;
     height: auto;
@@ -49,20 +64,22 @@ a{
     flex-wrap: wrap;
     justify-content: left;
 }
-#works li{
+
+#works li {
     width: 33%;
     border-radius: var(--border-radius);
     box-sizing: border-box;
     overflow: hidden;
     padding: 10px;
     cursor: pointer;
-    display:none;
+    display: inline-block;
     position: relative;
     list-style: none;
 }
-#works li img{
+
+#works li img {
     width: 100%;
-	height: 100%;
+    height: 100%;
     border-radius: var(--border-radius);
     object-fit: cover;
     object-position: top;
@@ -70,6 +87,7 @@ a{
     transform: scale(0.8);
     display: block;
 }
+
 .image-overlay {
     position: absolute;
     top: 0;
@@ -83,30 +101,94 @@ a{
     justify-content: center;
     opacity: 0;
     transition: opacity 0.3s;
-    -moz-user-select:none; /* Firefox私有属性 */
-    -webkit-user-select:none; /* WebKit内核私有属性 */
-    -ms-user-select:none; /* IE私有属性(IE10及以后) */
-    -khtml-user-select:none; /* KHTML内核私有属性 */
-    -o-user-select:none; /* Opera私有属性 */
-    user-select:none; /* CSS3属性 */
-  }
-#works li:hover .image-overlay{
+    -moz-user-select: none;
+    /* Firefox私有属性 */
+    -webkit-user-select: none;
+    /* WebKit内核私有属性 */
+    -ms-user-select: none;
+    /* IE私有属性(IE10及以后) */
+    -khtml-user-select: none;
+    /* KHTML内核私有属性 */
+    -o-user-select: none;
+    /* Opera私有属性 */
+    user-select: none;
+    /* CSS3属性 */
+}
+
+#works li:hover .image-overlay {
     opacity: 1;
 }
-#works li:hover img{
-    transform: scale(1.1)!important;
+
+#works li:hover img {
+    transform: scale(1.1) !important;
     transition: all 1s cubic-bezier(.215, .61, .355, 1);
 }
+
 footer {
-    text-align:center;
+    text-align: center;
     width: 100%;
     padding: 32px 0;
-    color:#858585;
+    color: #858585;
 }
-.links a{
-    transition:all .2s;
+
+.links a {
+    transition: all .2s;
     padding: 0 4px;
 }
-.links a:hover{
+
+.links a:hover {
     color: #ED7839;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 244;
+    padding-top: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #e0e0e0;
+    cursor: zoom-in;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: auto;
+    height: 100%;
+}
+
+#img01{
+    opacity: 0;
+    transition: all .6s;
+}
+
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+.close {
+    position: fixed;
+    top: 0;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
 }
