@@ -86,9 +86,12 @@ window.onload = anime()
 function anime() {
   var eles = document.getElementsByTagName('img')
   var lxl = 1
-  for (var i = 0; i < eles.length; i++) {
-    eles[i].style.transform = 'scale(' + lxl + ')'
-  }
+  setTimeout(()=>{
+    for (var i = 0; i < eles.length; i++) {
+      eles[i].style.transform = 'scale(' + lxl + ')'
+      eles[i].style.opacity = '1'
+    }
+  },20)
 }
 
 //查看原图

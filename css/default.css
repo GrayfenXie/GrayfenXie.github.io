@@ -85,6 +85,7 @@ a {
     object-position: top;
     transition: all 0.6s;
     transform: scale(0.8);
+    opacity: 0;
     display: block;
 }
 
@@ -185,6 +186,7 @@ footer {
     font-size: 40px;
     font-weight: bold;
     transition: 0.3s;
+    z-index: 2;
 }
 .close:hover,
 .close:focus {
