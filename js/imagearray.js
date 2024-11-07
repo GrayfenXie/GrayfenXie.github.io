@@ -32,55 +32,6 @@ const imagesData = [
   { src: 'https://cdn.grayfen.cn/pinkwinter.png', alt: '粉色的冬天' },
 ];
 
-// // 函数用于洗牌数组
-// function shuffleArray(array) {
-//   for (let i = array.length - 1; i > 0; i--) {
-//     const j = Math.floor(Math.random() * (i + 1));
-//     [array[i], array[j]] = [array[j], array[i]];
-//   }
-// }
-
-// // 函数用于创建img元素并赋值src和alt
-// function createImageElements(imagesArray) {
-//   // 获取一个容器元素，用于存放所有的img元素
-//   const container = document.getElementById('works');
-
-//   // 遍历数组中的每个对象
-//   imagesArray.forEach(image => {
-//     // 创建一个新的li元素
-//     const li = document.createElement('li');
-
-//     // 创建一个新的img元素
-//     const img = document.createElement('img');
-//     // 为img元素设置src和alt属性
-//     img.src = image.src;
-//     img.alt = image.alt;
-
-//     // 创建一个遮罩层
-//     const overlay = document.createElement('div');
-//     overlay.className = 'image-overlay';
-//     overlay.textContent = image.alt;
-
-//     // 将img元素和遮罩层添加到li元素中
-//     li.appendChild(img);
-//     li.appendChild(overlay);
-
-//     // 将li元素添加到容器中
-//     container.appendChild(li);
-
-//     // 为img添加点击事件
-//     overlay.addEventListener('click', function () {
-//       opens(this);
-//     });
-//   });
-// }
-
-// // 调用洗牌函数
-// shuffleArray(imagesData);
-
-// // 调用函数，传入数组
-// createImageElements(imagesData);
-
 //jq动画
 window.onload = anime()
 function anime() {
@@ -180,7 +131,9 @@ function createImageElements(imagesArray, limit) {
 
   loadedImages += limit;
   if (loadedImages >= imagesArray.length) {
-    document.getElementById('load-more-btn').style.display = 'none';
+    setTimeout(() => {
+      document.getElementById('more').innerHTML = '已加载到底部';
+    }, "300");
   }
   anime();
 }
@@ -191,7 +144,7 @@ createImageElements(imagesData, imagesPerLoad);
 
 // 检查是否滚动到底部并加载更多图片
 function checkScrollPosition() {
-  const nearBottomThreshold = 10; // 当距离底部500px时开始加载
+  const nearBottomThreshold = 5; // 当距离底部5px时开始加载
   if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - nearBottomThreshold &&
       loadedImages < imagesData.length) {
     createImageElements(imagesData, imagesPerLoad);

@@ -125,6 +125,12 @@ a {
     transition: all 1s cubic-bezier(.215, .61, .355, 1);
 }
 
+#more{
+    text-align: center;
+    color: #9f9f9f;
+    margin: 20px 0;
+}
+
 footer {
     text-align: center;
     width: 100%;
@@ -145,7 +151,7 @@ footer {
 .modal {
     display: none;
     position: fixed;
-    z-index: 244;
+    z-index: 4;
     padding-top: 0;
     left: 0;
     top: 0;
