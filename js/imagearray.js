@@ -30,6 +30,7 @@ const imagesData = [
   { src: 'https://cdn.grayfen.cn/tothemoon.png', alt: '划向明月的船' },
   { src: 'https://cdn.grayfen.cn/tothemoon2.png', alt: '随波逐流' },
   { src: 'https://cdn.grayfen.cn/pinkwinter.png', alt: '粉色的冬天' },
+  { src: 'https://cdn.grayfen.cn/harrypoter.png', alt: '魔法生日' },
 ];
 
 //jq动画
@@ -153,3 +154,8 @@ function checkScrollPosition() {
 
 // 监听滚动事件
 window.addEventListener('scroll', checkScrollPosition);
+
+var more = document.getElementById("more");
+more.addEventListener("click", function() {
+  createImageElements(imagesData, imagesPerLoad);
+});
