@@ -139,7 +139,7 @@ function createImageElements(imagesArray, limit) {
     setTimeout(() => {
       loadpic.innerHTML = imagesArray.length;
       document.getElementById('more').innerHTML = '加载到底部啦~';
-      document.getElementById("more").style.cursor = 'none';
+      document.getElementById('more').style.cursor = 'unset';
     }, "300")
   }else{
     loadpic.innerHTML = loadnum;

@@ -128,13 +128,21 @@ a {
 .loadmorepic{
     text-align: center;
     margin: 10px 0 20px 0;
+    opacity: 0.8;
+    transition: all .6s;
 }
-
+.loadmorepic:hover{
+    opacity: 1;
+}
+.loadmorepic:hover #more{
+    color: #333;
+}
 #more{
     text-align: center;
     color: #9f9f9f;
     margin: 20px 0;
     cursor: pointer;
+    transition: all .6s;
 }
 
 #nums .and{
