@@ -125,6 +125,11 @@ a {
     transition: all 1s cubic-bezier(.215, .61, .355, 1);
 }
 
+.loadmorepic{
+    text-align: center;
+    margin: 10px 0 20px 0;
+}
+
 #more{
     text-align: center;
     color: #9f9f9f;
@@ -132,10 +137,18 @@ a {
     cursor: pointer;
 }
 
+#nums .and{
+    color: #c9c9c9;
+}
+
+#nums #allpic{
+    color: #c9c9c9;
+}
+
 footer {
     text-align: center;
     width: 100%;
-    padding: 32px 0;
+    padding: 16px 0;
     color: #858585;
 }
 

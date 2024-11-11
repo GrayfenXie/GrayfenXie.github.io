@@ -31,6 +31,7 @@ const imagesData = [
   { src: 'https://cdn.grayfen.cn/tothemoon2.png', alt: '随波逐流' },
   { src: 'https://cdn.grayfen.cn/pinkwinter.png', alt: '粉色的冬天' },
   { src: 'https://cdn.grayfen.cn/harrypoter.png', alt: '魔法生日' },
+  { src: 'https://cdn.grayfen.cn/anniversary.png', alt: '纪念日' },
 ];
 
 //jq动画
@@ -110,10 +111,13 @@ function shuffleArray(array) {
 }
 
 // 函数用于创建img元素并赋值src和alt
+var loadnum = 0;
 function createImageElements(imagesArray, limit) {
   const container = document.getElementById('works');
   let imagesToLoad = imagesArray.slice(loadedImages, loadedImages + limit);
-
+  var loadpic = document.getElementById('loadpic');
+  var allpic = document.getElementById('allpic');
+  allpic.innerHTML = imagesArray.length;
   imagesToLoad.forEach(image => {
     const li = document.createElement('li');
     const img = document.createElement('img');
@@ -129,12 +133,16 @@ function createImageElements(imagesArray, limit) {
       opens(this);
     });
   });
-
   loadedImages += limit;
+  loadnum = loadnum + limit;
   if (loadedImages >= imagesArray.length) {
     setTimeout(() => {
-      document.getElementById('more').innerHTML = '已加载到底部';
-    }, "300");
+      loadpic.innerHTML = imagesArray.length;
+      document.getElementById('more').innerHTML = '加载到底部啦~';
+      document.getElementById("more").style.cursor = 'none';
+    }, "300")
+  }else{
+    loadpic.innerHTML = loadnum;
   }
   anime();
 }
@@ -145,15 +153,27 @@ createImageElements(imagesData, imagesPerLoad);
 
 // 检查是否滚动到底部并加载更多图片
 function checkScrollPosition() {
-  const nearBottomThreshold = 5; // 当距离底部5px时开始加载
+  const nearBottomThreshold = 2; // 当距离底部2px时开始加载
   if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - nearBottomThreshold &&
       loadedImages < imagesData.length) {
     createImageElements(imagesData, imagesPerLoad);
   }
 }
+let lastKnownScrollPosition = 0;
+let ticking = false;
 
 // 监听滚动事件
-window.addEventListener('scroll', checkScrollPosition);
+document.addEventListener("scroll", (event) => {
+  lastKnownScrollPosition = window.scrollY;
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      checkScrollPosition();
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+// window.addEventListener('scroll', checkScrollPosition);
 
 var more = document.getElementById("more");
 more.addEventListener("click", function() {
