@@ -58,6 +58,10 @@ function anime() {
 var modal = document.getElementById('myModal');
 var img = document.getElementById('myImg');
 var modalImg = document.getElementById("img01");
+var a = document.getElementsByClassName("modal-content");
+var b = document.getElementsByClassName("modal");
+var flag = true;
+
 function opens(self) {
   modal.style.display = "block";
   modalImg.src = self.previousElementSibling.src;
@@ -65,13 +69,16 @@ function opens(self) {
   document.getElementById('myModal').scrollTop = 0;
   document.onkeydown = false;
   document.body.classList.add('no-scroll');
+  flag = true;
   setTimeout(() => {
     modalImg.style.opacity = 1;
-  }, "100");
+    for (var i = a.length - 1; i >= 0; i--) {
+      b[i].style.cursor = "zoom-in";
+      a[i].style.height = "100%";
+      a[i].style.width = "auto";
+    }
+  }, 100);
 }
-var a = document.getElementsByClassName("modal-content");
-var b = document.getElementsByClassName("modal");
-var flag = true;
 function look(self) {
   if (flag) {
     for (var i = a.length - 1; i >= 0; i--) {
@@ -100,9 +107,9 @@ span.onclick = function () {
   }, "100");
   document.body.classList.remove('no-scroll');
   for (var i = a.length - 1; i >= 0; i--) {
+    b[i].style.cursor = "zoom-in";
     a[i].style.height = "100%";
     a[i].style.width = "auto";
-    b[i].style.cursor = "zoom-in";
   }
 }
 // 当前已加载图片数量
