@@ -35,16 +35,23 @@ const imagesData = [
 ];
 
 //jq动画
-window.onload = anime()
+window.onload = anime();
+
+window.onbeforeunload = function () {
+  //刷新后页面自动回到顶部
+  document.documentElement.scrollTop = 0;  //ie下
+  document.body.scrollTop = 0;  //非ie
+}
+
 function anime() {
   var eles = document.getElementsByTagName('img')
   var lxl = 1
-  setTimeout(()=>{
+  setTimeout(() => {
     for (var i = 0; i < eles.length; i++) {
       eles[i].style.transform = 'scale(' + lxl + ')'
       eles[i].style.opacity = '1'
     }
-  },20)
+  }, 20)
 }
 
 //查看原图
@@ -141,7 +148,7 @@ function createImageElements(imagesArray, limit) {
       document.getElementById('more').innerHTML = '加载到底部啦~';
       document.getElementById('more').style.cursor = 'unset';
     }, "300")
-  }else{
+  } else {
     loadpic.innerHTML = loadnum;
   }
   anime();
@@ -155,7 +162,7 @@ createImageElements(imagesData, imagesPerLoad);
 function checkScrollPosition() {
   const nearBottomThreshold = 2; // 当距离底部2px时开始加载
   if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - nearBottomThreshold &&
-      loadedImages < imagesData.length) {
+    loadedImages < imagesData.length) {
     createImageElements(imagesData, imagesPerLoad);
   }
 }
@@ -176,6 +183,6 @@ document.addEventListener("scroll", (event) => {
 // window.addEventListener('scroll', checkScrollPosition);
 
 var more = document.getElementById("more");
-more.addEventListener("click", function() {
+more.addEventListener("click", function () {
   createImageElements(imagesData, imagesPerLoad);
 });
