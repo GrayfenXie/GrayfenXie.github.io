@@ -222,3 +222,10 @@ footer {
     text-decoration: none;
     cursor: pointer;
 }
+
+
+@media screen and (max-width: 1024px) {
+    #works , #works li {
+        width: 100%;
+    }
+  }

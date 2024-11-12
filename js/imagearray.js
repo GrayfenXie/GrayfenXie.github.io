@@ -28,7 +28,7 @@ const imagesData = [
   { src: 'https://cdn.grayfen.cn/swordquest.png', alt: '寻剑' },
   { src: 'https://cdn.grayfen.cn/swordsman.png', alt: '侠客行' },
   { src: 'https://cdn.grayfen.cn/tothemoon.png', alt: '划向明月的船' },
-  { src: 'https://cdn.grayfen.cn/tothemoon2.png', alt: '随波逐流' },
+  { src: 'https://cdn.grayfen.cn/moonsea.png', alt: '月海' },
   { src: 'https://cdn.grayfen.cn/pinkwinter.png', alt: '粉色的冬天' },
   { src: 'https://cdn.grayfen.cn/harrypoter.png', alt: '魔法生日' },
   { src: 'https://cdn.grayfen.cn/anniversary.png', alt: '纪念日' },
