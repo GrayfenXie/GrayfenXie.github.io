@@ -173,36 +173,46 @@ function checkScrollPosition() {
     createImageElements(imagesData, imagesPerLoad);
   }
 }
-let lastKnownScrollPosition = 0;
-let ticking = false;
+// 防抖函数
+function debounce(func, delay) {
+  let debounceTimer;
+  return function() {
+    const context = this;
+    const args = arguments;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      func.apply(context, args);
+    }, delay);
+  };
+}
+
+// 创建防抖后的滚动事件处理函数
+const debouncedCheckScrollPosition = debounce(checkScrollPosition, 200); // 200ms内最多执行一次
 
 // 监听滚动事件
 document.addEventListener("scroll", (event) => {
-  lastKnownScrollPosition = window.scrollY;
-  if (!ticking) {
-    window.requestAnimationFrame(() => {
-      checkScrollPosition();
-      ticking = false;
-    });
-    ticking = true;
-  }
+  debouncedCheckScrollPosition();
 });
-// window.addEventListener('scroll', checkScrollPosition);
 
 var more = document.getElementById("more");
 more.addEventListener("click", function () {
   createImageElements(imagesData, imagesPerLoad);
 });
 
+
 var flag = true;
-document.getElementById('switch').onclick = function () {
-  if(flag){
+var bgImage1 = 'url("img/sun.svg")'; // 注意路径是相对于HTML文件的
+var bgImage2 = 'url("img/moon.svg")';
+var switchbutton = document.getElementById('switch');
+switchbutton.addEventListener('click', function () {
+  if (flag) {
     document.body.classList.add("night");
+    switchbutton.style.backgroundImage = bgImage2;
     flag = false;
   }
-  else{
+  else {
     document.body.classList.remove("night");
-    this.style.backgroundImage="../img/moon.svg";
+    switchbutton.style.backgroundImage = bgImage1;
     flag = true;
   }
-}
+});

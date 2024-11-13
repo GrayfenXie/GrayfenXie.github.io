@@ -18,7 +18,7 @@
 
 body {
     background: var(--bg-color);
-    transition: background 0.5s ease-in-out;
+    transition: background 1s ease-in-out;
 }
 
 ul,
@@ -47,7 +47,7 @@ a {
 
 .thetitle{
     position: relative;
-    width: 16%;
+    width: 340px;
     margin: 0 auto;
 }
 
@@ -55,18 +55,18 @@ a {
     width: 28px;
     height: 28px;
     position: absolute;
-    right: 0;
+    right: -28px;
     top: 0;
     border: none;
     cursor: pointer;
-    transition: all .6s;
+    transition: all 1s;
     background: url(../img/sun.svg);
     background-position: center 0px;
     background-size: cover;
 }
 
 #switch:hover{
-    transform: rotate(90deg)
+    transform: rotate(-360deg)
 }
 #mainpart {
     height: 100%;
