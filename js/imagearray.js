@@ -193,3 +193,15 @@ var more = document.getElementById("more");
 more.addEventListener("click", function () {
   createImageElements(imagesData, imagesPerLoad);
 });
+
+var flag = true;
+document.getElementById('switch').onclick = function () {
+  if(flag){
+    document.body.classList.add("night");
+    flag = false;
+  }
+  else{
+    document.body.classList.remove("night");
+    flag = true;
+  }
+}

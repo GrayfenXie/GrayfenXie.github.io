@@ -4,8 +4,21 @@
     box-sizing: border-box;
 }
 
+:root{
+    --bg-color: #f3f3f3;
+    --mainword-color: #333;
+    --second-color: #9f9f9f;
+  }
+
+:root .night {
+    --bg-color: #121212;
+    --mainword-color: #f2f2f7;
+    --second-color: #979797;
+}
+
 body {
-    background: #f3f3f3;
+    background: var(--bg-color);
+    transition: background 0.5s ease-in-out;
 }
 
 ul,
@@ -25,11 +38,36 @@ img {
 
 a {
     text-decoration: none;
-    color: #000;
+    color: var(--mainword-color);
 }
 
 .no-scroll {
     overflow: hidden;
+}
+
+.thetitle{
+    position: relative;
+    width: 20%;
+    margin: 0 auto;
+}
+
+#switch{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
+    cursor: pointer;
+    transition: all .6s;
+    background: url(../img/day.svg) no-repeat center 0px;
+    background-position: center 0px;
+    background-size: cover;
+}
+
+#switch:hover{
+    width: 25px;
+    height: 25px;
 }
 #mainpart {
     height: 100%;
@@ -38,13 +76,14 @@ a {
 #mainpart .title {
     text-align: center;
     font-size: 40px;
-    padding: 40px 0 0 0;
+    margin: 40px 0 0 0;
+    color: var(--mainword-color);
 }
 
 #mainpart .slogen {
     text-align: center;
     font-size: 16px;
-    color: #9f9f9f;
+    color: var(--second-color);
     padding: 8px 0;
 }
 
@@ -135,11 +174,11 @@ a {
     opacity: 1;
 }
 .loadmorepic:hover #more{
-    color: #333;
+    color: var(--mainword-color);
 }
 #more{
     text-align: center;
-    color: #9f9f9f;
+    color: var(--second-color);
     margin: 20px 0;
     cursor: pointer;
     transition: all .6s;
@@ -149,6 +188,11 @@ a {
     color: #c9c9c9;
 }
 
+#nums #loadpic{
+    color: var(--mainword-color);
+}
+
+
 #nums #allpic{
     color: #c9c9c9;
 }
@@ -157,7 +201,7 @@ footer {
     text-align: center;
     width: 100%;
     padding: 16px 0;
-    color: #858585;
+    color: var(--second-color);
 }
 
 .links a {
