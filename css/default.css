@@ -47,27 +47,26 @@ a {
 
 .thetitle{
     position: relative;
-    width: 20%;
+    width: 16%;
     margin: 0 auto;
 }
 
 #switch{
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
     position: absolute;
     right: 0;
     top: 0;
     border: none;
     cursor: pointer;
     transition: all .6s;
-    background: url(../img/day.svg) no-repeat center 0px;
+    background: url(../img/sun.svg);
     background-position: center 0px;
     background-size: cover;
 }
 
 #switch:hover{
-    width: 25px;
-    height: 25px;
+    transform: rotate(90deg)
 }
 #mainpart {
     height: 100%;

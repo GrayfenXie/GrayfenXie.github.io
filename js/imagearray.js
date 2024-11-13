@@ -202,6 +202,7 @@ document.getElementById('switch').onclick = function () {
   }
   else{
     document.body.classList.remove("night");
+    this.style.backgroundImage="../img/moon.svg";
     flag = true;
   }
 }
