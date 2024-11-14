@@ -44,7 +44,7 @@ window.onbeforeunload = function () {
 }
 
 function anime() {
-  var eles = document.getElementsByTagName('img')
+  var eles = document.getElementsByClassName('image-item');
   var lxl = 1
   setTimeout(() => {
     for (var i = 0; i < eles.length; i++) {
@@ -74,25 +74,23 @@ function opens(self) {
     modalImg.style.opacity = 1;
     for (var i = a.length - 1; i >= 0; i--) {
       b[i].style.cursor = "zoom-in";
-      a[i].style.height = "100%";
-      a[i].style.width = "auto";
     }
   }, 100);
 }
 function look(self) {
   if (flag) {
+    //放大
     for (var i = a.length - 1; i >= 0; i--) {
       b[i].style.cursor = "zoom-out";
-      a[i].style.width = "100vw";
-      a[i].style.height = "auto";
+      a[i].classList.add('big');
     }
     flag = false;
   }
   else {
+    //缩小
     for (var i = a.length - 1; i >= 0; i--) {
       b[i].style.cursor = "zoom-in";
-      a[i].style.height = "100%";
-      a[i].style.width = "auto";
+      a[i].classList.remove('big');
     }
     flag = true;
   }
@@ -108,8 +106,7 @@ span.onclick = function () {
   document.body.classList.remove('no-scroll');
   for (var i = a.length - 1; i >= 0; i--) {
     b[i].style.cursor = "zoom-in";
-    a[i].style.height = "100%";
-    a[i].style.width = "auto";
+    a[i].classList.remove('big');
   }
 }
 // 当前已加载图片数量
@@ -137,6 +134,7 @@ function createImageElements(imagesArray, limit) {
     const img = document.createElement('img');
     img.src = image.src;
     img.alt = image.alt;
+    img.className = 'image-item';
     const overlay = document.createElement('div');
     overlay.className = 'image-overlay';
     overlay.textContent = image.alt;
