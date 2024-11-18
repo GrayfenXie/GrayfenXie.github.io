@@ -33,6 +33,7 @@ const imagesData = [
   { src: 'https://cdn.grayfen.cn/harrypoter.png', alt: '魔法生日' },
   { src: 'https://cdn.grayfen.cn/anniversary.png', alt: '纪念日' },
   { src: 'https://cdn.grayfen.cn/rideboat.png', alt: '林间划船' },
+  { src: 'https://cdn.grayfen.cn/forest.png', alt: '森林猎人' }
 ];
 
 //jq动画
