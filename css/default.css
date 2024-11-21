@@ -4,11 +4,15 @@
     box-sizing: border-box;
 }
 
-:root{
+html {
+    font-size: 16px;
+}
+
+:root {
     --bg-color: #f3f3f3;
     --mainword-color: #333;
     --second-color: #9f9f9f;
-  }
+}
 
 :root .night {
     --bg-color: #121212;
@@ -19,6 +23,8 @@
 body {
     background: var(--bg-color);
     transition: background 1s ease-in-out;
+    font-size: 16px;
+    font-size: 1rem;
 }
 
 ul,
@@ -38,13 +44,15 @@ img {
 
 a {
     text-decoration: none;
-    outline:none;
+    outline: none;
     color: var(--mainword-color);
 }
+
 a[name]:hover::after {
     content: attr(name);
     width: 56px;
     font-size: 12px;
+    font-size: 0.75rem;
     color: var(--bg-color);
     background-color: var(--mainword-color);
     opacity: 0.8;
@@ -60,16 +68,16 @@ a[name]:hover::after {
     overflow: hidden;
 }
 
-.thetitle{
+.thetitle {
     position: relative;
     /* width: 340px; */
-    width:fit-content;
-    width:-webkit-fit-content;
-    width:-moz-fit-content;
+    width: fit-content;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     margin: 0 auto;
 }
 
-#switch{
+#switch {
     width: 28px;
     height: 28px;
     position: absolute;
@@ -83,18 +91,19 @@ a[name]:hover::after {
     background-size: cover;
 }
 
-#switch:hover{
+#switch:hover {
     transform: rotate(-360deg)
 }
 
-.zcool{
-    width: 32px; 
+.zcool {
+    width: 32px;
     margin: 12px auto 6px auto;
     text-align: center;
     opacity: 0.6;
     transition: all .6s;
 }
-.zcool .link{
+
+.zcool .link {
     background: url(../img/zcool.png);
     background-position: center 0px;
     background-size: cover;
@@ -105,10 +114,12 @@ a[name]:hover::after {
     position: relative;
     transition: all .6s;
 }
-.zcool:hover{
+
+.zcool:hover {
     opacity: 1;
     scale: 1.1;
 }
+
 #mainpart {
     height: 100%;
 }
@@ -116,6 +127,7 @@ a[name]:hover::after {
 #mainpart .title {
     text-align: center;
     font-size: 40px;
+    font-size: 2.5rem;
     margin: 40px 0 0 0;
     color: var(--mainword-color);
     white-space: nowrap;
@@ -206,19 +218,22 @@ a[name]:hover::after {
     transition: all 1s cubic-bezier(.215, .61, .355, 1);
 }
 
-.loadmorepic{
+.loadmorepic {
     text-align: center;
     margin: 10px 0 20px 0;
     opacity: 0.8;
     transition: all .6s;
 }
-.loadmorepic:hover{
+
+.loadmorepic:hover {
     opacity: 1;
 }
-.loadmorepic:hover #more{
+
+.loadmorepic:hover #more {
     color: var(--mainword-color);
 }
-#more{
+
+#more {
     text-align: center;
     color: var(--second-color);
     margin: 20px 0;
@@ -226,16 +241,16 @@ a[name]:hover::after {
     transition: all .6s;
 }
 
-#nums .and{
+#nums .and {
     color: #c9c9c9;
 }
 
-#nums #loadpic{
+#nums #loadpic {
     color: var(--mainword-color);
 }
 
 
-#nums #allpic{
+#nums #allpic {
     color: #c9c9c9;
 }
 
@@ -249,6 +264,8 @@ footer {
 .links a {
     transition: all .2s;
     padding: 0 4px;
+    font-size: 0.875rem;
+    font-size: 14px;
 }
 
 .links a:hover {
@@ -277,18 +294,18 @@ footer {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform:translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     padding: 6%;
 }
 
-.big{
+.big {
     transform: translate(-50%, -50%) scale(1.2);
     top: 50%;
     left: 50%;
     padding: 0;
 }
 
-#img01{
+#img01 {
     opacity: 0;
     transition: all .6s;
 }
@@ -310,10 +327,12 @@ footer {
     right: 35px;
     color: #f1f1f1;
     font-size: 40px;
+    font-size: 2.5rem;
     font-weight: bold;
     transition: 0.3s;
     z-index: 2;
 }
+
 .close:hover,
 .close:focus {
     color: #bbb;
@@ -323,11 +342,14 @@ footer {
 
 
 @media screen and (max-width: 1024px) {
-    #works , #works li {
+
+    #works,
+    #works li {
         width: 100%;
     }
+
     #mainpart .title {
-    font-size: 24px;
-    font-size: 1.75rem;
+        font-size: 24px;
+        font-size: 1.75rem;
     }
-  }
+}
