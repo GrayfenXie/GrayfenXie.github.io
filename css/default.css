@@ -62,7 +62,10 @@ a[name]:hover::after {
 
 .thetitle{
     position: relative;
-    width: 340px;
+    /* width: 340px; */
+    width:fit-content;
+    width:-webkit-fit-content;
+    width:-moz-fit-content;
     margin: 0 auto;
 }
 
@@ -70,7 +73,7 @@ a[name]:hover::after {
     width: 28px;
     height: 28px;
     position: absolute;
-    right: -28px;
+    right: -24px;
     top: 0;
     border: none;
     cursor: pointer;
@@ -121,6 +124,7 @@ a[name]:hover::after {
 #mainpart .slogen {
     text-align: center;
     font-size: 16px;
+    font-size: 1rem;
     color: var(--second-color);
     padding: 8px 0;
 }
@@ -321,5 +325,9 @@ footer {
 @media screen and (max-width: 1024px) {
     #works , #works li {
         width: 100%;
+    }
+    #mainpart .title {
+    font-size: 24px;
+    font-size: 1.75rem;
     }
   }
