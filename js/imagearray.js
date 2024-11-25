@@ -35,7 +35,8 @@ const imagesData = [
   { src: 'https://cdn.grayfen.cn/rideboat.png', alt: '林间划船' },
   { src: 'https://cdn.grayfen.cn/forest.png', alt: '森林猎人' },
   { src: 'https://cdn.grayfen.cn/butterfly.png', alt: '阿飞的小蝴蝶' },
-  { src: 'https://cdn.grayfen.cn/umbrella.png', alt: '雨蝶' }
+  { src: 'https://cdn.grayfen.cn/umbrella.png', alt: '雨蝶' },
+  { src: 'https://cdn.grayfen.cn/unamenight.png', alt: '没有名字的夜晚' }
 ];
 
 //jq动画
