@@ -65,7 +65,9 @@ a[name]:hover::after {
 }
 
 .no-scroll {
-    overflow: hidden;
+    position: fixed;
+    overflow-y: scroll;
+    width: 100%;
 }
 
 .thetitle {
