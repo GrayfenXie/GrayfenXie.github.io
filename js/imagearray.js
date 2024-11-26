@@ -66,14 +66,32 @@ var modalImg = document.getElementById("img01");
 var a = document.getElementsByClassName("modal-content");
 var b = document.getElementsByClassName("modal");
 var flag = true;
+var originalScrollPosition = 0; // 用于存储原始滚动位置
 
 function opens(self) {
+  // modal.style.display = "block";
+  // modalImg.src = self.previousElementSibling.src;
+  // modalImg.alt = self.previousElementSibling.alt;
+  // document.getElementById('myModal').scrollTop = 0;
+  // document.onkeydown = false;
+  // document.body.classList.add('no-scroll');
+  // flag = true;
+  // setTimeout(() => {
+  //   modalImg.style.opacity = 1;
+  //   for (var i = a.length - 1; i >= 0; i--) {
+  //     b[i].style.cursor = "zoom-in";
+  //   }
+  // }, 100);
   modal.style.display = "block";
   modalImg.src = self.previousElementSibling.src;
   modalImg.alt = self.previousElementSibling.alt;
-  document.getElementById('myModal').scrollTop = 0;
-  document.onkeydown = false;
+  // 记录当前滚动位置
+  originalScrollPosition = window.scrollY || document.documentElement.scrollTop;
+  // 添加禁止滚动的类
   document.body.classList.add('no-scroll');
+  // 将页面滚动位置设置为之前记录的位置，以避免页面跳转
+  document.body.style.position = 'fixed';
+  document.body.style.top = -originalScrollPosition + 'px';
   flag = true;
   setTimeout(() => {
     modalImg.style.opacity = 1;
@@ -107,6 +125,13 @@ span.onclick = function () {
   modalImg.style.opacity = 0;
   setTimeout(() => {
     modal.style.display = "none";
+    // 移除禁止滚动的类
+    document.body.classList.remove('no-scroll');
+    // 恢复body的默认样式
+    document.body.style.position = '';
+    document.body.style.top = '';
+    // 恢复原始滚动位置
+    window.scrollTo(0, originalScrollPosition);
   }, "100");
   document.body.classList.remove('no-scroll');
   for (var i = a.length - 1; i >= 0; i--) {
