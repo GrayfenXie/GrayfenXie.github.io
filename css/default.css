@@ -39,7 +39,6 @@ body::-webkit-scrollbar-track{
 body::-webkit-scrollbar-thumb{
     background: var(--scrollbar-color);
     border-radius: 10px;
-    cursor: pointer;
 }
 body::-webkit-scrollbar-thumb:hover{
     background: #9fa2b3;
