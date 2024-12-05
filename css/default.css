@@ -9,15 +9,17 @@ html {
 }
 
 :root {
-    --bg-color: #f3f3f3;
+    --bg-color: #F3F5FC;
     --mainword-color: #333;
     --second-color: #9f9f9f;
+    --scrollbar-color: #adb0bd;
 }
 
 :root .night {
     --bg-color: #121212;
     --mainword-color: #f2f2f7;
     --second-color: #979797;
+    --scrollbar-color: #adb0bd;
 }
 
 body {
@@ -25,6 +27,22 @@ body {
     transition: background 1s ease-in-out;
     font-size: 16px;
     font-size: 1rem;
+}
+
+body::-webkit-scrollbar{
+    width: 10px;
+}
+body::-webkit-scrollbar-track{
+    background-color: var(--bg-color);
+    border-radius: 2px;
+}
+body::-webkit-scrollbar-thumb{
+    background: var(--scrollbar-color);
+    border-radius: 10px;
+    cursor: pointer;
+}
+body::-webkit-scrollbar-thumb:hover{
+    background: #9fa2b3;
 }
 
 ul,
