@@ -69,19 +69,6 @@ var flag = true;
 var originalScrollPosition = 0; // 用于存储原始滚动位置
 
 function opens(self) {
-  // modal.style.display = "block";
-  // modalImg.src = self.previousElementSibling.src;
-  // modalImg.alt = self.previousElementSibling.alt;
-  // document.getElementById('myModal').scrollTop = 0;
-  // document.onkeydown = false;
-  // document.body.classList.add('no-scroll');
-  // flag = true;
-  // setTimeout(() => {
-  //   modalImg.style.opacity = 1;
-  //   for (var i = a.length - 1; i >= 0; i--) {
-  //     b[i].style.cursor = "zoom-in";
-  //   }
-  // }, 100);
   modal.style.display = "block";
   modalImg.src = self.previousElementSibling.src;
   modalImg.alt = self.previousElementSibling.alt;
