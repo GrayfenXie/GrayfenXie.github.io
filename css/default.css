@@ -33,7 +33,7 @@ body::-webkit-scrollbar{
     width: 10px;
 }
 body::-webkit-scrollbar-track{
-    background-color: var(--bg-color);
+    background-color: none;
     border-radius: 2px;
 }
 body::-webkit-scrollbar-thumb{
