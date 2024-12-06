@@ -271,6 +271,8 @@ footer {
     width: 100%;
     padding: 16px 0;
     color: var(--second-color);
+    font-size: 0.875rem;
+    font-size: 14px;
 }
 
 .links{
