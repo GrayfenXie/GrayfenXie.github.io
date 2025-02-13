@@ -393,13 +393,14 @@ footer {
 .tabs {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
 }
 .tab {
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
     margin: 0 20px;
+    color: var(--mainword-color);
+    opacity: 0.8;
 }
 .tab.active {
     color: #FFC549;
