@@ -22,7 +22,7 @@
         <div class="zcool">
             <a class="link" href="https://www.zcool.com.cn/u/16736676" target="_blank" name="站酷主页"></a>
         </div>
-        <div class="tabs">
+        <!-- <div class="tabs">
             <div class="tab active" data-tab="images">图片</div>
             <div class="tab" data-tab="comments">评论</div>
         </div>
@@ -41,7 +41,22 @@
         <div id="comment-content" class="tab-content">
             <h2>随笔列表</h2>
             <ul id="comment-list"></ul>
+        </div> -->
+
+        <div class="tabs">
+            <div class="tab active" data-tab="image-content">图片</div>
+            <div class="tab" data-tab="comment-content">评论</div>
         </div>
+        <div id="image-content" class="tab-content active">
+            <h2>图片展示</h2>
+            <ul id="image-list"></ul>
+        </div>
+        <div id="comment-content" class="tab-content">
+            <h2>评论列表</h2>
+            <ul id="comment-list"></ul>
+        </div>
+
+
     </div>
     <!-- The Modal -->
     <div id="myModal" class="modal">
@@ -74,16 +89,27 @@
 <script src="js/marked.min.js"></script>
 <script>
     // 切换标签页
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-      const targetTab = tab.getAttribute('data-tab');
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-      tab.classList.add('active');
-      console.log(targetTab);
-      document.getElementById(targetTab).classList.add('active');
-  });
-});
+    document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.getAttribute('data-tab');
+                console.log("Target Tab:", targetTab); // 调试信息
+
+                // 确保目标内容区域存在
+                const targetContent = document.getElementById(targetTab);
+                if (!targetContent) {
+                    console.error("Target content not found:", targetTab);
+                    return;
+                }
+
+                // 移除所有标签和内容的active类
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+                // 添加active类到当前标签和内容
+                tab.classList.add('active');
+                targetContent.classList.add('active');
+            });
+        });
     async function loadComments() {
         try {
             // 替换为你的GitHub用户名、仓库名称和Issue编号
