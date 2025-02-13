@@ -86,7 +86,8 @@
                 const li = document.createElement('li');
                     const date = new Date(comment.created_at); // 解析时间戳
                     const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`; // 格式化日期和时间
-
+                    // 使用marked.js将Markdown转换为HTML
+                    const bodyHTML = marked(comment.body);
                     li.innerHTML = `
                         <div class="comment-body">${comment.body}</div>
                         <div class="comment-date">${formattedDate}</div>
