@@ -51,11 +51,12 @@
     </div>
     <footer>
         <div class="links">友情链接：
-            <a href="https://www.leoon.cn/" target="_blank" > Leoon Liang </a>
+            <a href="https://www.leoon.cn/" target="_blank"> Leoon Liang </a>
             <a href="https://kooritea.moe/" target="_blank"> 冰茶的糖果罐 </a>
             <a href="https://www.yuanmoc.cn/" target="_blank"> Yuanmoc </a>
             <a href="https://weitheworld.cn/" target="_blank"> Lusir's Blog </a>
-            <a href="https://www.d1n910.com/" target="_blank" style="pointer-events:none;color:#939393;text-decoration-line: line-through;"> 蛋糕博客(已失效) </a>
+            <a href="https://www.d1n910.com/" target="_blank"
+                style="pointer-events:none;color:#939393;text-decoration-line: line-through;"> 蛋糕博客(已失效) </a>
         </div>
         <div class="links">特别鸣谢：
             <a href="https://wangyuan.info/" target="_blank"> 网园资讯工作室 </a>
@@ -76,31 +77,31 @@
 <script>
     // 切换标签页
     document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                const targetTab = tab.getAttribute('data-tab');
-                console.log("Target Tab:", targetTab); // 调试信息
+        tab.addEventListener('click', () => {
+            const targetTab = tab.getAttribute('data-tab');
+            console.log("Target Tab:", targetTab); // 调试信息
 
-                // 确保目标内容区域存在
-                const targetContent = document.getElementById(targetTab);
-                if (!targetContent) {
-                    console.error("Target content not found:", targetTab);
-                    return;
-                }
+            // 确保目标内容区域存在
+            const targetContent = document.getElementById(targetTab);
+            if (!targetContent) {
+                console.error("Target content not found:", targetTab);
+                return;
+            }
 
-                // 移除所有标签和内容的active类
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            // 移除所有标签和内容的active类
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
 
-                // 添加active类到当前标签和内容
-                tab.classList.add('active');
-                targetContent.classList.add('active');
-            });
+            // 添加active类到当前标签和内容
+            tab.classList.add('active');
+            targetContent.classList.add('active');
         });
-        const owner = "GrayfenXie";
-            const repo = "GrayfenXie.github.io";
-            const issueNumber = "2"; // 替换为目标Issue的编号
-            let currentPage = 1;
-            const perPage = 10; // 每页加载10条评论
+    });
+    const owner = "GrayfenXie";
+    const repo = "GrayfenXie.github.io";
+    const issueNumber = "2"; // 替换为目标Issue的编号
+    let currentPage = 1;
+    const perPage = 10; // 每页加载10条评论
     async function loadissues(page) {
         try {
             // 替换为你的GitHub用户名、仓库名称和Issue编号
@@ -117,15 +118,15 @@
             // 遍历评论数组，动态生成HTML内容
             issues.forEach(issue => {
                 const li = document.createElement('li');
-                    const date = new Date(issue.created_at); // 解析时间戳
-                    const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`; // 格式化日期和时间
-                    // 使用marked.js将Markdown转换为HTML
-                    const bodyHTML = marked(issue.body);
-                    li.innerHTML = `
+                const date = new Date(issue.created_at); // 解析时间戳
+                const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`; // 格式化日期和时间
+                // 使用marked.js将Markdown转换为HTML
+                const bodyHTML = marked(issue.body);
+                li.innerHTML = `
                         <div class="issue-body">${bodyHTML}</div>
                         <div class="issue-date">${formattedDate}</div>
                     `;
-                    issueList.appendChild(li);
+                issueList.appendChild(li);
             });
         } catch (error) {
             console.error('Failed to load issues:', error);
@@ -137,8 +138,9 @@
     loadissues(currentPage);
     // 添加“加载更多”按钮的事件监听
     document.getElementById('more2').addEventListener('click', () => {
-            currentPage++;
-            loadissues(currentPage);
-        });
+        currentPage++;
+        loadissues(currentPage);
+    });
 </script>
+
 </html>
