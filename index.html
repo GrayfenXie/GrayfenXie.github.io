@@ -87,9 +87,8 @@
                     const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`; // 格式化日期和时间
 
                     li.innerHTML = `
-                        <div class="comment-author">${comment.user.login}</div>
                         <div class="comment-body">${comment.body}</div>
-                        <div class="comment-date">评论时间: ${formattedDate}</div>
+                        <div class="comment-date">${formattedDate}</div>
                     `;
                     commentList.appendChild(li);
             });
