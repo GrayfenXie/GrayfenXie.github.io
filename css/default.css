@@ -194,6 +194,12 @@ a[name]:hover::after {
     display: block;
 }
 
+#issue-list li{
+    width: 100%;
+    background: #e0e0e0;
+    border-radius: var(--border-radius);
+    padding: 20px 40px;
+}
 .image-overlay {
     position: absolute;
     top: 0;
