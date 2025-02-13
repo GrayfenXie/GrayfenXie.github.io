@@ -73,6 +73,16 @@
 <script src="js/imagearray.js"></script>
 <script src="js/marked.min.js"></script>
 <script>
+    // 切换标签页
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+      const targetTab = tab.getAttribute('data-tab');
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(targetTab).classList.add('active');
+  });
+});
     async function loadComments() {
         try {
             // 替换为你的GitHub用户名、仓库名称和Issue编号

@@ -233,13 +233,3 @@ switchbutton.addEventListener('click', function () {
   }
 });
 
-// 切换标签页
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-      const targetTab = tab.getAttribute('data-tab');
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(targetTab).classList.add('active');
-  });
-});
