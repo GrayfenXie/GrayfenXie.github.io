@@ -96,14 +96,14 @@
                 targetContent.classList.add('active');
             });
         });
-    async function loadissues(page) {
-        try {
-            // 替换为你的GitHub用户名、仓库名称和Issue编号
-            const owner = "GrayfenXie";
+        const owner = "GrayfenXie";
             const repo = "GrayfenXie.github.io";
             const issueNumber = "2"; // 替换为目标Issue的编号
             let currentPage = 1;
             const perPage = 10; // 每页加载10条评论
+    async function loadissues(page) {
+        try {
+            // 替换为你的GitHub用户名、仓库名称和Issue编号
             const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}/comments?per_page=${perPage}`);
             if (!response.ok) {
                 throw new Error(`Failed to fetch issues: ${response.statusText}`);
