@@ -22,8 +22,18 @@
         <div class="zcool">
             <a class="link" href="https://www.zcool.com.cn/u/16736676" target="_blank" name="站酷主页"></a>
         </div>
-        <ul id="works"></ul>
-        <ul id="comment-list"></ul>
+        <div class="tabs">
+            <div class="tab active" data-tab="images">图片</div>
+            <div class="tab" data-tab="comments">评论</div>
+        </div>
+        <div id="image-content" class="tab-content active">
+            <h2>图片展示</h2>
+            <ul id="works"></ul>
+        </div>
+        <div id="comment-content" class="tab-content">
+            <h2>随笔列表</h2>
+            <ul id="comment-list"></ul>
+        </div>
         <div class="loadmorepic">
             <span id="more">滚动加载更多...</span>
             <span id="nums">
