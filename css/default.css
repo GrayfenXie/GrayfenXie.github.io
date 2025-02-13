@@ -167,19 +167,19 @@ a[name]:hover::after {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: left;
+    justify-content: space-around;
 }
 
 #works li {
-    width: 33%;
+    width: 32%;
     border-radius: var(--border-radius);
     box-sizing: border-box;
     overflow: hidden;
-    padding: 10px;
     cursor: pointer;
     display: inline-block;
     position: relative;
     list-style: none;
+    margin: 6px 0;
 }
 
 #works li img {
@@ -376,8 +376,10 @@ footer {
 @media screen and (max-width: 1024px) {
 
     #works,
-    #works li {
-        width: 100%;
+    #works li,
+    #issue-list,
+    #issue-list li {
+        width: 97%;
     }
 
     #mainpart .title {
