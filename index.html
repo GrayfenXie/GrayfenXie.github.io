@@ -100,37 +100,23 @@
 
     // 调用函数加载评论
     loadComments();
+    function zhengze() {
+                            //正则
+                    // 获取包含Markdown内容的元素
+                    const content = document.getElementById('comment-list').innerText;
+
+                    // 使用正则表达式匹配Markdown图片格式
+                    const markdownImageRegex = /!\[.*?\]\((.*?)\)/g;
+
+                    // 替换为HTML的<img>标签
+                    const htmlContent = content.replace(markdownImageRegex, (match, url) => {
+                        return `<img src="${url}" alt="Image">`;
+                    });
+
+                    // 将转换后的内容插入到页面中
+                    document.getElementById('comment-list').innerHTML = htmlContent;
+    }
+    zhengze();
+
 </script>
-<!-- <script>
-    async function loadPosts() {
-            try {
-                // 替换为你的GitHub用户名和仓库名称
-                const response = await fetch('https://api.github.com/repos/GrayfenXie/GrayfenXie.github.io/issues?labels=Essay&state=open');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data from GitHub API');
-                }
-                const issues = await response.json();
-                const postList = document.getElementById('post-list');
-
-                // 清空之前的列表内容
-                postList.innerHTML = '';
-
-                // 遍历Issues数组，动态生成HTML内容
-                issues.forEach(issue => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `
-                        <a href="${issue.html_url}" target="_blank">${issue.title}</a>
-                        <p>${issue.body}</p>
-                    `;
-                    postList.appendChild(li);
-                });
-            } catch (error) {
-                console.error('Failed to load posts:', error);
-                document.getElementById('post-list').innerHTML = '<li>加载随笔失败，请稍后再试。</li>';
-            }
-        }
-
-        // 调用函数加载随笔
-        loadPosts();
-</script> -->
 </html>
