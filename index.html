@@ -102,6 +102,7 @@
     const issueNumber = "2"; // 替换为目标Issue的编号
     let currentPage = 1;
     const perPage = 10; // 每页加载10条评论
+
     async function loadissues(page) {
         try {
             // 替换为你的GitHub用户名、仓库名称和Issue编号
@@ -111,9 +112,6 @@
             }
             const issues = await response.json();
             const issueList = document.getElementById('issue-list');
-
-            // 清空之前的评论内容
-            issueList.innerHTML = '';
 
             // 遍历评论数组，动态生成HTML内容
             issues.forEach(issue => {
@@ -127,8 +125,13 @@
                         <div class="issue-date">${formattedDate}</div>
                     `;
                 issueList.appendChild(li);
-            });
-        } catch (error) {
+            }); 
+            if (comments.length < perPage) {
+                    document.getElementById('more2').style.display = 'none';
+                }
+        }
+       
+         catch (error) {
             console.error('Failed to load issues:', error);
             document.getElementById('issue-list').innerHTML = '<li>加载评论失败，请稍后再试。</li>';
         }
