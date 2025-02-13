@@ -199,6 +199,13 @@ a[name]:hover::after {
     background: #e0e0e0;
     border-radius: var(--border-radius);
     padding: 20px 40px;
+    margin: 10px 0;
+}
+#issue-list .issue-body{
+    color: var(--mainword-color);
+}
+#issue-list .issue-date{
+    color: var(--second-color);
 }
 .image-overlay {
     position: absolute;
