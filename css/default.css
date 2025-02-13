@@ -357,9 +357,7 @@ footer {
     cursor: pointer;
 }
 
-.issue-img{
-    width: 100px;
-}
+
 
 
 @media screen and (max-width: 1024px) {
@@ -378,4 +376,64 @@ footer {
         height: auto;
         padding: 6%;
     }
+}
+
+
+
+
+
+
+/*new*/
+
+
+.issue-img{
+    width: 100px;
+}
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+.tab.active {
+    background-color: #4CAF50;
+    color: white;
+}
+.tab-content {
+    display: none;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.tab-content.active {
+    display: block;
+}
+#image-list img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+#comment-list li {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+.comment-author {
+    font-weight: bold;
+    color: #007BFF;
+}
+.comment-body {
+    margin-top: 5px;
+    color: #666;
+}
+.comment-date {
+    font-size: 0.8em;
+    color: #999;
 }
