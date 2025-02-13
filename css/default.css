@@ -409,7 +409,6 @@ footer {
 .tab-content {
     display: none;
     padding: 20px;
-    border: 1px solid #ccc;
     border-radius: 5px;
 }
 .tab-content.active {

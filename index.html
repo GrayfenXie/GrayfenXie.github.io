@@ -24,7 +24,7 @@
         </div>
         <!-- <div class="tabs">
             <div class="tab active" data-tab="images">图片</div>
-            <div class="tab" data-tab="comments">评论</div>
+            <div class="tab" data-tab="issues">评论</div>
         </div>
         <div id="image-content" class="tab-content active">
             <h2>图片展示</h2>
@@ -38,17 +38,16 @@
                 </span>
             </div>
         </div>
-        <div id="comment-content" class="tab-content">
+        <div id="issue-content" class="tab-content">
             <h2>随笔列表</h2>
-            <ul id="comment-list"></ul>
+            <ul id="issue-list"></ul>
         </div> -->
 
         <div class="tabs">
             <div class="tab active" data-tab="image-content">图片</div>
-            <div class="tab" data-tab="comment-content">评论</div>
+            <div class="tab" data-tab="issue-content">随笔</div>
         </div>
         <div id="image-content" class="tab-content active">
-            <h2>图片展示</h2>
             <ul id="works"></ul>
             <div class="loadmorepic">
                 <span id="more">滚动加载更多...</span>
@@ -59,9 +58,8 @@
                 </span>
             </div>
         </div>
-        <div id="comment-content" class="tab-content">
-            <h2>评论列表</h2>
-            <ul id="comment-list"></ul>
+        <div id="issue-content" class="tab-content">
+            <ul id="issue-list"></ul>
         </div>
 
 
@@ -118,43 +116,43 @@
                 targetContent.classList.add('active');
             });
         });
-    async function loadComments() {
+    async function loadissues() {
         try {
             // 替换为你的GitHub用户名、仓库名称和Issue编号
             const owner = "GrayfenXie";
             const repo = "GrayfenXie.github.io";
             const issueNumber = "2"; // 替换为目标Issue的编号
 
-            const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}/comments`);
+            const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}/issues`);
             if (!response.ok) {
-                throw new Error(`Failed to fetch comments: ${response.statusText}`);
+                throw new Error(`Failed to fetch issues: ${response.statusText}`);
             }
-            const comments = await response.json();
-            const commentList = document.getElementById('comment-list');
+            const issues = await response.json();
+            const issueList = document.getElementById('issue-list');
 
             // 清空之前的评论内容
-            commentList.innerHTML = '';
+            issueList.innerHTML = '';
 
             // 遍历评论数组，动态生成HTML内容
-            comments.forEach(comment => {
+            issues.forEach(issue => {
                 const li = document.createElement('li');
-                    const date = new Date(comment.created_at); // 解析时间戳
+                    const date = new Date(issue.created_at); // 解析时间戳
                     const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`; // 格式化日期和时间
                     // 使用marked.js将Markdown转换为HTML
-                    const bodyHTML = marked(comment.body);
+                    const bodyHTML = marked(issue.body);
                     li.innerHTML = `
-                        <div class="comment-body">${bodyHTML}</div>
-                        <div class="comment-date">${formattedDate}</div>
+                        <div class="issue-body">${bodyHTML}</div>
+                        <div class="issue-date">${formattedDate}</div>
                     `;
-                    commentList.appendChild(li);
+                    issueList.appendChild(li);
             });
         } catch (error) {
-            console.error('Failed to load comments:', error);
-            document.getElementById('comment-list').innerHTML = '<li>加载评论失败，请稍后再试。</li>';
+            console.error('Failed to load issues:', error);
+            document.getElementById('issue-list').innerHTML = '<li>加载评论失败，请稍后再试。</li>';
         }
     }
 
     // 调用函数加载评论
-    loadComments();
+    loadissues();
 </script>
 </html>
