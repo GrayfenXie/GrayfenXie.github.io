@@ -13,6 +13,7 @@ html {
     --mainword-color: #333;
     --second-color: #9f9f9f;
     --scrollbar-color: #adb0bd;
+    --card-color:#f8fbff;
 }
 
 :root .night {
@@ -20,6 +21,7 @@ html {
     --mainword-color: #f2f2f7;
     --second-color: #979797;
     --scrollbar-color: #adb0bd;
+    --card-color:#2f3031;
 }
 
 body {
@@ -196,7 +198,7 @@ a[name]:hover::after {
 
 #issue-list li{
     width: 100%;
-    background: #e0e0e0;
+    background: var(--card-color);
     border-radius: var(--border-radius);
     padding: 20px 40px;
     margin: 10px 0;
@@ -250,15 +252,16 @@ a[name]:hover::after {
     transition: all .6s;
 }
 
-.loadmorepic:hover {
+.loadmorepic:hover{
     opacity: 1;
 }
 
-.loadmorepic:hover #more {
+.loadmorepic:hover #more ,
+.loadmorepic:hover #more2 {
     color: var(--mainword-color);
 }
 
-#more {
+#more , #more2{
     text-align: center;
     color: var(--second-color);
     margin: 20px 0;
@@ -266,16 +269,16 @@ a[name]:hover::after {
     transition: all .6s;
 }
 
-#nums .and {
+.and {
     color: #c9c9c9;
 }
 
-#nums #loadpic {
+#loadpic , #loadpic2 {
     color: var(--mainword-color);
 }
 
 
-#nums #allpic {
+#allpic , #allpic2 {
     color: #c9c9c9;
 }
 
