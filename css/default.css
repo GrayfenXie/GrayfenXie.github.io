@@ -160,7 +160,7 @@ a[name]:hover::after {
     padding: 8px 0;
 }
 
-#works {
+#works , #issue-list{
     width: 72%;
     margin: 0 auto;
     height: auto;
@@ -405,10 +405,10 @@ footer {
 .tab.active {
     color: #FFC549;
     font-weight: 600;
+    opacity: 1;
 }
 .tab-content {
     display: none;
-    padding: 20px;
     border-radius: 5px;
 }
 .tab-content.active {
