@@ -106,7 +106,7 @@
     async function loadissues(page) {
         try {
             // 替换为你的GitHub用户名、仓库名称和Issue编号
-            const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}/comments?per_page=${perPage}`);
+            const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}/comments?per_page=${perPage}&page=${page}`);
             if (!response.ok) {
                 throw new Error(`Failed to fetch issues: ${response.statusText}`);
             }
