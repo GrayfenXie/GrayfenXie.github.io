@@ -208,6 +208,7 @@ a[name]:hover::after {
 }
 #issue-list .issue-date{
     color: var(--second-color);
+    float: right;
 }
 .image-overlay {
     position: absolute;
