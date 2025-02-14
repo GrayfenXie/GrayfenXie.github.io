@@ -197,7 +197,7 @@ a[name]:hover::after {
 }
 
 #issue-list li{
-    width: 100%;
+    width: 99%;
     background: var(--card-color);
     border-radius: var(--border-radius);
     padding: 20px 40px;
