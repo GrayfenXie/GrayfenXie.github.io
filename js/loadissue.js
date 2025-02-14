@@ -44,6 +44,7 @@ async function loadissues(page) {
 
         const issueList = document.getElementById('issue-list');
 
+        issues.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         // 遍历评论数组，动态生成HTML内容
         issues.forEach(issue => {
             const li = document.createElement('li');
