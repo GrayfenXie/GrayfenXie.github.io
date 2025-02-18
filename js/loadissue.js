@@ -27,7 +27,7 @@ let totalComments = 0; // 总评论数
 
 async function loadissues(page, perPage) {
     try {
-        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}/comments?per_page=${perPage}&page=${page}&sort=created&direction=desc.`);
+        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/comments?per_page=${perPage}&page=${page}&sort=created&direction=desc.`);
         if (!response.ok) {
             throw new Error(`Failed to fetch issues: ${response.statusText}`);
         }
