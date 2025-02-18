@@ -33,6 +33,9 @@ async function loadissues(page, perPage) {
         }
         const issues = await response.json();
         // 获取评论列表容器
+        const response2 = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues`);
+        const issues2 = await response2.json();
+        allpic2.innerHTML = issues2[0].comments;
         const issueList = document.getElementById('issue-list');
         // 如果是第一页，清空现有列表
         if (page === 1) {
