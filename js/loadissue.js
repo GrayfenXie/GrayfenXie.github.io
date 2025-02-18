@@ -20,7 +20,6 @@ document.querySelectorAll('.tab').forEach(tab => {
 });
 const owner = "GrayfenXie";
 const repo = "GrayfenXie.github.io";
-// const issueNumber = "2"; // 替换为目标Issue的编号
 let maxlength = 0;
 let currentPage = 1; // 当前加载的页码
 const perPage = 10; // 每页加载10条评论
@@ -28,21 +27,17 @@ let totalComments = 0; // 总评论数
 
 async function loadissues(page, perPage) {
     try {
-        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/comments?per_page=${perPage}&page=${page}&sort=created&direction=desc.`);
+        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}/comments?per_page=${perPage}&page=${page}&sort=created&direction=desc.`);
         if (!response.ok) {
             throw new Error(`Failed to fetch issues: ${response.statusText}`);
         }
         const issues = await response.json();
         // 获取评论列表容器
         const issueList = document.getElementById('issue-list');
-
-        // issues.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-        console.log(issues);
         // 如果是第一页，清空现有列表
         if (page === 1) {
             issueList.innerHTML = '';
         }
-
         // 将新加载的评论倒序插入到列表顶部
         issues.forEach(issue => {
             const li = document.createElement('li');
@@ -55,11 +50,9 @@ async function loadissues(page, perPage) {
             `;
             issueList.appendChild(li);
         });
-
         // 更新加载状态
         totalComments += issues.length;
         document.getElementById('loadpic2').innerText = totalComments;
-
         // 如果加载的评论少于 perPage，说明已经加载完所有评论
         if (issues.length < perPage) {
             document.getElementById('more2').innerText = '已经到底啦~';
