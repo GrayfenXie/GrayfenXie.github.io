@@ -33,7 +33,7 @@ async function loadissues(page, perPage) {
         }
         const issues = await response.json();
         // 获取评论列表容器
-        const response2 = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues`);
+        const response2 = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues`);       
         const issues2 = await response2.json();
         allpic2.innerHTML = issues2[0].comments;
         const issueList = document.getElementById('issue-list');
@@ -46,11 +46,17 @@ async function loadissues(page, perPage) {
             const li = document.createElement('li');
             const date = new Date(issue.created_at);
             const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-            const bodyHTML = marked(issue.body || ''); // 确保 issue.body 是字符串
+            const options = {
+                gfm: true,
+                breaks: true,
+                smartLists: true,
+              };
+            const bodyHTML = marked(issue.body || '', options);
             li.innerHTML = `
                 <div class="issue-body">${bodyHTML}</div>
                 <div class="issue-date">${formattedDate}</div>
             `;
+            li.classList.add("aissue");
             issueList.appendChild(li);
         });
         // 更新加载状态
@@ -58,7 +64,7 @@ async function loadissues(page, perPage) {
         document.getElementById('loadpic2').innerText = totalComments;
         // 如果加载的评论少于 perPage，说明已经加载完所有评论
         if (issues.length < perPage) {
-            document.getElementById('more2').innerText = '已经到底啦~';
+            document.getElementById('more2').innerText = '加载到底部啦~';
             document.getElementById('more2').style.cursor = 'default';
         }
     } catch (error) {
