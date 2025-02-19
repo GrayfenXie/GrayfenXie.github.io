@@ -215,7 +215,7 @@ a[name]:hover::after {
     list-style-type: '👉';
     color: var(--second-color);
 }
-#issue-list .issue-body img{
+.issue-img{
     border-radius:8px;
     width: 20%;
     padding: 4px 0;
@@ -389,7 +389,6 @@ footer {
 }
 
 .issue-img{
-    width: 100px;
     display: block;
 }
 .tabs {
