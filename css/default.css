@@ -212,6 +212,7 @@ a[name]:hover::after {
 }
 #issue-list .issue-body li{
     list-style-type: '👉';
+    color: var(--second-color);
 }
 #issue-list .issue-date{
     color: var(--second-color);
