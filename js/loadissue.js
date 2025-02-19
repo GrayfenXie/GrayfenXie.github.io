@@ -1,3 +1,6 @@
+// 全局变量，用于缓存 Issue 数据
+let cachedIssues = [];
+let isLoading = false; // 防止重复加载
 // 切换标签页
 document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -16,6 +19,14 @@ document.querySelectorAll('.tab').forEach(tab => {
         // 添加active类到当前标签和内容
         tab.classList.add('active');
         targetContent.classList.add('active');
+
+        // 如果缓存中有数据，直接渲染并触发动画
+        if (cachedIssues.length > 0) {
+            renderIssues(cachedIssues);
+        } else {
+            // 如果缓存为空，加载数据
+            loadissues(currentPage, perPage);
+        }
 
         anime();
     });
@@ -91,6 +102,13 @@ async function loadissues(page, perPage) {
             li.classList.add("aissue");
             issueList.appendChild(li);
         });
+        
+        // 缓存 Issue 数据
+        cachedIssues = issues;
+
+        // 渲染 Issue 数据
+        renderIssues(issues);
+
         // 更新加载状态
         totalComments += issues.length;
         document.getElementById('loadpic2').innerText = totalComments;
@@ -104,6 +122,30 @@ async function loadissues(page, perPage) {
         document.getElementById('issue-list').innerHTML = '<li>加载评论失败，请稍后再试。</li>';
     }
 }
+
+function renderIssues(issues) {
+    const issueList = document.getElementById('issue-list');
+    issueList.innerHTML = ''; // 清空现有列表
+
+    issues.forEach(issue => {
+        const li = document.createElement('li');
+        const date = new Date(issue.created_at);
+        const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+        const options = {
+            gfm: true,
+            breaks: true,
+            smartLists: true,
+        };
+        const bodyHTML = marked(issue.body || '', options);
+        li.innerHTML = `
+            <div class="issue-body">${bodyHTML}</div>
+            <div class="issue-date">${formattedDate}</div>
+        `;
+        li.classList.add("aissue");
+        issueList.appendChild(li);
+    });
+}
+
 
 // 调用函数加载评论
 loadissues(currentPage, perPage);
