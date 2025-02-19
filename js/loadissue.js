@@ -16,8 +16,40 @@ document.querySelectorAll('.tab').forEach(tab => {
         // 添加active类到当前标签和内容
         tab.classList.add('active');
         targetContent.classList.add('active');
+
+        anime();
     });
 });
+
+function anime() {
+    const eles = document.getElementsByClassName('image-item');
+    const eles2 = document.getElementsByClassName('aissue');
+
+    // 重置动画状态
+    function resetStyles(elements) {
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.transform = 'scale(0)';
+            elements[i].style.opacity = '0';
+        }
+    }
+
+    // 触发动画
+    function triggerAnimation(elements) {
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.transform = 'scale(1)';
+            elements[i].style.opacity = '1';
+        }
+    }
+
+    resetStyles(eles);
+    resetStyles(eles2);
+
+    setTimeout(() => {
+        triggerAnimation(eles);
+        triggerAnimation(eles2);
+    }, 10);
+}
+
 const owner = "GrayfenXie";
 const repo = "GrayfenXie.github.io";
 let maxlength = 0;

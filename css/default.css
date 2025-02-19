@@ -202,6 +202,7 @@ a[name]:hover::after {
     border-radius: var(--border-radius);
     padding: 20px 40px;
     margin: 10px 0;
+    transition: all 0.6s;
 }
 #issue-list .issue-body{
     color: var(--mainword-color);
@@ -213,6 +214,11 @@ a[name]:hover::after {
 #issue-list .issue-body li{
     list-style-type: '👉';
     color: var(--second-color);
+}
+#issue-list .issue-body img{
+    border-radius:8px;
+    width: 20%;
+    padding: 4px 0;
 }
 #issue-list .issue-date{
     color: var(--second-color);
@@ -382,37 +388,6 @@ footer {
     cursor: pointer;
 }
 
-
-
-
-@media screen and (max-width: 1024px) {
-
-    #works,
-    #works li,
-    #issue-list,
-    #issue-list li {
-        width: 97%;
-    }
-
-    #mainpart .title {
-        font-size: 24px;
-        font-size: 1.75rem;
-    }
-    .modal-content {
-        width: 100%;
-        height: auto;
-        padding: 6%;
-    }
-}
-
-
-
-
-
-
-/*new*/
-
-
 .issue-img{
     width: 100px;
     display: block;
@@ -462,4 +437,29 @@ footer {
 .comment-date {
     font-size: 0.8em;
     color: #999;
+}
+
+
+@media screen and (max-width: 1024px) {
+
+    #works,
+    #works li,
+    #issue-list,
+    #issue-list li {
+        width: 97%;
+    }
+
+    #mainpart .title {
+        font-size: 24px;
+        font-size: 1.75rem;
+    }
+    .modal-content {
+        width: 100%;
+        height: auto;
+        padding: 6%;
+    }
+    .issue-img {
+        width: 100%;
+        display: block;
+    }
 }
