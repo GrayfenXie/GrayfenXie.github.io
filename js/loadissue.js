@@ -5,29 +5,26 @@ let isLoading = false; // 防止重复加载
 document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
         const targetTab = tab.getAttribute('data-tab');
-        // 确保目标内容区域存在
         const targetContent = document.getElementById(targetTab);
         if (!targetContent) {
             console.error("Target content not found:", targetTab);
             return;
         }
-
-        // 移除所有标签和内容的active类
+    
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-        // 添加active类到当前标签和内容
+    
         tab.classList.add('active');
         targetContent.classList.add('active');
-
-        // 如果缓存中有数据，直接渲染并触发动画
+    
+        // 如果缓存中有数据，直接渲染
         if (cachedIssues.length > 0) {
             renderIssues(cachedIssues);
         } else {
             // 如果缓存为空，加载数据
             loadissues(currentPage, perPage);
         }
-
+    
         anime();
     });
 });
@@ -75,6 +72,13 @@ async function loadissues(page, perPage) {
             throw new Error(`Failed to fetch issues: ${response.statusText}`);
         }
         const issues = await response.json();
+
+        // 如果加载的数据为空，直接返回
+        if (issues.length === 0) {
+            console.warn("No more issues to load.");
+            return;
+        }
+
         // 获取评论列表容器
         const response2 = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues`);       
         const issues2 = await response2.json();
@@ -117,11 +121,10 @@ async function loadissues(page, perPage) {
             document.getElementById('more2').innerText = '加载到底部啦~';
             document.getElementById('more2').style.cursor = 'unset';
             document.getElementById('more2').style.pointerEvents = "none";
-
         }
     } catch (error) {
         console.error('Failed to load issues:', error);
-        document.getElementById('issue-list').innerHTML = '<li>加载评论失败，请稍后再试。</li>';
+        document.getElementById('issue-list').innerHTML = '<li>加载随笔失败，请稍后再试。</li>';
     }
 }
 
@@ -153,14 +156,20 @@ function renderIssues(issues) {
 loadissues(currentPage, perPage);
 
 // 检查是否滚动到底部并加载更多图片
+let isFetching = false;
+
 function checkScrollPosition() {
     const nearBottomThreshold = 2; // 当距离底部2px时开始加载
     if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - nearBottomThreshold &&
-        loadedImages < imagesData.length) {
+        !isFetching) {
+        isFetching = true; // 设置标志变量
         currentPage++;
-        loadissues(currentPage, perPage);
+        loadissues(currentPage, perPage).then(() => {
+            isFetching = false; // 加载完成后重置标志变量
+        });
     }
 }
+
 // 防抖函数
 function debounce(func, delay) {
     let debounceTimer;
