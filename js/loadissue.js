@@ -115,7 +115,9 @@ async function loadissues(page, perPage) {
         // 如果加载的评论少于 perPage，说明已经加载完所有评论
         if (issues.length < perPage) {
             document.getElementById('more2').innerText = '加载到底部啦~';
-            document.getElementById('more2').style.cursor = 'default';
+            document.getElementById('more2').style.cursor = 'unset';
+            document.getElementById('more2').style.pointerEvents = "none";
+
         }
     } catch (error) {
         console.error('Failed to load issues:', error);

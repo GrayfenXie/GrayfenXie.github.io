@@ -170,6 +170,7 @@ function createImageElements(imagesArray, limit) {
       loadpic.innerHTML = imagesArray.length;
       document.getElementById('more').innerHTML = '加载到底部啦~';
       document.getElementById('more').style.cursor = 'unset';
+      document.getElementById('more').style.pointerEvents = "none";
     }, "300")
   } else {
     loadpic.innerHTML = loadnum;
