@@ -208,7 +208,9 @@ const debouncedCheckScrollPosition = debounce(checkScrollPosition, 200); // 200m
 
 // 监听滚动事件
 document.addEventListener("scroll", (event) => {
-  debouncedCheckScrollPosition();
+  if(tabType == 'image'){
+    debouncedCheckScrollPosition();
+  }
 });
 
 var more = document.getElementById("more");
@@ -234,3 +236,8 @@ switchbutton.addEventListener('click', function () {
   }
 });
 
+let tabType = 'image'
+//获取当前点击的tab
+function tabClacik (type){
+  tabType = type
+}
