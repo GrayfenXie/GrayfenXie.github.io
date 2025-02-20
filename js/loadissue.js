@@ -153,7 +153,9 @@ function renderIssues(issues) {
 
 
 // 调用函数加载评论
+document.addEventListener('DOMContentLoaded', () => {
 loadissues(currentPage, perPage);
+});
 
 // 检查是否滚动到底部并加载更多图片
 let isFetching = false;
@@ -196,3 +198,7 @@ document.getElementById('more2').addEventListener('click', () => {
     currentPage++;
     loadissues(currentPage, perPage);
 });
+
+
+1
+
