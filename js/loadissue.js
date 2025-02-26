@@ -1,64 +1,6 @@
 // 全局变量，用于缓存 Issue 数据
 let cachedIssues = [];
-let isLoading = false; // 防止重复加载
-
-// 切换标签页
-document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-        const targetTab = tab.getAttribute('data-tab');
-        const targetContent = document.getElementById(targetTab);
-        if (!targetContent) {
-            console.error("Target content not found:", targetTab);
-            return;
-        }
-
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-        tab.classList.add('active');
-        targetContent.classList.add('active');
-
-        // 如果缓存中有数据，直接渲染
-        if (cachedIssues.length > 0) {
-            renderIssues(cachedIssues);
-        } else {
-            // 如果缓存为空，加载数据
-            loadissues(currentPage, perPage);
-        }
-
-        anime();
-    });
-});
-
-function anime() {
-    const eles = document.getElementsByClassName('image-item');
-    const eles2 = document.getElementsByClassName('aissue');
-
-    // 重置动画状态
-    function resetStyles(elements) {
-        for (let i = 0; i < elements.length; i++) {
-            elements[i].style.transform = 'scale(0)';
-            elements[i].style.opacity = '0';
-        }
-    }
-
-    // 触发动画
-    function triggerAnimation(elements) {
-        for (let i = 0; i < elements.length; i++) {
-            elements[i].style.transform = 'scale(1)';
-            elements[i].style.opacity = '1';
-        }
-    }
-
-    resetStyles(eles);
-    resetStyles(eles2);
-
-    setTimeout(() => {
-        triggerAnimation(eles);
-        triggerAnimation(eles2);
-    }, 10);
-}
-
+let isLoading = false; // 防止重复加载  
 const owner = "GrayfenXie";
 const repo = "GrayfenXie.github.io";
 let maxlength = 0;
@@ -75,7 +17,6 @@ async function loadissues(page, perPage) {
                 throw new Error(`Failed to fetch issues: ${response.statusText}`);
             }
             const issues = await response.json();
-            console.log(issues.length);
 
             // 如果加载的数据为空，直接返回
             if (issues.length === 0) {
@@ -88,8 +29,6 @@ async function loadissues(page, perPage) {
             const issues2 = await response2.json();
             allpic2.innerHTML = issues2[0].comments;
             allcomments = issues2[0].comments;
-
-
             const issueList = document.getElementById('issue-list');
             // 如果是第一页，清空现有列表
             if (page === 1) {
@@ -183,26 +122,10 @@ function checkScrollPosition() {
     }
 }
 
-// 防抖函数
-function debounce(func, delay) {
-    let debounceTimer;
-    return function () {
-        const context = this;
-        const args = arguments;
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-            func.apply(context, args);
-        }, delay);
-    };
-}
-
-// 创建防抖后的滚动事件处理函数
-const debouncedCheckScrollPosition2 = debounce(checkScrollPosition, 200); // 200ms内最多执行一次
-
 // 监听滚动事件
 document.addEventListener("scroll", (event) => {
     if(tabType=="issue"){
-        debouncedCheckScrollPosition2();
+        debouncedCheckScrollPosition();
     }
 });
 

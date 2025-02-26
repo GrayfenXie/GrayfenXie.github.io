@@ -190,21 +190,6 @@ function checkScrollPosition() {
     createImageElements(imagesData, imagesPerLoad);
   }
 }
-// 防抖函数
-function debounce(func, delay) {
-  let debounceTimer;
-  return function() {
-    const context = this;
-    const args = arguments;
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-      func.apply(context, args);
-    }, delay);
-  };
-}
-
-// 创建防抖后的滚动事件处理函数
-const debouncedCheckScrollPosition = debounce(checkScrollPosition, 200); // 200ms内最多执行一次
 
 // 监听滚动事件
 document.addEventListener("scroll", (event) => {
