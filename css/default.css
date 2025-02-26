@@ -535,7 +535,11 @@ footer {
     font-size: 0.8em;
     color: #999;
 }
-
+.unlink{
+    pointer-events:none;
+    color:#939393;
+    text-decoration-line: line-through;
+}
 
 @media screen and (max-width: 1024px) {
 
