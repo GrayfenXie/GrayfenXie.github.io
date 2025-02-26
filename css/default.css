@@ -149,18 +149,37 @@ a[name]:hover::after {
     text-align: center;
     font-size: 40px;
     font-size: 2.5rem;
-    margin: 40px 0 0 0;
+    margin: 10px 0 0 0;
     color: var(--mainword-color);
     white-space: nowrap;
 }
 
-#mainpart .slogen {
+#mainpart #slogen {
     text-align: center;
     font-size: 16px;
     font-size: 1rem;
     color: var(--second-color);
-    padding: 8px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 20px;
+    position: relative; /* 为光标设置相对定位 */
+    margin-top: 6px;
 }
+
+/* 光标效果 */
+#slogen::after {    
+    content: "|"; /* 使用竖线表示光标 */
+    position: relative;
+    right: 0;
+    animation: blink-caret 0.75s step-end infinite; /* 光标闪烁动画 */
+}
+
+/* 光标闪烁动画 */
+@keyframes blink-caret {
+    from, to { opacity: 0; }
+    50% { opacity: 1; }
+}
+
 
 #works , #issue-list{
     width: 72%;
@@ -170,6 +189,71 @@ a[name]:hover::after {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+}
+.infor{
+    padding: 2.2em 0 2em 0;
+}
+.avatar{
+    position: relative;
+    width: 8rem;
+    height: 8rem;
+    margin: auto auto 20px auto;
+    padding: 4px;
+    border-radius: 50%;
+}
+
+.avatar img{
+    width: 100%;
+    height: 100;
+    border-radius: 100%;
+}
+.avatar::before{
+        content: "";
+        width: 110%;
+        height: 110%;
+        position: absolute;
+        border: 4px solid var(--second-color);;
+        left: -5%;
+        top: -5%;
+        box-sizing: border-box;
+        border-radius: 50%;
+        animation: identifier2 3s linear infinite;
+}
+.avatar::after{
+    content: "";
+    left: 2%;
+    top: 2%;
+    width: 96%;
+    height: 96%;
+    position: absolute;
+    border: 1px solid var(--second-color);
+    box-sizing: border-box;
+    border-radius: 50%;
+    animation: identifier 3s linear infinite;
+}
+@keyframes identifier {
+    0%{
+        opacity: 0;
+    }
+    50%{
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1.15);
+        opacity: 0
+    }
+}
+@keyframes identifier2 {
+    0%{
+        opacity: 0;
+    }   
+    50% {
+        opacity: 0.2;
+    }
+    100% {
+        transform: scale(1.05);
+        opacity: 0;
+    }
 }
 
 #works li {
@@ -194,6 +278,10 @@ a[name]:hover::after {
     transform: scale(0.8);
     opacity: 0;
     display: block;
+}
+
+#issue-list{
+    color: var(--second-color);
 }
 
 #issue-list .aissue{
@@ -401,9 +489,15 @@ footer {
     border-radius: 5px;
     margin: 0 20px;
     color: var(--mainword-color);
-    opacity: 0.8;
+    opacity: 0.4;
+    transition: all .6s;
+}
+.tab:hover{
+    color: var(--mainword-color);
+    opacity: 1;
 }
 .tab.active {
+    transition: none;
     color: #FFC549;
     font-weight: 600;
     opacity: 1;

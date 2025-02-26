@@ -14,17 +14,22 @@
 
 <body>
     <div id="mainpart">
-        <div class="thetitle">
-            <h1 class="title">Grayfen's Canvas</h1>
-            <button id="switch"></button>
+        <div class="infor">
+            <div  class="avatar">
+                <img src="img/avatar.png">
+            </div>  
+            <div class="thetitle">
+                <h1 class="title">Grayfen's Canvas</h1>
+                <button id="switch"></button>
+            </div>
+            <div id="slogen"></div>
         </div>
-        <div class="slogen">分享作品和设计</div>
-        <div class="zcool">
+        <!-- <div class="zcool">
             <a class="link" href="https://www.zcool.com.cn/u/16736676" target="_blank" name="站酷主页"></a>
-        </div>
+        </div> -->
         <div class="tabs">
             <div class="tab active" data-tab="image-content" onclick="tabClacik('image')">🎨 作品</div>
-            <div class="tab" data-tab="issue-content" onclick="tabClacik('issue')">👀 随笔</div>
+            <div class="tab" data-tab="issue-content" onclick="tabClacik('issue')">👀 日常</div>
         </div>
         <div id="image-content" class="tab-content active">
             <ul id="works"></ul>
@@ -39,7 +44,7 @@
         </div>
         <div id="issue-content" class="tab-content">
             <ul id="issue-list"></ul>
-            <div class="loadmorepic">
+            <div class="loadmorepic" id="loadmore">
                 <span id="more2">滚动加载更多...</span>
                 <span id="nums2">
                     <span id="loadpic2"></span>
@@ -82,4 +87,5 @@
 <script src="js/marked.min.js"></script>
 <script src="js/imagearray.js"></script>
 <script src="js/loadissue.js"></script>
+<script src="js/print.js"></script>
 </html>

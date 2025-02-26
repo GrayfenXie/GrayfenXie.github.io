@@ -131,7 +131,9 @@ async function loadissues(page, perPage) {
             }
         } catch (error) {
             console.error('Failed to load issues:', error);
+            // document.getElementById('loadmore').innerHTML = '';
             document.getElementById('issue-list').innerHTML = '<li>加载随笔失败，请稍后再试。</li>';
+            
         }
     }
 
