@@ -287,7 +287,9 @@ a[name]:hover::after {
 #issue-list{
     color: var(--second-color);
 }
-
+.failtoload{
+    padding: 20px 0;
+}
 #issue-list .aissue{
     width: 99%;
     background: var(--card-color);

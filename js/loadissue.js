@@ -131,8 +131,8 @@ async function loadissues(page, perPage) {
             }
         } catch (error) {
             console.error('Failed to load issues:', error);
-            // document.getElementById('loadmore').innerHTML = '';
-            document.getElementById('issue-list').innerHTML = '<li>加载随笔失败，请稍后再试。</li>';
+            document.getElementById('loadmore').innerHTML = '';
+            document.getElementById('issue-list').innerHTML = "<li class=failtoload>加载失败，请稍后再试</li>";
             
         }
     }
