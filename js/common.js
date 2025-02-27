@@ -1,4 +1,4 @@
-
+let currentTabType = ''; // 当前激活的标签页类型
 // 切换标签页
 document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -15,14 +15,17 @@ document.querySelectorAll('.tab').forEach(tab => {
         tab.classList.add('active');
         targetContent.classList.add('active');
 
+        currentTabType = targetTab; 
+        if (currentTabType === 'issue-content') {
         // 如果缓存中有数据，直接渲染
         if (cachedIssues.length > 0) {
             renderIssues(cachedIssues);
+            console.log(cachedIssues);
         } else {
             // 如果缓存为空，加载数据
             loadissues(currentPage, perPage);
         }
-
+    }
         anime();
     });
 });
@@ -105,6 +108,3 @@ function debounce(func, delay) {
         }, delay);
     };
 }
-// 创建防抖后的滚动事件处理函数
-const debouncedCheckScrollPosition = debounce(checkScrollPosition, 200); // 200ms内最多执行一次
-

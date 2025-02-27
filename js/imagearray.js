@@ -226,3 +226,6 @@ let tabType = 'image'
 function tabClacik (type){
   tabType = type
 }
+
+// 创建防抖后的滚动事件处理函数
+const debouncedCheckScrollPosition = debounce(checkScrollPosition, 200); // 200ms内最多执行一次

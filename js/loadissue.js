@@ -5,12 +5,15 @@ const owner = "GrayfenXie";
 const repo = "GrayfenXie.github.io";
 let maxlength = 0;
 let currentPage = 1; // 当前加载的页码
-const perPage = 10; // 每页加载10条评论
+const perPage = 5; // 每页加载10条评论
 let totalComments = 0; // 总评论数
 let allcomments = 0;
+let isFirstLoad = true;
 
 async function loadissues(page, perPage) {
-    if (totalComments==0||totalComments < allcomments) {
+    if (isLoading) return;
+    isLoading = true;
+    if (totalComments == 0 || totalComments < allcomments) {
         try {
             const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/comments?per_page=${perPage}&page=${page}&sort=created&direction=desc.`);
             if (!response.ok) {
@@ -27,12 +30,13 @@ async function loadissues(page, perPage) {
             // 获取评论列表容器
             const response2 = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues`);
             const issues2 = await response2.json();
-            allpic2.innerHTML = issues2[0].comments;
+            document.getElementById('allpic2').innerHTML = issues2[0].comments;
             allcomments = issues2[0].comments;
             const issueList = document.getElementById('issue-list');
             // 如果是第一页，清空现有列表
-            if (page === 1) {
+            if (isFirstLoad) {
                 issueList.innerHTML = '';
+                isFirstLoad = false; // 设置为 false，后续不再清空
             }
             // 将新加载的评论倒序插入到列表顶部
             issues.forEach(issue => {
@@ -54,11 +58,7 @@ async function loadissues(page, perPage) {
             });
 
             // 缓存 Issue 数据
-            cachedIssues = issues;
-
-            // 渲染 Issue 数据
-            renderIssues(issues);
-
+            cachedIssues = cachedIssues.concat(issues);
             // 更新加载状态
             totalComments += issues.length;
             document.getElementById('loadpic2').innerText = totalComments;
@@ -72,7 +72,9 @@ async function loadissues(page, perPage) {
             console.error('Failed to load issues:', error);
             document.getElementById('loadmore').innerHTML = '';
             document.getElementById('issue-list').innerHTML = "<li class=failtoload>加载失败，请稍后再试</li>";
-            
+
+        } finally {
+            isLoading = false;
         }
     }
 
@@ -81,7 +83,6 @@ async function loadissues(page, perPage) {
 function renderIssues(issues) {
     const issueList = document.getElementById('issue-list');
     issueList.innerHTML = ''; // 清空现有列表
-
     issues.forEach(issue => {
         const li = document.createElement('li');
         const date = new Date(issue.created_at);
@@ -122,10 +123,12 @@ function checkScrollPosition() {
     }
 }
 
+// 创建防抖后的滚动事件处理函数
+const debouncedCheckScrollPosition2 = debounce(checkScrollPosition, 200); // 200ms内最多执行一次
 // 监听滚动事件
 document.addEventListener("scroll", (event) => {
-    if(tabType=="issue"){
-        debouncedCheckScrollPosition();
+    if (currentTabType == "issue-content") {
+        debouncedCheckScrollPosition2();
     }
 });
 
