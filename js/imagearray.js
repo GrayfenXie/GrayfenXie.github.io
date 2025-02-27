@@ -49,17 +49,6 @@ window.onbeforeunload = function () {
   document.body.scrollTop = 0;  //非ie
 }
 
-function anime() {
-  var eles = document.getElementsByClassName('image-item');
-  var lxl = 1
-  setTimeout(() => {
-    for (var i = 0; i < eles.length; i++) {
-      eles[i].style.transform = 'scale(' + lxl + ')'
-      eles[i].style.opacity = '1'
-    }
-  }, 20)
-}
-
 //查看原图
 var modal = document.getElementById('myModal');
 var img = document.getElementById('myImg');

@@ -278,7 +278,7 @@ a[name]:hover::after {
     border-radius: var(--border-radius);
     object-fit: cover;
     object-position: top;
-    transition: all 0.6s;
+    transition: all 1s;
     transform: scale(0.8);
     opacity: 0;
     display: block;
@@ -296,7 +296,7 @@ a[name]:hover::after {
     border-radius: var(--border-radius);
     padding: 20px 40px;
     margin: 10px 0;
-    transition: all 0.6s;
+    transition: all 1s;
 }
 #issue-list .issue-body{
     color: var(--mainword-color);
@@ -375,7 +375,7 @@ a[name]:hover::after {
     color: var(--second-color);
     margin: 20px 0;
     cursor: pointer;
-    transition: all .6s;
+    transition: all 1s;
 }
 
 .and {
@@ -449,7 +449,7 @@ footer {
 
 #img01 {
     opacity: 0;
-    transition: all .6s;
+    transition: all 1s;
 }
 
 #caption {
@@ -471,7 +471,7 @@ footer {
     font-size: 40px;
     font-size: 2.5rem;
     font-weight: bold;
-    transition: 0.3s;
+    transition: 1s;
     z-index: 2;
 }
 

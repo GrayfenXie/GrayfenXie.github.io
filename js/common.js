@@ -17,12 +17,6 @@ document.querySelectorAll('.tab').forEach(tab => {
         targetContent.classList.add('active');
 
         currentTabType = targetTab;
-        // if (currentTabType === 'issue-content') {
-        //     // 如果缓存中有数据，直接渲染第一页
-        //     if (window.cachedIssues && window.cachedIssues.length > 0) {
-        //         renderIssues(1, window.perPage);
-        //     }
-        // }
         anime();
     });
 });
@@ -30,7 +24,6 @@ document.querySelectorAll('.tab').forEach(tab => {
 function anime() {
     const eles = document.getElementsByClassName('image-item');
     const eles2 = document.getElementsByClassName('aissue');
-
     // 重置动画状态
     function resetStyles(elements) {
         for (let i = 0; i < elements.length; i++) {
