@@ -17,12 +17,12 @@ document.querySelectorAll('.tab').forEach(tab => {
         targetContent.classList.add('active');
 
         currentTabType = targetTab;
-        if (currentTabType === 'issue-content') {
-            // 如果缓存中有数据，直接渲染第一页
-            if (window.cachedIssues && window.cachedIssues.length > 0) {
-                renderIssues(1, window.perPage);
-            }
-        }
+        // if (currentTabType === 'issue-content') {
+        //     // 如果缓存中有数据，直接渲染第一页
+        //     if (window.cachedIssues && window.cachedIssues.length > 0) {
+        //         renderIssues(1, window.perPage);
+        //     }
+        // }
         anime();
     });
 });

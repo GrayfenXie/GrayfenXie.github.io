@@ -55,18 +55,19 @@ function renderIssues(page, perPage, isAppend = false) {
         `;
         li.classList.add("aissue");
         issueList.appendChild(li); // 将新内容追加到列表中
-        const linum = document.getElementById('issue-list').getElementsByTagName('li').length;
-        document.getElementById('loadpic2').innerText = linum;
+        // 计算当前显示的条目数
+        const visibleIssues = start + pageIssues.length;
+        document.getElementById('loadpic2').innerText = visibleIssues;
     });
 
     // 更新“加载更多”按钮状态
     const moreButton = document.getElementById('more2');
     if (start + perPage >= window.cachedIssues.length) {
-        moreButton.innerText = '没有更多了~';
+        moreButton.innerText = '加载到底部啦~';
         moreButton.style.cursor = 'unset';
         moreButton.style.pointerEvents = "none";
     } else {
-        moreButton.innerText = '加载更多';
+        moreButton.innerText = '滚动加载更多...';
         moreButton.style.cursor = 'pointer';
         moreButton.style.pointerEvents = "auto";
     }
@@ -99,6 +100,7 @@ document.addEventListener("scroll", (event) => {
 // 添加“加载更多”按钮的事件监听
 document.getElementById('more2').addEventListener('click', () => {
     window.currentPage++;
+    window.currentIssuePage = window.currentPage; // 更新当前页码
     renderIssues(window.currentPage, window.perPage, true); // 追加内容
 });
 
