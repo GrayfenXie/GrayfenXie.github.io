@@ -1,4 +1,5 @@
 let currentTabType = ''; // 当前激活的标签页类型
+
 // 切换标签页
 document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -15,17 +16,13 @@ document.querySelectorAll('.tab').forEach(tab => {
         tab.classList.add('active');
         targetContent.classList.add('active');
 
-        currentTabType = targetTab; 
+        currentTabType = targetTab;
         if (currentTabType === 'issue-content') {
-        // 如果缓存中有数据，直接渲染
-        if (cachedIssues.length > 0) {
-            renderIssues(cachedIssues);
-            console.log(cachedIssues);
-        } else {
-            // 如果缓存为空，加载数据
-            loadissues(currentPage, perPage);
+            // 如果缓存中有数据，直接渲染第一页
+            if (window.cachedIssues && window.cachedIssues.length > 0) {
+                renderIssues(1, window.perPage);
+            }
         }
-    }
         anime();
     });
 });
@@ -59,7 +56,7 @@ function anime() {
     }, 10);
 }
 
-//打印机动画
+// 打印机动画
 document.addEventListener("DOMContentLoaded", function () {
     const text = "分享作品和日常"; // 要打印的文本
     const sloganElement = document.getElementById("slogen");
@@ -92,8 +89,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     setTimeout(() => {
-        typeWriter(); 
-    },500);// 启动动画
+        typeWriter();
+    }, 500); // 启动动画
 });
 
 // 防抖函数
