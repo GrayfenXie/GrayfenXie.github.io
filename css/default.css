@@ -295,7 +295,7 @@ a[name]:hover::after {
     background: var(--card-color);
     border-radius: var(--border-radius);
     padding: 20px 40px;
-    margin: 10px 0;
+    margin: 6px 0;
     transition: all 1s;
 }
 #issue-list .issue-body{
