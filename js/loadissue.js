@@ -3,14 +3,12 @@ window.cachedIssues = []; // 缓存所有 Issue 数据
 window.currentPage = 1; // 当前页码
 window.perPage = 5; // 每页显示 5 条
 window.isLoading = false; // 防止重复加载
-
 const owner = "GrayfenXie";
 const repo = "GrayfenXie.github.io";
 
 async function loadAllIssues() {
     if (window.isLoading) return;
     window.isLoading = true;
-
     try {
         const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/comments?per_page=100&sort=created&direction=desc`);
         if (!response.ok) {
@@ -30,15 +28,12 @@ async function loadAllIssues() {
 
 function renderIssues(page, perPage, isAppend = false) {
     const issueList = document.getElementById('issue-list');
-
     const start = (page - 1) * perPage;
     const end = start + perPage;
     const pageIssues = window.cachedIssues.slice(start, end);
-
     if (!isAppend) {
         issueList.innerHTML = ''; // 如果不是追加内容，则清空现有列表
     }
-
     pageIssues.forEach(issue => {
         const li = document.createElement('li');
         const date = new Date(issue.created_at);
@@ -58,6 +53,7 @@ function renderIssues(page, perPage, isAppend = false) {
         // 计算当前显示的条目数
         const visibleIssues = start + pageIssues.length;
         document.getElementById('loadpic2').innerText = visibleIssues;
+        anime();
     });
 
     // 更新“加载更多”按钮状态
@@ -75,7 +71,6 @@ function renderIssues(page, perPage, isAppend = false) {
 
 // 检查是否滚动到底部并加载更多
 let isFetching = false;
-
 function checkScrollPosition() {
     const nearBottomThreshold = 2; // 当距离底部2px时开始加载
     if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - nearBottomThreshold &&
