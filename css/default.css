@@ -11,9 +11,11 @@ html {
 :root {
     --bg-color: #F3F5FC;
     --mainword-color: #333;
-    --second-color: #9f9f9f;
+    --second-color: #9f9f9f;    
     --scrollbar-color: #adb0bd;
-    --card-color:#fcfdff;;
+    --card-color:#fcfdff;
+    --light-color:#fda437;
+    --border-radius: 8px;
 }
 
 :root .night {
@@ -50,10 +52,6 @@ ul,
 ol,
 li {
     list-style: none;
-}
-
-:root {
-    --border-radius: 4px;
 }
 
 img {
@@ -413,7 +411,7 @@ footer {
 }
 
 .links a:hover {
-    color: #ED7839;
+    color: var(--light-color);
 }
 
 /* The Modal (background) */
@@ -504,7 +502,7 @@ footer {
 }
 .tab.active {
     transition: none;
-    color: #FFC549;
+    color: var(--light-color);
     font-weight: 600;
     opacity: 1;
 }
