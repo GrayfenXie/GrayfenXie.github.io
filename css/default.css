@@ -188,7 +188,7 @@ a[name]:hover::after {
     justify-content: space-around;
 }
 .infor{
-    padding: 2.2em 0 2em 0;
+    padding: 2.2em 0 1.2em 0;
 }
 .avatar{
     position: relative;
@@ -488,13 +488,14 @@ footer {
     justify-content: center;
 }
 .tab {
-    padding: 10px 20px;
+    padding: 10px 28px;
     cursor: pointer;
     border-radius: 5px;
-    margin: 0 20px;
+    margin: 12px;
     color: var(--mainword-color);
-    opacity: 0.4;
+    opacity: 0.5;
     transition: all 1s;
+    background: var(--card-color);
 }
 .tab:hover{
     color: var(--mainword-color);
