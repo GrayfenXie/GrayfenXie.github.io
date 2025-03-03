@@ -154,12 +154,13 @@ function createImageElements(imagesArray, limit) {
   });
   loadedImages += limit;
   loadnum = loadnum + limit;
+  const moreButton = document.getElementById('more');
   if (loadedImages >= imagesArray.length) {
     setTimeout(() => {
       loadpic.innerHTML = imagesArray.length;
-      document.getElementById('more').innerHTML = '加载到底部啦~';
-      document.getElementById('more').style.cursor = 'unset';
-      document.getElementById('more').style.pointerEvents = "none";
+      moreButton.innerHTML = '加载到底部啦~';
+      moreButton.style.cursor = 'unset';
+      moreButton.style.pointerEvents = "none";
     }, "300")
   } else {
     loadpic.innerHTML = loadnum;
@@ -190,24 +191,6 @@ document.addEventListener("scroll", (event) => {
 var more = document.getElementById("more");
 more.addEventListener("click", function () {
   createImageElements(imagesData, imagesPerLoad);
-});
-
-
-var flag = true;
-var bgImage1 = 'url("img/sun.svg")'; // 注意路径是相对于HTML文件的
-var bgImage2 = 'url("img/moon.svg")';
-var switchbutton = document.getElementById('switch');
-switchbutton.addEventListener('click', function () {
-  if (flag) {
-    document.body.classList.add("night");
-    switchbutton.style.backgroundImage = bgImage2;
-    flag = false;
-  }
-  else {
-    document.body.classList.remove("night");
-    switchbutton.style.backgroundImage = bgImage1;
-    flag = true;
-  }
 });
 
 let tabType = 'image'

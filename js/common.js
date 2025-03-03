@@ -98,3 +98,21 @@ function debounce(func, delay) {
         }, delay);
     };
 }
+
+//模式切换
+var flag = true;
+var bgImage1 = 'url("img/sun.svg")'; // 注意路径是相对于HTML文件的
+var bgImage2 = 'url("img/moon.svg")';
+var switchbutton = document.getElementById('switch');
+switchbutton.addEventListener('click', function () {
+  if (flag) {
+    document.body.classList.add("night");
+    switchbutton.style.backgroundImage = bgImage2;
+    flag = false;
+  }
+  else {
+    document.body.classList.remove("night");
+    switchbutton.style.backgroundImage = bgImage1;
+    flag = true;
+  }
+});
