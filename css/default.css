@@ -14,7 +14,7 @@ html {
     --second-color: #9f9f9f;    
     --scrollbar-color: #adb0bd;
     --card-color:#fcfdff;
-    /* --light-color:#fda437; */
+    --footer-color:#eeeff6;
     --border-radius: 8px;
     --theme-color:#FFBF37;
 }
@@ -25,6 +25,7 @@ html {
     --second-color: #979797;
     --scrollbar-color: #adb0bd;
     --card-color:#2f3031;
+    --footer-color:#0b0b0b;
     --theme-color:#B5F3FF;
 }
 
@@ -81,6 +82,10 @@ a[name]:hover::after {
     top: -80%;
     left: -50%;
     transform: translate(0, 0);
+}
+
+.clear{
+    clear: both;
 }
 
 .no-scroll {
@@ -390,29 +395,95 @@ a[name]:hover::after {
 #allpic , #allpic2 {
     color: #c9c9c9;
 }
+footer{
+    background: var(--footer-color);
+}
 
-footer {
+.footer-box {
     text-align: center;
-    width: 100%;
+    width: 72%;
+    margin: 0 auto;
     padding: 16px 0;
-    color: var(--second-color);
+    
     font-size: 0.875rem;
     font-size: 14px;
+}
+.linktitle{
+    font-size: 1.2em;
+    color: var(--second-color);
+    text-align: left;
 }
 
 .links{
     font-size: 0.875rem;
     font-size: 14px;
+    padding: 10px;
 }
 
-.links a {
-    transition: all .2s;
-    padding: 0 4px;
-    font-size: 0.875rem;
-    font-size: 14px;
+.links .alink {
+    display: block;
+    background-color: var(--card-color);
+    padding: 16px;
+    margin: 12px;
+    border-radius: var(--border-radius);
+    transition: all .6s;
+    width: 15%;
+} 
+.unlink{
+    pointer-events:none;
+    color:#939393;
+    text-decoration-line: line-through;
+    opacity: 0.6;
 }
 
-.links a:hover {
+.links .alink:hover{
+    background-color: var(--theme-color);
+    color: var(--bg-color);
+}
+.alllink{
+    margin: 0 -1%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.links .alink .linkbox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+.links .alink .linkbox .description{
+    text-align: left;
+    padding-left: 12px;
+} 
+
+.links .alink .linkpic{
+    width: 3rem;
+    border-radius: var(--border-radius);
+}
+
+.links .alink .blog-name{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.links .alink .blog-title{
+    padding-top: 2px;
+}
+
+.copyright{
+    margin: 0 auto;
+    width: 50%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    color: var(--mainword-color);
+}
+.copyright a{
+    transition: all .6s;
+}
+
+.copyright a:hover {
     color: var(--theme-color);
 }
 
@@ -537,11 +608,6 @@ footer {
 .comment-date {
     font-size: 0.8em;
     color: #999;
-}
-.unlink{
-    pointer-events:none;
-    color:#939393;
-    text-decoration-line: line-through;
 }
 
 @media screen and (max-width: 1024px) {
