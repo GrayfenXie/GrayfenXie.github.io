@@ -1,5 +1,13 @@
 let currentTabType = ''; // 当前激活的标签页类型
 
+// 页面加载时初始化当前标签页类型
+document.addEventListener('DOMContentLoaded', function () {
+    const firstTab = document.querySelector('.tab');
+    if (firstTab) {
+        currentTabType = firstTab.getAttribute('data-tab');
+    }
+});
+
 // 切换标签页
 document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -7,6 +15,11 @@ document.querySelectorAll('.tab').forEach(tab => {
         const targetContent = document.getElementById(targetTab);
         if (!targetContent) {
             console.error("Target content not found:", targetTab);
+            return;
+        }
+
+        // 如果点击的是当前激活的标签页，不执行任何操作
+        if (targetTab === currentTabType) {
             return;
         }
 
