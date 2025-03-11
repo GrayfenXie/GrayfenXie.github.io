@@ -1,7 +1,7 @@
 // 将全局变量挂载到 window 对象上，避免重复声明
 window.cachedIssues = []; // 缓存所有 Issue 数据
 window.currentPage = 1; // 当前页码
-window.perPage = 5; // 每页显示 5 条
+window.perPage = 10; // 每页显示 10 条
 window.isLoading = false; // 防止重复加载
 const owner = "GrayfenXie";
 const repo = "GrayfenXie.github.io";
