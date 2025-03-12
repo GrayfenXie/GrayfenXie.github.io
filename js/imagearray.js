@@ -60,8 +60,9 @@ var originalScrollPosition = 0; // 用于存储原始滚动位置
 
 function opens(self) {
   modal.style.display = "block";
-  modalImg.src = self.previousElementSibling.src;
-  modalImg.alt = self.previousElementSibling.alt;
+  console.log(self);
+  modalImg.src = self.firstElementChild.src;
+  modalImg.alt = self.firstElementChild.alt;
   // 记录当前滚动位置
   originalScrollPosition = window.scrollY || document.documentElement.scrollTop;
   // 添加禁止滚动的类
@@ -148,7 +149,7 @@ function createImageElements(imagesArray, limit) {
     li.appendChild(img);
     li.appendChild(overlay);
     container.appendChild(li);
-    overlay.addEventListener('click', function () {
+    li.addEventListener('click', function () {
       opens(this);
     });
   });

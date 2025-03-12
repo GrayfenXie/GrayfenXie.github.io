@@ -275,6 +275,7 @@ a[name]:hover::after {
     position: relative;
     list-style: none;
     margin: 6px 0;
+    text-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
 }
 
 #works li img {
@@ -326,7 +327,7 @@ a[name]:hover::after {
 .image-overlay {
     position: absolute;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 0);
@@ -402,7 +403,6 @@ footer{
     width: 72%;
     margin: 0 auto;
     padding: 16px 0;
-    
     font-size: 0.875rem;
     font-size: 14px;
 }
