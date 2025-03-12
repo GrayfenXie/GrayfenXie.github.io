@@ -423,7 +423,7 @@ footer{
 .links .alink {
     display: block;
     background-color: var(--card-color);
-    padding: 16px;
+    padding: 16px 0;
     margin: 12px;
     border-radius: var(--border-radius);
     transition: all .6s;
