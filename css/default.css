@@ -481,10 +481,14 @@ footer{
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-around;
-    color: var(--mainword-color);
+}
+.copyright .information{
+    padding: 4px 0;
+    color: var(--second-color);
 }
 .copyright a{
     transition: all .6s;
+    color: var(--second-color);
 }
 
 .copyright a:hover {
