@@ -438,6 +438,8 @@ footer{
 
 .links .alink:hover{
     background-color: var(--theme-color);
+}
+.links .alink:hover .blog-title , .links .alink:hover .blog-name {
     color: var(--bg-color);
 }
 .alllink{
@@ -455,6 +457,7 @@ footer{
 .links .alink .linkbox .description{
     text-align: left;
     padding-left: 12px;
+    word-break: break-all;
 } 
 
 .links .alink .linkpic{
@@ -463,17 +466,20 @@ footer{
 }
 
 .links .alink .blog-name{
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: bold;
+    transition: all .6s;
 }
 
 .links .alink .blog-title{
     padding-top: 2px;
+    color: var(--second-color);
+    transition: all .6s;
 }
 
 .copyright{
     margin: 0 auto;
-    width: 50%;
+    width: 60%;
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-around;
@@ -632,6 +638,28 @@ footer{
     }
     .issue-img {
         width: 100%;
+        display: block;
+    }
+    .footer-box{
+        width: 97%;
+    }
+    .linktitle{
+        margin-bottom: 12px;
+    }
+    .links .alink{
+        margin: 0;
+    }
+    .links .alink .linkpic {
+        width: 2rem;
+    }
+    .links .alink .linkbox {
+        display: block;
+    }
+    .links .alink .linkbox .description{
+        display: none;
+    }
+    .copyright {
+        width: 97%;
         display: block;
     }
 }
