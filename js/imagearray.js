@@ -197,7 +197,7 @@ more.addEventListener("click", function () {
 let tabType = 'image'
 //获取当前点击的tab
 function tabClacik (type){
-  tabType = type
+  tabType = type;
 }
 
 // 创建防抖后的滚动事件处理函数

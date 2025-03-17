@@ -28,8 +28,9 @@
             <a class="link" href="https://www.zcool.com.cn/u/16736676" target="_blank" name="站酷主页"></a>
         </div> -->
         <div class="tabs">
-            <div class="tab active" data-tab="image-content" onclick="tabClacik('image')">🎨 作品</div>
-            <div class="tab" data-tab="issue-content" onclick="tabClacik('issue')">👀 日常</div>
+            <div class="tab active" data-tab="image-content">🎨 作品</div>
+            <div class="tab" data-tab="issue-content">👀 日常</div>
+            <div class="tab" data-tab="message-content">📢 留言[测试版]</div>
         </div>
         <div id="image-content" class="tab-content active">
             <ul id="works"></ul>
@@ -53,7 +54,27 @@
                 </span>
             </div>
         </div>
-
+        <div id="message-content" class="tab-content">
+            <ul id="message-list">
+                <form id="my-form" action="https://formspree.io/f/mvgkgbjw" method="POST">
+                    <div class="e-name">
+                        <div class="form-title">姓名：</div>
+                        <input type="text" placeholder="可填可不填" name="id" />
+                    </div>
+                    <div class="e-content">
+                        <div class="form-title">留言：</div>
+                        <div class="textarea-container">
+                            <textarea id="myTextarea" placeholder="别写太多字" name="message"></textarea>
+                            <div class="wordnums">
+                                <span id="currentChars">0</span>/<span id="remainingChars">20</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="formbutton" id="my-form-button">发送</button>
+                    <p id="my-form-status"></p>
+                </form>
+            </ul>
+        </div>
 
     </div>
     <!-- The Modal -->
@@ -144,5 +165,6 @@
 <script src="js/common.js"></script>
 <script src="js/imagearray.js"></script>
 <script src="js/loadissue.js"></script>
+<script src="js/message.js"></script>
 
 </html>
