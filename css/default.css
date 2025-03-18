@@ -670,7 +670,7 @@ footer{
     width: 99%;
     background: var(--card-color);
     border-radius: var(--border-radius);
-    padding: 0 4%;
+    padding: 0 4% 20px 4%;
     margin: 6px 0 20px 0;
     transition: all 1s;
     text-align: center;
@@ -691,12 +691,16 @@ footer{
 }
 #my-form-button{
     background: var(--footer-color);
-    margin: 16px 0 36px 0;
+    color: var(--second-color);
+    margin: 16px 0;
     opacity: 1;
 }
 #my-form-button:hover{
     background: var(--theme-color);
     color: white;
+}
+#my-form-status{
+    color: var(--second-color);
 }
 .wordnums{
     position: relative;
@@ -718,7 +722,6 @@ footer{
     user-select: none; /* 禁止选中文字 */
     color: var(--mainword-color);
 }
-
 @media screen and (max-width: 1024px) {
 
     #works,

@@ -12,19 +12,19 @@ async function handleSubmit(event) {
         }
     }).then(response => {
         if (response.ok) {
-            status.innerHTML = "Thanks for your submission!";
+            status.innerHTML = "发送成功";
             form.reset()
         } else {
             response.json().then(data => {
                 if (Object.hasOwn(data, 'errors')) {
                     status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
                 } else {
-                    status.innerHTML = "Oops! There was a problem submitting your form"
+                    status.innerHTML = "emmm好像出了点状况"
                 }
             })
         }
     }).catch(error => {
-        status.innerHTML = "Oops! There was a problem submitting your form"
+        status.innerHTML = "emmm好像出了点状况"
     });
 }
 form.addEventListener("submit", handleSubmit)
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const textarea = document.getElementById('myTextarea');
     const currentChars = document.getElementById('currentChars'); // 当前字数显示
     const remainingChars = document.getElementById('remainingChars'); // 剩余字数显示
-    const maxCharacters = 20; // 设置最大字数
+    const maxCharacters = 100; // 设置最大字数
 
     // 使用防抖逻辑延迟处理输入事件
     let debounceTimeout;
