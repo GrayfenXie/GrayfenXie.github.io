@@ -4,28 +4,27 @@ async function handleSubmit(event) {
     event.preventDefault();
     var status = document.getElementById("my-form-status");
     var data = new FormData(event.target);
-    fetch(event.target.action, {
-        method: form.method,
-        body: data,
-        headers: {
-            'Accept': 'application/json'
-        }
-    }).then(response => {
-        if (response.ok) {
-            status.innerHTML = "发送成功";
-            form.reset()
-        } else {
-            response.json().then(data => {
-                if (Object.hasOwn(data, 'errors')) {
-                    status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
-                } else {
-                    status.innerHTML = "emmm好像出了点状况"
-                }
-            })
-        }
-    }).catch(error => {
-        status.innerHTML = "emmm好像出了点状况"
-    });
+    var myTextarea = document.getElementById('myTextarea').value;
+    var messagebox = document.getElementById('messagebox').value;
+    if (myTextarea.length == 0 || messagebox.length == 0) {
+        status.innerHTML = "内容不能为空"
+    }
+    else {
+        fetch(event.target.action, {
+            method: form.method,
+            body: data,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok && myTextarea.length != 0) {
+                status.innerHTML = "发送成功";
+                form.reset()
+            }
+        }).catch(error => {
+            status.innerHTML = "emmm好像出了点状况"
+        });
+    }
 }
 form.addEventListener("submit", handleSubmit)
 

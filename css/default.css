@@ -690,17 +690,17 @@ footer{
     height: 160px;
 }
 #my-form-button{
-    background: var(--footer-color);
-    color: var(--second-color);
+    background: var(--theme-color);
+    color: var(--card-color);
     margin: 16px 0;
     opacity: 1;
 }
 #my-form-button:hover{
-    background: var(--theme-color);
-    color: white;
+    transition: all 0.2s;
+    filter: brightness(110%);
 }
 #my-form-status{
-    color: var(--second-color);
+    color: var(--theme-color);
 }
 .wordnums{
     position: relative;
@@ -724,18 +724,12 @@ footer{
 }
 @media screen and (max-width: 1024px) {
 
-    #works,
-    #works li{
-        width: 97%;
-    }
-    #issue-list,
-    #issue-list li {
+    #works , #issue-list , #message-list{
         width: 96%;
     }
-    #message-list{
-        width: 96%;
+    #works li , #issue-list .aissue{
+        width: 100%;
     }
-
     #mainpart .title {
         font-size: 24px;
         font-size: 1.75rem;
@@ -771,5 +765,17 @@ footer{
     .copyright {
         width: 97%;
         display: block;
+    }
+    .tabs{
+        width: 96%;
+        margin: 0 auto;
+        justify-content: space-around;
+    }
+    .tab{
+        margin: 12px 0;
+        padding: 10px 0;
+        width: 32%;
+        text-align: center;
+        padding: auto 0;
     }
 }
