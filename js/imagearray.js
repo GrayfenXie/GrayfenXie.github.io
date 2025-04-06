@@ -11,7 +11,7 @@ const imagesData = [
   { src: 'https://cdn.grayfen.cn/pinkspring.png', alt: '春日迟' },
   { src: 'https://cdn.grayfen.cn/ridethebike.png', alt: '追风少年' },
   { src: 'https://cdn.grayfen.cn/thelittlepark.png', alt: '未知的相遇' },
-  { src: 'https://cdn.grayfen.cn/camera.png', alt: '秋日相片' },
+  { src: 'https://cdn.grayfen.cn/fallcamera.png', alt: '秋日相片' },
   { src: 'https://cdn.grayfen.cn/adventure.png', alt: '命运石之门' },
   { src: 'https://cdn.grayfen.cn/rowboat.png', alt: '江上泛舟' },
   { src: 'https://cdn.grayfen.cn/snowmoon.png', alt: '月光' },
