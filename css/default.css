@@ -739,6 +739,9 @@ footer{
         height: auto;
         padding: 6%;
     }
+    #my-form{
+        width: 100%;
+    }
     .issue-img {
         width: 100%;
         display: block;
