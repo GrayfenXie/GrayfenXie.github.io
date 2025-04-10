@@ -5,6 +5,7 @@ window.perPage = 10; // 每页显示 10 条
 window.isLoading = false; // 防止重复加载
 const owner = "GrayfenXie";
 const repo = "GrayfenXie.github.io";
+const myUsername = "GrayfenXie";
 
 async function loadAllIssues() {
     if (window.isLoading) return;
@@ -14,10 +15,11 @@ async function loadAllIssues() {
         if (!response.ok) {
             throw new Error(`Failed to fetch issues: ${response.statusText}`);
         }
-        const issues = await response.json();
-        window.cachedIssues = issues; // 缓存所有 Issue 数据
+        const comments = await response.json();
+        const myComments = comments.filter(comment => comment.user.login === myUsername);
+        window.cachedIssues = myComments; // 缓存所有 Issue 数据
         renderIssues(1, window.perPage); // 渲染第一页
-        document.getElementById('allpic2').innerHTML = issues.length;
+        document.getElementById('allpic2').innerHTML = myComments.length;
     } catch (error) {
         console.error('Failed to load issues:', error);
         document.getElementById('issue-list').innerHTML = "<li class=failtoload>加载失败，请稍后再试</li>";

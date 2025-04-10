@@ -452,10 +452,10 @@ footer{
     display: block;
     background-color: var(--card-color);
     padding: 16px;
-    margin: 12px;
+    margin: 8px 12px;
     border-radius: var(--border-radius);
     transition: all .6s;
-    width: 15%;
+    width: 24%;
 } 
 .unlink{
     pointer-events:none;
@@ -470,7 +470,7 @@ footer{
 .links .alink:hover .blog-title , .links .alink:hover .blog-name {
     color: var(--bg-color);
 }
-.alllink{
+.alllink .row{
     margin: 0 -1%;
     display: flex;
     justify-content: space-evenly;
@@ -755,15 +755,19 @@ footer{
     .links .alink{
         margin: 0;
         padding: 16px 0;
+        width: 23%;
     }
     .links .alink .linkpic {
-        width: 2rem;
+        width: 2.5rem;
     }
     .links .alink .linkbox {
         display: block;
     }
     .links .alink .linkbox .description{
         display: none;
+    }
+    .alllink .row {
+        margin: 2% -2%;
     }
     .copyright {
         width: 97%;
