@@ -792,11 +792,14 @@ footer{
 }
 @media screen and (max-width: 1024px) {
 
-    #works , #issue-list , #message-list{
+    #works , #issue-list , #message-list ,  #portfolio-list{
         width: 96%;
     }
-    #works li , #issue-list .aissue{
+    #works li , #issue-list .aissue , .portfolio-item{
         width: 100%;
+    }
+    .portfolio-item{
+            margin: 6px 0;
     }
     #mainpart .title {
         font-size: 24px;
