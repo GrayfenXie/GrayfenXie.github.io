@@ -38,6 +38,7 @@ function anime() {
     const eles = document.getElementsByClassName('image-item');
     const eles2 = document.getElementsByClassName('aissue');
     const eles3 = document.getElementById('my-form');
+    const eles4 = document.getElementsByClassName('portfolio-item');
     // 重置动画状态
     function resetStyles(elements) {
         for (let i = 0; i < elements.length; i++) {
@@ -56,14 +57,16 @@ function anime() {
 
     resetStyles(eles);
     resetStyles(eles2);
-    eles3.style.transform = 'scale(0)';
-    eles3.style.opacity = '0';
+    resetStyles(eles4);
+    // eles3.style.transform = 'scale(0)';
+    // eles3.style.opacity = '0';
 
     setTimeout(() => {
         triggerAnimation(eles);
         triggerAnimation(eles2);
-        eles3.style.transform = 'scale(1)';
-        eles3.style.opacity = '1';
+        triggerAnimation(eles4);
+        // eles3.style.transform = 'scale(1)';
+        // eles3.style.opacity = '1';
     }, 10);
 }
 

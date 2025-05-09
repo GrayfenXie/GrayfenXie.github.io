@@ -319,6 +319,9 @@ a[name]:hover::after {
     list-style: none;
     margin: 6px 0;
     text-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
+    transform: scale(0.8);
+    opacity: 0;
+    transition: all 1s;
 }
 .portfolio-item img {
     width: 100%;
@@ -333,6 +336,9 @@ a[name]:hover::after {
 .portfolio-item:hover img {
     transform: scale(1.1) !important;
     transition: all 1s cubic-bezier(.215, .61, .355, 1);
+}
+.portfolio-item:hover .image-overlay {
+    opacity: 1;
 }
 
 #works li img {
