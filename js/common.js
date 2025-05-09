@@ -150,6 +150,7 @@ messageboxbutton.onclick = function () {
     originalScrollPosition = window.scrollY || document.documentElement.scrollTop;
 //   // 将页面滚动位置设置为之前记录的位置，以避免页面跳转
     document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
     document.body.style.top = -originalScrollPosition + 'px';
   flag2 = true;
 }
@@ -168,6 +169,7 @@ span.onclick = function () {
     // 恢复body的默认样式
     document.body.style.position = '';
     document.body.style.top = '';
+    document.body.style.width = 'auto';
     // 恢复原始滚动位置
     window.scrollTo(0, originalScrollPosition);
   }, "100");
