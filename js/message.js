@@ -20,6 +20,10 @@ async function handleSubmit(event) {
             if (response.ok && myTextarea.length != 0) {
                 status.innerHTML = "发送成功";
                 form.reset()
+                currentChars.textContent = 0;
+                setTimeout(() => {
+                    status.innerHTML = "";
+                }, 3000);
             }
         }).catch(error => {
             status.innerHTML = "emmm好像出了点状况"

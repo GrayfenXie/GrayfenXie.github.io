@@ -17,6 +17,9 @@
         <div class="infor">
             <div class="avatar">
                 <img src="img/avatar.png">
+                <button id="Messageboard" title="私信">
+                    <img src="img/send-plane-fill.svg" id="messageboxbutton">
+                </button>
             </div>
             <div class="thetitle">
                 <h1 class="title">Grayfen's Canvas</h1>
@@ -52,27 +55,6 @@
                 </span>
             </div>
         </div>
-        <div id="message-content" class="tab-content">
-            <ul id="message-list" class="messagelist">
-                <form id="my-form" action="https://formspree.io/f/mvgkgbjw" method="POST">
-                    <div class="e-name">
-                        <div class="form-title">姓名：</div>
-                        <input type="text" id="messagebox" placeholder="敢问阁下名讳" name="id" />
-                    </div>
-                    <div class="e-content">
-                        <div class="form-title">留言：</div>
-                        <div class="textarea-container">
-                            <textarea id="myTextarea" placeholder="有啥事儿尽管说，只有俺能看到" name="message"></textarea>
-                            <div class="wordnums">
-                                <span id="currentChars">0</span>/<span id="remainingChars">100</span>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="formbutton" id="my-form-button">发送</button>
-                    <p id="my-form-status"></p>
-                </form>
-            </ul>
-        </div>
         <div id="portfolio-content" class="tab-content">
             <ul id="portfolio-list">
                 <li class="portfolio-item">
@@ -101,6 +83,29 @@
                 </li>
             </ul>
         </div>
+    </div>
+    <div id="message-content">
+        
+        <ul id="message-list" class="messagelist">
+            <form id="my-form" action="https://formspree.io/f/mvgkgbjw" method="POST">
+                <span class="close2">×</span>
+                <div class="e-name">
+                    <div class="form-title">姓名：</div>
+                    <input type="text" id="messagebox" placeholder="敢问阁下名讳" name="id" />
+                </div>
+                <div class="e-content">
+                    <div class="form-title">留言：</div>
+                    <div class="textarea-container">
+                        <textarea id="myTextarea" placeholder="有啥事儿尽管说，只有俺能看到" name="message"></textarea>
+                        <div class="wordnums">
+                            <span id="currentChars">0</span>/<span id="remainingChars">100</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="formbutton" id="my-form-button">发送</button>
+                <p id="my-form-status"></p>
+            </form>
+        </ul>
     </div>
     <!-- The Modal -->
     <div id="myModal" class="modal">
@@ -219,4 +224,5 @@
 <script src="js/imagearray.js"></script>
 <script src="js/loadissue.js"></script>
 <script src="js/message.js"></script>
+
 </html>
