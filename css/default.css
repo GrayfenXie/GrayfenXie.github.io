@@ -267,11 +267,6 @@ a[name]:hover::after {
     border-radius: 100%;
 }
 
-#Messageboard:hover {
-    transform: translateY(-2px);
-    scale: 1.02;
-}
-
 .avatar::before {
     content: "";
     width: 110%;
@@ -782,10 +777,23 @@ footer {
     border-radius: 100%;
     padding: 2%;
     z-index: 2;
-    background: #fff;
+    background: #4782d4;
     width: 24px;
     height: 24px;
+    border: 1px solid #fff;
 }
+
+#Messageboard img{
+    width: 90%;
+    height: 90%;
+}
+
+#Messageboard:hover {
+    transform: translateY(-2px);
+    scale: 1.02;
+    background: #4492ff;
+}
+
 
 .form-title {
     font-size: 16px;
@@ -850,9 +858,19 @@ textarea {
 }
 
 #my-form-status {
-    color: var(--theme-color);
-    transition: all 1s;
-
+    border: 2px;
+    padding: 4px 0;
+    border-radius: 4px;
+}
+.success-status{
+    color: #67c23a;
+    background-color: #f0f9eb;
+    border-color: #e1f3d8;
+}
+.fail-status{
+    color: #f56c6c;
+    background-color: #fef0f0;
+    border-color: #fde2e2;
 }
 
 .wordnums {

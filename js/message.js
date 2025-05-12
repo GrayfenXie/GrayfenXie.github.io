@@ -7,6 +7,7 @@ async function handleSubmit(event) {
     var myTextarea = document.getElementById('myTextarea').value;
     var messagebox = document.getElementById('messagebox').value;
     if (myTextarea.length == 0 || messagebox.length == 0) {
+        status.classList.add("fail-status");    
         status.innerHTML = "内容不能为空"
     }
     else {
@@ -18,6 +19,7 @@ async function handleSubmit(event) {
             }
         }).then(response => {
             if (response.ok && myTextarea.length != 0) {
+                status.classList.add("success-status");
                 status.innerHTML = "发送成功";
                 form.reset()
                 currentChars.textContent = 0;
@@ -26,6 +28,7 @@ async function handleSubmit(event) {
                 }, 3000);
             }
         }).catch(error => {
+            status.classList.add("fail-status");
             status.innerHTML = "emmm好像出了点状况"
         });
     }
