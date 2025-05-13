@@ -7,8 +7,10 @@ async function handleSubmit(event) {
     var myTextarea = document.getElementById('myTextarea').value;
     var messagebox = document.getElementById('messagebox').value;
     if (myTextarea.length == 0 || messagebox.length == 0) {
-        status.classList.add("fail-status");    
-        status.innerHTML = "内容不能为空"
+        status.classList.remove("success-status");
+        status.classList.add("fail-status");
+        status.innerHTML = "内容不能为空";
+        status.style.display = "block";
     }
     else {
         fetch(event.target.action, {
@@ -19,17 +21,22 @@ async function handleSubmit(event) {
             }
         }).then(response => {
             if (response.ok && myTextarea.length != 0) {
+                status.classList.remove("fail-status");
                 status.classList.add("success-status");
-                status.innerHTML = "发送成功";
+                status.innerHTML = "发送成功,阁下的私信俺收到辣";
+                status.style.display = "block";
                 form.reset()
                 currentChars.textContent = 0;
                 setTimeout(() => {
                     status.innerHTML = "";
+                    status.style.display = "none";
                 }, 3000);
             }
         }).catch(error => {
+            status.classList.remove("success-status");
             status.classList.add("fail-status");
             status.innerHTML = "emmm好像出了点状况"
+            status.style.display = "block";
         });
     }
 }

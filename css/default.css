@@ -861,6 +861,7 @@ textarea {
     border: 2px;
     padding: 4px 0;
     border-radius: 4px;
+    display: block;
 }
 .success-status{
     color: #67c23a;
