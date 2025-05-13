@@ -175,4 +175,5 @@ span.onclick = function () {
   }, "100");
   document.body.classList.remove('no-scroll');
   flag2 = false;
+  document.getElementById("my-form-status").style.display = "none";
 }
