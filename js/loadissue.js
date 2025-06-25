@@ -53,15 +53,6 @@ function renderIssues(page, perPage, isAppend = false) {
         li.classList.add("aissue");
         issueList.appendChild(li); // 将新内容追加到列表中
 
-
-        // 绑定图片点击事件
-        const images = li.getElementsByTagName('img');
-        for (let i = 0; i < images.length; i++) {
-            images[i].addEventListener('click', function () {
-                opens(this);
-            });
-        }
-
         // 计算当前显示的条目数
         const visibleIssues = start + pageIssues.length;
         document.getElementById('loadpic2').innerText = visibleIssues;
@@ -81,36 +72,57 @@ function renderIssues(page, perPage, isAppend = false) {
     }
 }
 
-// function opens(self) {
-//   modal.style.display = "block";
-//   console.log(self);
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('myModal');
+    const modalImg = document.getElementById("img01");
+    const span = document.getElementsByClassName("close")[0];
+    var originalScrollPosition = 0; // 用于存储原始滚动位置
+    // 定义打开模态框的函数
+    function opens(img) {
+        modal.style.display = "block";
+        modalImg.src = img.src;
+        modalImg.alt = img.alt;
 
-//   // 获取 self 内部的第一个 <img> 标签
-//   const imgElement = self.querySelector('img.issue-img');
-//   console.log(imgElement);
-//   if (imgElement) {
-//     modalImg.src = imgElement.src; // 设置模态框图片的 src
-//     modalImg.alt = imgElement.alt; // 设置模态框图片的 alt
-//   } else {
-//     console.error("No image found in the clicked element");
-//   }
+        // 记录当前滚动位置
+        originalScrollPosition = window.scrollY || document.documentElement.scrollTop;
+        // 添加禁止滚动的类
+        document.body.classList.add('no-scroll');
+        // 将页面滚动位置设置为之前记录的位置，以避免页面跳转
+        document.body.style.position = 'fixed';
+        document.body.style.top = -originalScrollPosition + 'px';
+        setTimeout(() => {
+            modalImg.style.opacity = 1;
+        }, 100);
+    }
 
-//   // 记录当前滚动位置
-//   originalScrollPosition = window.scrollY || document.documentElement.scrollTop;
-//   // 添加禁止滚动的类
-//   document.body.classList.add('no-scroll');
-//   // 将页面滚动位置设置为之前记录的位置，以避免页面跳转
-//   document.body.style.position = 'fixed';
-//   document.body.style.top = -originalScrollPosition + 'px';
-//   flag = true;
+    // 获取 <span> 元素，设置关闭模态框按钮
+    span.onclick = function () {
+  modalImg.style.opacity = 0;
+  setTimeout(() => {
+    modal.style.display = "none";
+    // 移除禁止滚动的类
+    document.body.classList.remove('no-scroll');
+    // 恢复body的默认样式
+    document.body.style.position = '';
+    document.body.style.top = '';
+    // 恢复原始滚动位置
+    window.scrollTo(0, originalScrollPosition);
+  }, "100");
+  document.body.classList.remove('no-scroll');
+  for (var i = a.length - 1; i >= 0; i--) {
+    b[i].style.cursor = "zoom-in";
+    a[i].classList.remove('big');
+  }
+}
 
-//   setTimeout(() => {
-//     modalImg.style.opacity = 1;
-//     for (var i = a.length - 1; i >= 0; i--) {
-//       b[i].style.cursor = "zoom-in";
-//     }
-//   }, 100);
-// }
+    // 使用事件委托处理动态加载的图片点击事件
+    document.getElementById('issue-list').addEventListener('click', function (event) {
+        const target = event.target;
+        if (target.tagName.toLowerCase() === 'img') {
+            opens(target);
+        }
+    });
+});
 
 // 检查是否滚动到底部并加载更多
 let isFetching = false;

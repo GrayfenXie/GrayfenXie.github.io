@@ -420,6 +420,12 @@ a {
     border-radius: 8px;
     width: 20%;
     padding: 4px 0;
+    cursor: pointer;
+    overflow: hidden;
+}
+.issue-img:hover {
+    filter: brightness(120%);
+    transition: all 1s;
 }
 
 #issue-list .issue-date {
