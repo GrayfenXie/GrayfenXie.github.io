@@ -536,7 +536,7 @@ footer {
     display: block;
     background-color: var(--card-color);
     padding: 16px;
-    margin: 8px 12px;
+    margin: 8px;
     border-radius: var(--border-radius);
     transition: all .6s;
     width: 24%;
@@ -958,11 +958,11 @@ textarea {
     .links .alink {
         margin: 0;
         padding: 16px 0;
-        width: 23%;
+        width: 17%;
     }
 
     .links .alink .linkpic {
-        width: 2.5rem;
+        width: 2.8rem;
     }
 
     .links .alink .linkbox {
