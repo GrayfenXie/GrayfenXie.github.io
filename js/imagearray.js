@@ -56,11 +56,9 @@ var modalImg = document.getElementById("img01");
 var a = document.getElementsByClassName("modal-content");
 var b = document.getElementsByClassName("modal");
 var flag = true;
-var originalScrollPosition = 0; // 用于存储原始滚动位置
 
 function opens(self) {
   modal.style.display = "block";
-  console.log(self);
   modalImg.src = self.firstElementChild.src;
   modalImg.alt = self.firstElementChild.alt;
   // 记录当前滚动位置
@@ -94,27 +92,6 @@ function look(self) {
       a[i].classList.remove('big');
     }
     flag = true;
-  }
-}
-// 获取 <span> 元素，设置关闭模态框按钮
-var span = document.getElementsByClassName("close")[0];
-// 点击 <span> 元素上的 (x), 关闭模态框
-span.onclick = function () {
-  modalImg.style.opacity = 0;
-  setTimeout(() => {
-    modal.style.display = "none";
-    // 移除禁止滚动的类
-    document.body.classList.remove('no-scroll');
-    // 恢复body的默认样式
-    document.body.style.position = '';
-    document.body.style.top = '';
-    // 恢复原始滚动位置
-    window.scrollTo(0, originalScrollPosition);
-  }, "100");
-  document.body.classList.remove('no-scroll');
-  for (var i = a.length - 1; i >= 0; i--) {
-    b[i].style.cursor = "zoom-in";
-    a[i].classList.remove('big');
   }
 }
 // 当前已加载图片数量

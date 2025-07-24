@@ -1,4 +1,5 @@
 let currentTabType = ''; // 当前激活的标签页类型
+var originalScrollPosition = 0; // 用于存储原始滚动位置
 
 // 页面加载时初始化当前标签页类型
 document.addEventListener('DOMContentLoaded', function () {
@@ -177,3 +178,56 @@ span.onclick = function () {
   flag2 = false;
   document.getElementById("my-form-status").style.display = "none";
 }
+
+
+//关闭图片模态框
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('myModal');
+    const modalImg = document.getElementById("img01");
+    const span = document.getElementsByClassName("close")[0];
+    // 定义打开模态框的函数
+    function opens(img) {
+        modal.style.display = "block";
+        modalImg.src = img.src;
+        modalImg.alt = img.alt;
+
+        // 记录当前滚动位置
+        originalScrollPosition = window.scrollY || document.documentElement.scrollTop;
+        // 添加禁止滚动的类
+        document.body.classList.add('no-scroll');
+        // 将页面滚动位置设置为之前记录的位置，以避免页面跳转
+        document.body.style.position = 'fixed';
+        document.body.style.top = -originalScrollPosition + 'px';
+        setTimeout(() => {
+            modalImg.style.opacity = 1;
+        }, 100);
+    }
+
+    // 获取 <span> 元素，设置关闭模态框按钮
+    span.onclick = function () {
+        modalImg.style.opacity = 0;
+        setTimeout(() => {
+            modal.style.display = "none";
+            // 移除禁止滚动的类
+            document.body.classList.remove('no-scroll');
+            // 恢复body的默认样式
+            document.body.style.position = '';
+            document.body.style.top = '';
+            // 恢复原始滚动位置
+            window.scrollTo(0, originalScrollPosition);
+        }, "100");
+        document.body.classList.remove('no-scroll');
+        for (var i = a.length - 1; i >= 0; i--) {
+            b[i].style.cursor = "zoom-in";
+            a[i].classList.remove('big');
+        }
+    }
+
+    // 使用事件委托处理动态加载的图片点击事件
+    document.getElementById('issue-list').addEventListener('click', function (event) {
+        const target = event.target;
+        if (target.tagName.toLowerCase() === 'img') {
+            opens(target);
+        }
+    });
+});
