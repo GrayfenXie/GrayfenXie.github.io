@@ -11,13 +11,13 @@ async function loadAllIssues() {
     if (window.isLoading) return;
     window.isLoading = true;
     try {
-        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/comments?per_page=100&sort=created&direction=desc`);
+        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/2/comments?per_page=100&sort=created`);
         if (!response.ok) {
             throw new Error(`Failed to fetch issues: ${response.statusText}`);
         }
         const comments = await response.json();
         const myComments = comments.filter(comment => comment.user.login === myUsername);
-        window.cachedIssues = myComments; // 缓存所有 Issue 数据
+        window.cachedIssues = myComments.reverse(); // 缓存所有 Issue 数据
         renderIssues(1, window.perPage); // 渲染第一页
         document.getElementById('allpic2').innerHTML = myComments.length;
     } catch (error) {
@@ -61,7 +61,7 @@ function renderIssues(page, perPage, isAppend = false) {
 
     // 更新“加载更多”按钮状态
     const moreButton = document.getElementById('more2');
-    if (start + perPage >= window.cachedIssues.length) {
+    if (start + perPage >= window.cachedIssues.len  gth) {
         moreButton.innerText = '加载到底部啦~';
         moreButton.style.cursor = 'unset';
         moreButton.style.pointerEvents = "none";

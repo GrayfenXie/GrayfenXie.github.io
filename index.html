@@ -31,6 +31,7 @@
             <div class="tab active" data-tab="image-content">🎨 插画</div>
             <div class="tab" data-tab="issue-content">👀 日常</div>
             <div class="tab" data-tab="portfolio-content">📚 作品集</div>
+            <div class="tab" data-tab="guitar-content">🎸 弹棉花</div>
             <!-- <div class="tab" data-tab="message-content">📢 私信</div> -->
         </div>
         <div id="image-content" class="tab-content active">
@@ -83,9 +84,26 @@
                 </li>
             </ul>
         </div>
+        <div id="guitar-content" class="tab-content">
+            <ul id="guitar-list">
+                <!-- <li class="guitar-item">
+                    <video class="videoplayer" controls muted>
+                        <source src="https://cdn.grayfen.cn/%E4%BA%BA%E9%97%B4%E7%99%BD%E9%A6%96.mp4" type="video/mp4">
+                        您的浏览器不支持 HTML5 视频播放。
+                    </video>
+                </li> -->
+            </ul>
+            <div class="loadmorepic" id="loadmore">
+                <span id="more3">滚动加载更多...</span>
+                <span id="nums3">
+                    <span id="loadpic3"></span>
+                    <span class="and">/</span>
+                    <span id="allpic3"></span>
+                </span>
+            </div>
+        </div>
     </div>
     <div id="message-content">
-        
         <ul id="message-list" class="messagelist">
             <form id="my-form" action="https://formspree.io/f/mvgkgbjw" method="POST">
                 <span class="close2">×</span>
@@ -242,5 +260,6 @@
 <script src="js/imagearray.js"></script>
 <script src="js/loadissue.js"></script>
 <script src="js/message.js"></script>
-
+<script src="js/loadvideo.js"></script>
+<!-- <script src="js/test.js"></script> -->
 </html>

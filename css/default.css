@@ -385,7 +385,8 @@ a {
     display: block;
 }
 
-#issue-list {
+#issue-list,
+#guitar-list {
     color: var(--second-color);
 }
 
@@ -423,6 +424,7 @@ a {
     cursor: pointer;
     overflow: hidden;
 }
+
 .issue-img:hover {
     filter: brightness(120%);
     transition: all 1s;
@@ -479,12 +481,14 @@ a {
 }
 
 .loadmorepic:hover #more,
-.loadmorepic:hover #more2 {
+.loadmorepic:hover #more2,
+.loadmorepic:hover #more3 {
     color: var(--mainword-color);
 }
 
 #more,
-#more2 {
+#more2,
+#more3 {
     text-align: center;
     color: var(--second-color);
     margin: 20px 0;
@@ -497,7 +501,8 @@ a {
 }
 
 #loadpic,
-#loadpic2 {
+#loadpic2,
+#loadpic3 {
     color: var(--mainword-color);
 }
 
@@ -789,7 +794,7 @@ footer {
     border: 1px solid #fff;
 }
 
-#Messageboard img{
+#Messageboard img {
     width: 90%;
     height: 90%;
 }
@@ -869,12 +874,14 @@ textarea {
     border-radius: 4px;
     display: block;
 }
-.success-status{
+
+.success-status {
     color: #67c23a;
     background-color: #f0f9eb;
     border-color: #e1f3d8;
 }
-.fail-status{
+
+.fail-status {
     color: #f56c6c;
     background-color: #fef0f0;
     border-color: #fde2e2;
@@ -908,18 +915,54 @@ textarea {
     color: var(--mainword-color);
 }
 
+/* .videoplayer {
+    width: 600px;
+} */
+#guitar-list {
+    width: 72%;
+    margin: 0 auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: center;
+}
+
+.guitar-item {
+    /* max-width: 600px; */
+    border-radius: 8px;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 1s;
+}
+
+.guitar-item video {
+    width: 100%;
+    display: block;
+}
+
+.guitar-item {
+    width: 64%;
+    border-radius: var(--border-radius);
+    margin: 6px 0;
+    transition: all 1s;
+}
+
 @media screen and (max-width: 1024px) {
 
     #works,
     #issue-list,
     #message-list,
-    #portfolio-list {
+    #portfolio-list,
+    #guitar-list {
         width: 96%;
     }
 
     #works li,
     #issue-list .aissue,
-    .portfolio-item {
+    .portfolio-item,
+    .guitar-item {
         width: 100%;
     }
 
@@ -986,13 +1029,16 @@ textarea {
         width: 96%;
         margin: 0 auto;
         justify-content: space-around;
+        display: flex;
+        flex-wrap: wrap;
     }
 
     .tab {
-        margin: 12px 0;
+        margin: 6px 0;
         padding: 10px 0;
         width: 32%;
         text-align: center;
-        padding: auto 0;
+        flex: 0 0 calc(50% - 10px);
+        box-sizing: border-box;
     }
 }

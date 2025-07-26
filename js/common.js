@@ -1,6 +1,10 @@
 let currentTabType = ''; // 当前激活的标签页类型
 var originalScrollPosition = 0; // 用于存储原始滚动位置
 
+// var owner = "GrayfenXie";
+// var repo = "GrayfenXie.github.io";
+// var myUsername = "GrayfenXie";
+
 // 页面加载时初始化当前标签页类型
 document.addEventListener('DOMContentLoaded', function () {
     const firstTab = document.querySelector('.tab');
@@ -40,6 +44,7 @@ function anime() {
     const eles2 = document.getElementsByClassName('aissue');
     const eles3 = document.getElementById('my-form');
     const eles4 = document.getElementsByClassName('portfolio-item');
+    const eles5 = document.getElementsByClassName('guitar-item');
     // 重置动画状态
     function resetStyles(elements) {
         for (let i = 0; i < elements.length; i++) {
@@ -59,6 +64,7 @@ function anime() {
     resetStyles(eles);
     resetStyles(eles2);
     resetStyles(eles4);
+    resetStyles(eles5);
     // eles3.style.transform = 'scale(0)';
     // eles3.style.opacity = '0';
 
@@ -66,6 +72,7 @@ function anime() {
         triggerAnimation(eles);
         triggerAnimation(eles2);
         triggerAnimation(eles4);
+        triggerAnimation(eles5);
         // eles3.style.transform = 'scale(1)';
         // eles3.style.opacity = '1';
     }, 10);
