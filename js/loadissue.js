@@ -61,7 +61,7 @@ function renderIssues(page, perPage, isAppend = false) {
 
     // 更新“加载更多”按钮状态
     const moreButton = document.getElementById('more2');
-    if (start + perPage >= window.cachedIssues.len  gth) {
+    if (start + perPage >= window.cachedIssues.length) {
         moreButton.innerText = '加载到底部啦~';
         moreButton.style.cursor = 'unset';
         moreButton.style.pointerEvents = "none";
