@@ -52,7 +52,7 @@ function renderIssues2(page, perPage2, isAppend = false) {
         const videoSrc = decodeURIComponent(match[0]); 
         li2.innerHTML = `
             <video class="videoplayer" controlsList="nodownload" disablePictureInPicture controls muted
-                poster="${videoSrc}?vframe/jpg/offset/2/w/1200/h/675">
+                poster="${videoSrc}?vframe/jpg/offset/1/w/1200/h/675">
                 <source src="${videoSrc}" type="video/mp4">
                 您的浏览器不支持 HTML5 视频播放。
             </video>
