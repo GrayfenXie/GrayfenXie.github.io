@@ -71,6 +71,13 @@ function renderIssues2(page, perPage2, isAppend = false) {
             });
             player.ready(() => {
                 player.removeClass('vjs-loading'); // 移除透明锁
+
+                // 播放结束后回到封面
+                player.on('ended', () => {
+                    player.currentTime(0);
+                    player.load();              // 让浏览器重新显示 poster
+                    player.posterImage.show();  // Video.js 强制把 poster 放出来
+                });
             });
         }, 0);
     });
