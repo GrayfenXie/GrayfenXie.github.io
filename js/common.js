@@ -36,6 +36,9 @@ document.querySelectorAll('.tab').forEach(tab => {
 
         currentTabType = targetTab;
         anime();
+
+        // ➜ 新增：切页就停所有视频
+        pauseAllVideos();
     });
 });
 
@@ -134,33 +137,33 @@ var bgImage1 = 'url("img/sun.svg")'; // 注意路径是相对于HTML文件的
 var bgImage2 = 'url("img/moon.svg")';
 var switchbutton = document.getElementById('switch');
 switchbutton.addEventListener('click', function () {
-  if (flag) {
-    document.body.classList.add("night");
-    switchbutton.style.backgroundImage = bgImage2;
-    flag = false;
-  }
-  else {
-    document.body.classList.remove("night");
-    switchbutton.style.backgroundImage = bgImage1;
-    flag = true;
-  }
+    if (flag) {
+        document.body.classList.add("night");
+        switchbutton.style.backgroundImage = bgImage2;
+        flag = false;
+    }
+    else {
+        document.body.classList.remove("night");
+        switchbutton.style.backgroundImage = bgImage1;
+        flag = true;
+    }
 });
 
 var Messageboard = document.getElementById("message-board");
 var messageboxbutton = document.getElementById("messageboxbutton");
 var flag2 = true;
 messageboxbutton.onclick = function () {
-  messagemodal.style.display = "block";
-  setTimeout(() => {
-    messagemodal.style.opacity = 1;
-  }, 100);
+    messagemodal.style.display = "block";
+    setTimeout(() => {
+        messagemodal.style.opacity = 1;
+    }, 100);
     // 记录当前滚动位置
     originalScrollPosition = window.scrollY || document.documentElement.scrollTop;
-//   // 将页面滚动位置设置为之前记录的位置，以避免页面跳转
+    //   // 将页面滚动位置设置为之前记录的位置，以避免页面跳转
     document.body.style.position = 'fixed';
     document.body.style.width = '100%';
     document.body.style.top = -originalScrollPosition + 'px';
-  flag2 = true;
+    flag2 = true;
 }
 
 //关闭留言板
@@ -169,21 +172,21 @@ var span = document.getElementsByClassName("close2")[0];
 var messagemodal = document.getElementById("message-content");
 // 点击 <span> 元素上的 (x), 关闭模态框
 span.onclick = function () {
-  messagemodal.style.opacity = 0;
-  setTimeout(() => {
-    messagemodal.style.display = "none";
-    // 移除禁止滚动的类
+    messagemodal.style.opacity = 0;
+    setTimeout(() => {
+        messagemodal.style.display = "none";
+        // 移除禁止滚动的类
+        document.body.classList.remove('no-scroll');
+        // 恢复body的默认样式
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = 'auto';
+        // 恢复原始滚动位置
+        window.scrollTo(0, originalScrollPosition);
+    }, "100");
     document.body.classList.remove('no-scroll');
-    // 恢复body的默认样式
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = 'auto';
-    // 恢复原始滚动位置
-    window.scrollTo(0, originalScrollPosition);
-  }, "100");
-  document.body.classList.remove('no-scroll');
-  flag2 = false;
-  document.getElementById("my-form-status").style.display = "none";
+    flag2 = false;
+    document.getElementById("my-form-status").style.display = "none";
 }
 
 
@@ -238,3 +241,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+function pauseAllVideos() {
+    // 1. 如果页面里还有原生 <video>，也一起停
+    document.querySelectorAll('video').forEach(v => v.pause());
+
+    // 2. 把已经初始化过的 Video.js 实例全部暂停
+    if (window.videojs) {
+        Object.values(videojs.getPlayers()).forEach(p => {
+            if (!p.paused()) p.pause();
+        });
+    }
+}

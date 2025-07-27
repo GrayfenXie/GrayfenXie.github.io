@@ -949,6 +949,31 @@ textarea {
     transition: all 1s;
 }
 
+/* 1. 彻底隐藏原生控件 */
+*::-webkit-media-controls-panel,
+*::-webkit-media-controls-play-button,
+*::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    -webkit-appearance: none;
+}
+
+/* 2. 初始化期间让 video-js 透明；video-js 自己接管后会自动加上 vjs-paused 等类 */
+.video-js.vjs-loading {
+    opacity: 0;
+    transition: opacity .2s;
+}
+
+.video-js .vjs-big-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.video-js .vjs-big-play-button {
+    font-size: 4em;
+}
+
 @media screen and (max-width: 1024px) {
 
     #works,

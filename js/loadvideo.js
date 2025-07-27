@@ -30,53 +30,64 @@ function renderIssues2(page, perPage2, isAppend = false) {
     const start2 = (page - 1) * perPage2;
     const end2 = start2 + perPage2;
     const pageIssues = window.cachedIssues2.slice(start2, end2);
-    if (!isAppend) {
-        guitarList.innerHTML = ''; // 如果不是追加内容，则清空现有列表
-    }
-    pageIssues.forEach(guitar => {
-        const li2 = document.createElement('li');
+    if (!isAppend) guitarList.innerHTML = '';
+
+    pageIssues.forEach((guitar, idx) => {
+        const li = document.createElement('li');
         const date = new Date(guitar.created_at);
         const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-        const options = {
-            gfm: true,
-            breaks: true,
-            smartLists: true,
-        };
-        const guitarlist = document.getElementById('guitar-list');
-        const bodyHTML = marked(guitar.body || '', options);
+
+        const bodyHTML = marked(guitar.body || '', { gfm: true, breaks: true });
         const match = bodyHTML.match(/https:\/\/cdn\.grayfen\.cn\/[^"'>\s]+/i);
-        if (!match) {
-            console.warn('没有在 Issue 里找到七牛直链');
-            return;
-        }
-        const videoSrc = decodeURIComponent(match[0]); 
-        li2.innerHTML = `
-            <video class="videoplayer" controlsList="nodownload" disablePictureInPicture controls muted
-                poster="${videoSrc}?vframe/jpg/offset/1/w/1200/h/675">
-                <source src="${videoSrc}" type="video/mp4">
-                您的浏览器不支持 HTML5 视频播放。
-            </video>
-        `;
-        li2.classList.add("guitar-item");
-        guitarlist.appendChild(li2); // 将新内容追加到列表中
+        if (!match) return;
+        const videoSrc = decodeURIComponent(match[0]);
 
-        // 计算当前显示的条目数
-        const visibleIssues = start2 + pageIssues.length;
-        document.getElementById('loadpic2').innerText = visibleIssues;
-        anime();
+        // 唯一 id，确保多次渲染不冲突
+        const vid = `guitar-${guitar.id}-${idx}`;
+        li.innerHTML = `
+      <video id="${vid}"
+             class="video-js vjs-default-skin vjs-loading"
+             preload="none"
+             poster="${videoSrc}?vframe/jpg/offset/1/w/1200/h/675"
+             controls
+             muted>
+        <source src="${videoSrc}" type="video/mp4">
+      </video>
+    `;
+        li.classList.add('guitar-item');
+        guitarList.appendChild(li);
+
+        // 延迟初始化，避免闪屏
+        setTimeout(() => {
+            const player = videojs(vid, {
+                controls: true,
+                autoplay: false,
+                bigPlayButton: true,
+                fluid: false,
+                aspectRatio: '16:9',   // 直接给它一个比例
+                width: '100%',
+                height: 'auto',
+                controlBar: true
+            });
+            player.ready(() => {
+                player.removeClass('vjs-loading'); // 移除透明锁
+            });
+        }, 0);
     });
-    const moreButton2 = document.getElementById('more3');
-    if (start2 + perPage2 >= window.cachedIssues2.length) {
-        moreButton2.innerText = '加载到底部啦~';
-        moreButton2.style.cursor = 'unset';
-        moreButton2.style.pointerEvents = "none";
-    } else {
-        moreButton2.innerText = '滚动加载更多...';
-        moreButton2.style.cursor = 'pointer';
-        moreButton2.style.pointerEvents = "auto";
-    }
-}
 
+    // 底部提示
+    const moreBtn = document.getElementById('more3');
+    if (start2 + perPage2 >= window.cachedIssues2.length) {
+        moreBtn.innerText = '加载到底部啦~';
+        moreBtn.style.pointerEvents = 'none';
+    } else {
+        moreBtn.innerText = '滚动加载更多...';
+        moreBtn.style.pointerEvents = 'auto';
+    }
+
+    document.getElementById('loadpic2').innerText =
+        Math.min(start2 + perPage2, window.cachedIssues2.length);
+}
 // 检查是否滚动到底部并加载更多
 let isFetching2 = false;
 function checkScrollPosition() {
