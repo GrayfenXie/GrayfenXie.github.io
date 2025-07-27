@@ -48,7 +48,7 @@ function renderIssues2(page, perPage2, isAppend = false) {
       <video id="${vid}"
              class="video-js vjs-default-skin vjs-loading"
              preload="none"
-             poster="${videoSrc}?vframe/jpg/offset/1/w/1200/h/675"
+             poster="${videoSrc}?vframe/jpg/offset/2.5/w/1200/h/675"
              controls
              muted>
         <source src="${videoSrc}" type="video/mp4">
