@@ -87,7 +87,7 @@ function renderIssues2(page, perPage2, isAppend = false) {
         moreBtn.style.pointerEvents = 'auto';
     }
 
-    document.getElementById('loadpic2').innerText =
+    document.getElementById('loadpic3').innerText =
         Math.min(start2 + perPage2, window.cachedIssues2.length);
 }
 // 检查是否滚动到底部并加载更多
