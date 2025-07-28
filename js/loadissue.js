@@ -3,29 +3,21 @@ window.cachedIssues = []; // 缓存所有 Issue 数据
 window.currentPage = 1; // 当前页码
 window.perPage = 10; // 每页显示 10 条
 window.isLoading = false; // 防止重复加载
-const owner = "GrayfenXie";
-const repo = "GrayfenXie.github.io";
-const myUsername = "GrayfenXie";
 
 async function loadAllIssues() {
-    if (window.isLoading) return;
-    window.isLoading = true;
-    try {
-        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/2/comments?per_page=100&sort=created`);
-        if (!response.ok) {
-            throw new Error(`Failed to fetch issues: ${response.statusText}`);
-        }
-        const comments = await response.json();
-        const myComments = comments.filter(comment => comment.user.login === myUsername);
-        window.cachedIssues = myComments.reverse(); // 缓存所有 Issue 数据
-        renderIssues(1, window.perPage); // 渲染第一页
-        document.getElementById('allpic2').innerHTML = myComments.length;
-    } catch (error) {
-        console.error('Failed to load issues:', error);
-        document.getElementById('issue-list').innerHTML = "<li class=failtoload>加载失败，请稍后再试</li>";
-    } finally {
-        window.isLoading = false;
-    }
+  if (window.isLoading) return;
+  window.isLoading = true;
+  try {
+    await fetchAllCommentsOnce();
+    renderIssues(1, window.perPage);
+    document.getElementById('allpic2').innerText = window.cachedIssues.length;
+  } catch (e) {
+    console.error(e);
+    document.getElementById('issue-list').innerHTML =
+      '<li class=failtoload>加载失败，请稍后再试</li>';
+  } finally {
+    window.isLoading = false;
+  }
 }
 
 function renderIssues(page, perPage, isAppend = false) {

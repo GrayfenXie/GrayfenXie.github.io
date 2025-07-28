@@ -1,9 +1,34 @@
 let currentTabType = ''; // 当前激活的标签页类型
 var originalScrollPosition = 0; // 用于存储原始滚动位置
 
-// var owner = "GrayfenXie";
-// var repo = "GrayfenXie.github.io";
-// var myUsername = "GrayfenXie";
+var owner = "GrayfenXie";
+var repo = "GrayfenXie.github.io";
+var myUsername = "GrayfenXie";
+// 全局变量
+window.cachedIssues  = []; // #2 随笔
+window.cachedIssues2 = []; // #6 弹棉花
+let _commentsPromise = null;   // ← 缓存 Promise，保证只发一次
+
+async function fetchAllCommentsOnce() {
+  if (_commentsPromise) return _commentsPromise;   // 如果已请求过，直接复用
+
+  _commentsPromise = (async () => {
+    const res = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/issues/comments?per_page=100&sort=created`
+    );
+    if (!res.ok) throw new Error(res.statusText);
+
+    const all = await res.json();
+    const c2 = all.filter(c => c.issue_url.endsWith('/2') && c.user.login === myUsername);
+    const c6 = all.filter(c => c.issue_url.endsWith('/6') && c.user.login === myUsername);
+
+    window.cachedIssues  = c2.reverse();
+    window.cachedIssues2 = c6.reverse();
+  })();
+
+  return _commentsPromise;
+}
+
 
 // 页面加载时初始化当前标签页类型
 document.addEventListener('DOMContentLoaded', function () {

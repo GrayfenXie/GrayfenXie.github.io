@@ -5,24 +5,19 @@ window.perPage2 = 10; // 每页显示 10 条
 window.isLoading2 = false; // 防止重复加载
 
 async function loadAllGuitar() {
-    if (window.isLoading2) return;
-    window.isLoading2 = true;
-    try {
-        const response2 = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/6/comments?per_page=100&sort=created`);
-        if (!response2.ok) {
-            throw new Error(`Failed to fetch issues: ${response2.statusText}`);
-        }
-        const videos = await response2.json();
-        const myVideos = videos.filter(comment => comment.user.login === myUsername);
-        window.cachedIssues2 = myVideos.reverse(); // 缓存所有 Issue 数据
-        renderIssues2(1, window.perPage2); // 渲染第一页
-        document.getElementById('allpic2').innerHTML = myVideos.length;
-    } catch (error) {
-        console.error('Failed to load issues:', error);
-        document.getElementById('guitar-list').innerHTML = "<li class=failtoload>加载失败，请稍后再试</li>";
-    } finally {
-        window.isLoading2 = false;
-    }
+  if (window.isLoading2) return;
+  window.isLoading2 = true;
+  try {
+    await fetchAllCommentsOnce();
+    renderIssues2(1, window.perPage2);
+    document.getElementById('allpic3').innerText = window.cachedIssues2.length;
+  } catch (e) {
+    console.error(e);
+    document.getElementById('guitar-list').innerHTML =
+      '<li class=failtoload>加载失败，请稍后再试</li>';
+  } finally {
+    window.isLoading2 = false;
+  }
 }
 
 function renderIssues2(page, perPage2, isAppend = false) {
