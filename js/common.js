@@ -14,8 +14,7 @@ async function fetchAllCommentsOnce() {
 
   _commentsPromise = (async () => {
     const res = await fetch(
-       `https://grayfen-xie-github-io-li1o.vercel.app/api/github-comments`
-    //   `https://api.github.com/repos/${owner}/${repo}/issues/comments?per_page=100&sort=created`
+      `https://api.github.com/repos/${owner}/${repo}/issues/comments?per_page=100&sort=created`
     );
     if (!res.ok) throw new Error(res.statusText);
 
