@@ -278,3 +278,45 @@ function pauseAllVideos() {
         });
     }
 }
+
+/**
+ * @param {string}   tabName      data-tab 值
+ * @param {Function} loadMoreFn   到底部时执行的加载函数
+ * @param {number}   threshold    距离底部多少 px 触发
+ */
+function initScrollLoader(tabName, loadMoreFn, threshold = 2) {
+  const debounced = debounce(() => {
+    const nearBottom =
+      window.innerHeight + window.scrollY >=
+      document.body.offsetHeight - threshold;
+
+    if (nearBottom && currentTabType === tabName) {
+      loadMoreFn();
+    }
+  }, 200);
+
+  document.addEventListener('scroll', debounced);
+}
+
+/* ===== 为各 tab 注册滚动加载（在 DOM 完成后执行） ===== */
+document.addEventListener('DOMContentLoaded', () => {
+  // 随笔
+  initScrollLoader('issue-content', () => {
+    if (window.isLoading) return;
+    window.currentPage++;
+    renderIssues(window.currentPage, window.perPage, true);
+  });
+
+  // 弹棉花
+  initScrollLoader('guitar-content', () => {
+    if (window.isLoading2) return;
+    window.currentPage2++;
+    renderGuitars(window.currentPage2, window.perPage2, true);
+  });
+
+  // 插画（可选，如已使用“点击加载更多”可跳过）
+  initScrollLoader('image-content', () => {
+    if (window.loadedImages >= window.imagesData?.length) return;
+    createImageElements(window.imagesData, window.imagesPerLoad || 9);
+  });
+});

@@ -64,29 +64,6 @@ function renderIssues(page, perPage, isAppend = false) {
     }
 }
 
-// 检查是否滚动到底部并加载更多
-let isFetching = false;
-function checkScrollPosition() {
-    const nearBottomThreshold = 2; // 当距离底部2px时开始加载
-    if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - nearBottomThreshold &&
-        !isFetching) {
-        isFetching = true; // 设置标志变量
-        window.currentPage++;
-        renderIssues(window.currentPage, window.perPage, true); // 追加内容
-        isFetching = false; // 加载完成后重置标志变量
-    }
-}
-
-// 创建防抖后的滚动事件处理函数
-const debouncedCheckScrollPosition2 = debounce(checkScrollPosition, 200); // 200ms内最多执行一次
-
-// 监听滚动事件
-document.addEventListener("scroll", (event) => {
-    if (currentTabType == "issue-content") {
-        debouncedCheckScrollPosition2();
-    }
-});
-
 // 添加“加载更多”按钮的事件监听
 document.getElementById('more2').addEventListener('click', () => {
     window.currentPage++;

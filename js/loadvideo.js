@@ -9,7 +9,7 @@ async function loadAllGuitar() {
   window.isLoading2 = true;
   try {
     await fetchAllCommentsOnce();
-    renderIssues2(1, window.perPage2);
+    renderGuitars(1, window.perPage2);
     document.getElementById('allpic3').innerText = window.cachedIssues2.length;
   } catch (e) {
     console.error(e);
@@ -20,7 +20,7 @@ async function loadAllGuitar() {
   }
 }
 
-function renderIssues2(page, perPage2, isAppend = false) {
+function renderGuitars(page, perPage2, isAppend = false) {
     const guitarList = document.getElementById('guitar-list');
     const start2 = (page - 1) * perPage2;
     const end2 = start2 + perPage2;
@@ -90,34 +90,12 @@ function renderIssues2(page, perPage2, isAppend = false) {
     document.getElementById('loadpic3').innerText =
         Math.min(start2 + perPage2, window.cachedIssues2.length);
 }
-// 检查是否滚动到底部并加载更多
-let isFetching2 = false;
-function checkScrollPosition() {
-    const nearBottomThreshold = 2; // 当距离底部2px时开始加载
-    if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - nearBottomThreshold &&
-        !isFetching2) {
-        isFetching2 = true; // 设置标志变量
-        window.currentPage++;
-        renderIssues2(window.currentPage, window.perPage, true); // 追加内容
-        isFetching2 = false; // 加载完成后重置标志变量
-    }
-}
-
-// 创建防抖后的滚动事件处理函数
-const debouncedCheckScrollPosition3 = debounce(checkScrollPosition, 200); // 200ms内最多执行一次
-
-// 监听滚动事件
-document.addEventListener("scroll", (event) => {
-    if (currentTabType == "issue-content") {
-        debouncedCheckScrollPosition3();
-    }
-});
 
 // 添加“加载更多”按钮的事件监听
 document.getElementById('more3').addEventListener('click', () => {
     window.currentPage++;
     window.currentIssuePage = window.currentPage; // 更新当前页码
-    renderIssues2(window.currentPage, window.perPage, true); // 追加内容
+    renderGuitars(window.currentPage, window.perPage, true); // 追加内容
 });
 
 // 在页面加载时加载所有 Issue 数据

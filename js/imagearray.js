@@ -1,4 +1,5 @@
-const imagesData = [
+window.imagesPerLoad = 9; 
+window.imagesData = [
   { src: 'https://cdn.grayfen.cn/summerbbq.png', alt: '夏日露营' },
   { src: 'https://cdn.grayfen.cn/Nicholas2.png', alt: '北极星的眼泪' },
   { src: 'https://cdn.grayfen.cn/cattle.png', alt: '放牛娃' },
@@ -96,7 +97,7 @@ function look(self) {
 }
 // 当前已加载图片数量
 let loadedImages = 0;
-const imagesPerLoad = 9; // 每次加载的图片数量
+// const imagesPerLoad = 9; // 每次加载的图片数量
 
 // 函数用于洗牌数组
 function shuffleArray(array) {
@@ -150,32 +151,8 @@ function createImageElements(imagesArray, limit) {
 shuffleArray(imagesData);
 createImageElements(imagesData, imagesPerLoad);
 
-// 检查是否滚动到底部并加载更多图片
-function checkScrollPosition() {
-  const nearBottomThreshold = 2; // 当距离底部2px时开始加载
-  if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - nearBottomThreshold &&
-    loadedImages < imagesData.length) {
-    createImageElements(imagesData, imagesPerLoad);
-  }
-}
-
-// 监听滚动事件
-document.addEventListener("scroll", (event) => {
-  if(tabType == 'image'){
-    debouncedCheckScrollPosition();
-  }
-});
-
+//点击加载更多
 var more = document.getElementById("more");
 more.addEventListener("click", function () {
   createImageElements(imagesData, imagesPerLoad);
 });
-
-let tabType = 'image'
-//获取当前点击的tab
-function tabClacik (type){
-  tabType = type;
-}
-
-// 创建防抖后的滚动事件处理函数
-const debouncedCheckScrollPosition = debounce(checkScrollPosition, 200); // 200ms内最多执行一次
