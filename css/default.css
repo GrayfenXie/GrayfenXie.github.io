@@ -937,7 +937,7 @@ textarea {
     transition: all 1s;
     overflow: hidden;
     opacity: 0;
-    background: #fff;
+    background: var(--card-color);
     padding: 20px;
     border-radius: var(--border-radius);
 }
@@ -970,6 +970,17 @@ textarea {
 
 .video-js .vjs-big-play-button {
     font-size: 4em;
+}
+
+.video-title{
+    font-size: 1.4em;
+    color: var(--mainword-color);
+}
+.videoinfor{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
 }
 
 @media screen and (max-width: 1024px) {

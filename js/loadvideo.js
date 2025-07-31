@@ -1,8 +1,8 @@
-// 将全局变量挂载到 window 对象上，避免重复声明
-window.cachedIssues2 = []; // 缓存所有 Issue 数据
-window.currentPage2 = 1; // 当前页码
-window.perPage2 = 10; // 每页显示 10 条
-window.isLoading2 = false; // 防止重复加载
+// 全局变量
+window.cachedIssues2 = [];
+window.currentPage2 = 1;
+window.perPage2 = 10;
+window.isLoading2 = false;
 
 async function loadAllGuitar() {
   if (window.isLoading2) return;
@@ -21,25 +21,27 @@ async function loadAllGuitar() {
 }
 
 function renderGuitars(page, perPage2, isAppend = false) {
-    const guitarList = document.getElementById('guitar-list');
-    const start2 = (page - 1) * perPage2;
-    const end2 = start2 + perPage2;
-    const pageIssues = window.cachedIssues2.slice(start2, end2);
-    if (!isAppend) guitarList.innerHTML = '';
+  const guitarList = document.getElementById('guitar-list');
+  const start2 = (page - 1) * perPage2;
+  const end2 = start2 + perPage2;
+  const pageIssues = window.cachedIssues2.slice(start2, end2);
+  if (!isAppend) guitarList.innerHTML = '';
 
-    pageIssues.forEach((guitar, idx) => {
-        const li = document.createElement('li');
-        const date = new Date(guitar.created_at);
-        const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+  pageIssues.forEach((guitar, idx) => {
+    const body = guitar.body || '';
+    const urlMatch = body.match(/url:\s*(https:\/\/cdn\.grayfen\.cn\/[^\s\n\r]+)/i);
+    const nameMatch = body.match(/name:\s*([^\n\r]+)/i);
 
-        const bodyHTML = marked(guitar.body || '', { gfm: true, breaks: true });
-        const match = bodyHTML.match(/https:\/\/cdn\.grayfen\.cn\/[^"'>\s]+/i);
-        if (!match) return;
-        const videoSrc = decodeURIComponent(match[0]);
+    if (!urlMatch || !nameMatch) return;
 
-        // 唯一 id，确保多次渲染不冲突
-        const vid = `guitar-${guitar.id}-${idx}`;
-        li.innerHTML = `
+    const videoSrc = decodeURIComponent(urlMatch[1]);
+    const videoName = nameMatch[1].trim();
+    const date2 = new Date(guitar.created_at);
+    const formattedDate2 = `${date2.toLocaleDateString()} ${date2.toLocaleTimeString()}`;
+
+    const li = document.createElement('li');
+    const vid = `guitar-${guitar.id}-${idx}`;
+    li.innerHTML = `
       <video id="${vid}"
              class="video-js vjs-default-skin vjs-loading"
              preload="none"
@@ -48,61 +50,54 @@ function renderGuitars(page, perPage2, isAppend = false) {
              muted>
         <source src="${videoSrc}" type="video/mp4">
       </video>
+      <div class="videoinfor">
+        <h3 class="video-title">${videoName}</h3>
+        <div class="video-date">${formattedDate2}</div>
+      </div>
     `;
-        li.classList.add('guitar-item');
-        guitarList.appendChild(li);
+    li.classList.add('guitar-item');
+    guitarList.appendChild(li);
 
-        // 延迟初始化，避免闪屏
-        setTimeout(() => {
-            const player = videojs(vid, {
-                controls: true,
-                autoplay: false,
-                bigPlayButton: true,
-                fluid: false,
-                aspectRatio: '16:9',   // 直接给它一个比例
-                width: '100%',
-                height: 'auto',
-                controlBar: true
-            });
-            player.ready(() => {
-                player.removeClass('vjs-loading'); // 移除透明锁
+    setTimeout(() => {
+      const player = videojs(vid, {
+        controls: true,
+        autoplay: false,
+        bigPlayButton: true,
+        fluid: false,
+        aspectRatio: '16:9',
+        width: '100%',
+        height: 'auto',
+        controlBar: true
+      });
+      player.ready(() => {
+        player.removeClass('vjs-loading');
+        player.on('play', () => pauseAllVideos(player));
+        player.on('ended', () => {
+          player.currentTime(0);
+          player.load();
+          player.posterImage.show();
+        });
+      });
+    }, 0);
+  });
 
-                player.on('play', () => {
-                  pauseAllVideos(player); 
-                });
-
-                // 播放结束后回到封面
-                player.on('ended', () => {
-                    player.currentTime(0);
-                    player.load();              // 让浏览器重新显示 poster
-                    player.posterImage.show();  // Video.js 强制把 poster 放出来
-                });
-            });
-        }, 0);
-    });
-
-    // 底部提示
-    const moreBtn = document.getElementById('more3');
-    if (start2 + perPage2 >= window.cachedIssues2.length) {
-        moreBtn.innerText = '加载到底部啦~';
-        moreBtn.style.pointerEvents = 'none';
-    } else {
-        moreBtn.innerText = '滚动加载更多...';
-        moreBtn.style.pointerEvents = 'auto';
-    }
-
-    document.getElementById('loadpic3').innerText =
-        Math.min(start2 + perPage2, window.cachedIssues2.length);
+  const moreBtn = document.getElementById('more3');
+  if (start2 + perPage2 >= window.cachedIssues2.length) {
+    moreBtn.innerText = '加载到底部啦~';
+    moreBtn.style.pointerEvents = 'none';
+  } else {
+    moreBtn.innerText = '滚动加载更多...';
+    moreBtn.style.pointerEvents = 'auto';
+  }
+  document.getElementById('loadpic3').innerText =
+    Math.min(start2 + perPage2, window.cachedIssues2.length);
 }
 
-// 添加“加载更多”按钮的事件监听
 document.getElementById('more3').addEventListener('click', () => {
-    window.currentPage++;
-    window.currentIssuePage = window.currentPage; // 更新当前页码
-    renderGuitars(window.currentPage, window.perPage, true); // 追加内容
+  window.currentPage2++;
+  renderGuitars(window.currentPage2, window.perPage2, true);
 });
 
-// 在页面加载时加载所有 Issue 数据
 document.addEventListener('DOMContentLoaded', () => {
-    loadAllGuitar();
+  loadAllGuitar();
 });
