@@ -267,16 +267,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-function pauseAllVideos() {
-    // 1. 如果页面里还有原生 <video>，也一起停
-    document.querySelectorAll('video').forEach(v => v.pause());
+// 替换原来的 pauseAllVideos
+function pauseAllVideos(excludePlayer) {
+  // 1. 原生 <video>
+  document.querySelectorAll('video').forEach(v => {
+    if (v !== excludePlayer?.tech()?.el()) v.pause();
+  });
 
-    // 2. 把已经初始化过的 Video.js 实例全部暂停
-    if (window.videojs) {
-        Object.values(videojs.getPlayers()).forEach(p => {
-            if (!p.paused()) p.pause();
-        });
-    }
+  // 2. Video.js 实例
+  if (window.videojs) {
+    Object.values(videojs.getPlayers()).forEach(p => {
+      if (p !== excludePlayer && !p.paused()) p.pause();
+    });
+  }
 }
 
 /**

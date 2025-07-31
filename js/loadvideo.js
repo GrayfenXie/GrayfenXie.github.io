@@ -67,6 +67,10 @@ function renderGuitars(page, perPage2, isAppend = false) {
             player.ready(() => {
                 player.removeClass('vjs-loading'); // 移除透明锁
 
+                player.on('play', () => {
+                  pauseAllVideos(player); 
+                });
+
                 // 播放结束后回到封面
                 player.on('ended', () => {
                     player.currentTime(0);
