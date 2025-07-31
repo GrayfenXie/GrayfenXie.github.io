@@ -930,24 +930,21 @@ textarea {
     align-content: center;
 }
 
+
 .guitar-item {
-    /* max-width: 600px; */
-    border-radius: 8px;
+    width: 64%;
+    margin: 6px 0;
+    transition: all 1s;
     overflow: hidden;
     opacity: 0;
-    transition: all 1s;
+    background: #fff;
+    padding: 20px;
+    border-radius: var(--border-radius);
 }
 
 .guitar-item video {
     width: 100%;
     display: block;
-}
-
-.guitar-item {
-    width: 64%;
-    border-radius: var(--border-radius);
-    margin: 6px 0;
-    transition: all 1s;
 }
 
 /* 1. 彻底隐藏原生控件 */
