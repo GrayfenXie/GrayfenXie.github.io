@@ -52,7 +52,7 @@ button {
     --footer-color: #eeeff6;
     --border-radius: 8px;
     --theme-color: #FFBF37;
-    --nav-color: rgba(255, 255, 255, .72);
+    --nav-color: rgba(255, 255, 255, 0.72);
 }
 
 :root .night {
@@ -63,7 +63,7 @@ button {
     --card-color: #2f3031;
     --footer-color: #0b0b0b;
     --theme-color: #B5F3FF;
-    --nav-color: rgba(0, 0, 0, .72);
+    --nav-color: rgba(31, 31, 31, 0.72);
 }
 
 body {
@@ -993,7 +993,7 @@ textarea {
     top: 0;
     left: 0;
     right: 0;
-    height: 56px;
+    height: 64px;
     background: var(--nav-color);
     backdrop-filter: saturate(180%) blur(20px);
     display: flex;
@@ -1019,10 +1019,10 @@ textarea {
 
 /* 头像 */
 #subAvatar {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    margin-right: 12px;
+    margin-right: 8px;
     object-fit: cover;
 }
 
@@ -1032,7 +1032,7 @@ textarea {
     font-size: 1rem;
     font-weight: 600;
     letter-spacing: .5px;
-    line-height: 40px;
+    line-height: 42px;
     color: var(--mainword-color);
 }
 
@@ -1135,5 +1135,17 @@ textarea {
         text-align: center;
         flex: 0 0 calc(50% - 10px);
         box-sizing: border-box;
+    }
+
+    #subNav {
+        padding: 0 4%;
+    }
+
+    .rightmenu .tabs {
+        display: none;
+    }
+
+    .leftmenu {
+        margin: 0 auto;
     }
 }
