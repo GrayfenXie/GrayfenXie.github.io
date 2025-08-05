@@ -12,7 +12,22 @@
     <meta name="keywords" content="UI设计师/插画师">
     <meta name="description" content="Grayfen的个人画展">
 </head>
+
 <body>
+    <nav id="subNav" class="hide">
+        <div class="leftmenu">
+            <img id="subAvatar" src="img/avatar.png" alt="avatar" />
+            <span class="title">Grayfen's Canvas</span>
+        </div>
+        <div class="rightmenu">
+            <div class="tabs">
+                <div class="tab active" data-tab="image-content">🎨 插画</div>
+                <div class="tab" data-tab="issue-content">👀 日常</div>
+                <div class="tab" data-tab="portfolio-content">📚 作品集</div>
+                <div class="tab" data-tab="guitar-content">🎸 弹棉花</div>
+            </div>
+        </div>
+    </nav>
     <div id="mainpart">
         <div class="infor">
             <div class="avatar">
@@ -32,7 +47,6 @@
             <div class="tab" data-tab="issue-content">👀 日常</div>
             <div class="tab" data-tab="portfolio-content">📚 作品集</div>
             <div class="tab" data-tab="guitar-content">🎸 弹棉花</div>
-            <!-- <div class="tab" data-tab="message-content">📢 私信</div> -->
         </div>
         <div id="image-content" class="tab-content active">
             <ul id="works"></ul>
@@ -256,5 +270,4 @@
 <script src="js/loadissue.js"></script>
 <script src="js/message.js"></script>
 <script src="js/loadvideo.js"></script>
-
 </html>

@@ -1,34 +1,32 @@
 let currentTabType = ''; // 当前激活的标签页类型
 var originalScrollPosition = 0; // 用于存储原始滚动位置
-
 var owner = "GrayfenXie";
 var repo = "GrayfenXie.github.io";
 var myUsername = "GrayfenXie";
 // 全局变量
-window.cachedIssues  = []; // #2 随笔
+window.cachedIssues = []; // #2 随笔
 window.cachedIssues2 = []; // #6 弹棉花
 let _commentsPromise = null;   // ← 缓存 Promise，保证只发一次
 
 async function fetchAllCommentsOnce() {
-  if (_commentsPromise) return _commentsPromise;   // 如果已请求过，直接复用
+    if (_commentsPromise) return _commentsPromise;   // 如果已请求过，直接复用
 
-  _commentsPromise = (async () => {
-    const res = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/issues/comments?per_page=100&sort=created`
-    );
-    if (!res.ok) throw new Error(res.statusText);
+    _commentsPromise = (async () => {
+        const res = await fetch(
+            `https://api.github.com/repos/${owner}/${repo}/issues/comments?per_page=100&sort=created`
+        );
+        if (!res.ok) throw new Error(res.statusText);
 
-    const all = await res.json();
-    const c2 = all.filter(c => c.issue_url.endsWith('/2') && c.user.login === myUsername);
-    const c6 = all.filter(c => c.issue_url.endsWith('/6') && c.user.login === myUsername);
+        const all = await res.json();
+        const c2 = all.filter(c => c.issue_url.endsWith('/2') && c.user.login === myUsername);
+        const c6 = all.filter(c => c.issue_url.endsWith('/6') && c.user.login === myUsername);
 
-    window.cachedIssues  = c2.reverse();
-    window.cachedIssues2 = c6.reverse();
-  })();
+        window.cachedIssues = c2.reverse();
+        window.cachedIssues2 = c6.reverse();
+    })();
 
-  return _commentsPromise;
+    return _commentsPromise;
 }
-
 
 // 页面加载时初始化当前标签页类型
 document.addEventListener('DOMContentLoaded', function () {
@@ -38,33 +36,34 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// 切换标签页
-document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-        const targetTab = tab.getAttribute('data-tab');
-        const targetContent = document.getElementById(targetTab);
-        if (!targetContent) {
-            console.error("Target content not found:", targetTab);
-            return;
-        }
+document.addEventListener('DOMContentLoaded', () => {
+    const firstTab = document.querySelector('.tab[data-tab]');
+    if (firstTab) {
+        const tabName = firstTab.dataset.tab;
+        currentTabType = tabName;
+        document.querySelectorAll(`.tab[data-tab="${tabName}"]`).forEach(t => t.classList.add('active'));
+    }
+});
 
-        // 如果点击的是当前激活的标签页，不执行任何操作
-        if (targetTab === currentTabType) {
-            return;
-        }
-
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-        tab.classList.add('active');
-        targetContent.classList.add('active');
-
-        currentTabType = targetTab;
-        anime();
-
-        // ➜ 新增：切页就停所有视频
-        pauseAllVideos();
-    });
+// 点击任意 tab（主区域或副导航均可）
+document.addEventListener('click', e => {
+    const tab = e.target.closest('.tab[data-tab]');
+    if (!tab) return;
+    const targetTab = tab.dataset.tab;
+    if (targetTab === currentTabType) return; // 重复点击当前页
+    const targetContent = document.getElementById(targetTab);
+    if (!targetContent) {
+        console.error('Target content not found:', targetTab);
+        return;
+    }
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll(`.tab[data-tab="${targetTab}"]`).forEach(t => t.classList.add('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    targetContent.classList.add('active');
+    currentTabType = targetTab;
+    anime();
+    pauseAllVideos();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 function anime() {
@@ -88,21 +87,15 @@ function anime() {
             elements[i].style.opacity = '1';
         }
     }
-
     resetStyles(eles);
     resetStyles(eles2);
     resetStyles(eles4);
     resetStyles(eles5);
-    // eles3.style.transform = 'scale(0)';
-    // eles3.style.opacity = '0';
-
     setTimeout(() => {
         triggerAnimation(eles);
         triggerAnimation(eles2);
         triggerAnimation(eles4);
         triggerAnimation(eles5);
-        // eles3.style.transform = 'scale(1)';
-        // eles3.style.opacity = '1';
     }, 10);
 }
 
@@ -174,6 +167,7 @@ switchbutton.addEventListener('click', function () {
     }
 });
 
+//留言板
 var Messageboard = document.getElementById("message-board");
 var messageboxbutton = document.getElementById("messageboxbutton");
 var flag2 = true;
@@ -269,17 +263,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // 替换原来的 pauseAllVideos
 function pauseAllVideos(excludePlayer) {
-  // 1. 原生 <video>
-  document.querySelectorAll('video').forEach(v => {
-    if (v !== excludePlayer?.tech()?.el()) v.pause();
-  });
-
-  // 2. Video.js 实例
-  if (window.videojs) {
-    Object.values(videojs.getPlayers()).forEach(p => {
-      if (p !== excludePlayer && !p.paused()) p.pause();
+    // 1. 原生 <video>
+    document.querySelectorAll('video').forEach(v => {
+        if (v !== excludePlayer?.tech()?.el()) v.pause();
     });
-  }
+
+    // 2. Video.js 实例
+    if (window.videojs) {
+        Object.values(videojs.getPlayers()).forEach(p => {
+            if (p !== excludePlayer && !p.paused()) p.pause();
+        });
+    }
 }
 
 /**
@@ -288,38 +282,50 @@ function pauseAllVideos(excludePlayer) {
  * @param {number}   threshold    距离底部多少 px 触发
  */
 function initScrollLoader(tabName, loadMoreFn, threshold = 2) {
-  const debounced = debounce(() => {
-    const nearBottom =
-      window.innerHeight + window.scrollY >=
-      document.body.offsetHeight - threshold;
+    const debounced = debounce(() => {
+        const nearBottom =
+            window.innerHeight + window.scrollY >=
+            document.body.offsetHeight - threshold;
 
-    if (nearBottom && currentTabType === tabName) {
-      loadMoreFn();
-    }
-  }, 200);
+        if (nearBottom && currentTabType === tabName) {
+            loadMoreFn();
+        }
+    }, 200);
 
-  document.addEventListener('scroll', debounced);
+    document.addEventListener('scroll', debounced);
 }
 
 /* ===== 为各 tab 注册滚动加载（在 DOM 完成后执行） ===== */
 document.addEventListener('DOMContentLoaded', () => {
-  // 随笔
-  initScrollLoader('issue-content', () => {
-    if (window.isLoading) return;
-    window.currentPage++;
-    renderIssues(window.currentPage, window.perPage, true);
-  });
+    // 随笔
+    initScrollLoader('issue-content', () => {
+        if (window.isLoading) return;
+        window.currentPage++;
+        renderIssues(window.currentPage, window.perPage, true);
+    });
 
-  // 弹棉花
-  initScrollLoader('guitar-content', () => {
-    if (window.isLoading2) return;
-    window.currentPage2++;
-    renderGuitars(window.currentPage2, window.perPage2, true);
-  });
+    // 弹棉花
+    initScrollLoader('guitar-content', () => {
+        if (window.isLoading2) return;
+        window.currentPage2++;
+        renderGuitars(window.currentPage2, window.perPage2, true);
+    });
 
-  // 插画（可选，如已使用“点击加载更多”可跳过）
-  initScrollLoader('image-content', () => {
-    if (window.loadedImages >= window.imagesData?.length) return;
-    createImageElements(window.imagesData, window.imagesPerLoad || 9);
-  });
+    // 插画（可选，如已使用“点击加载更多”可跳过）
+    initScrollLoader('image-content', () => {
+        if (window.loadedImages >= window.imagesData?.length) return;
+        createImageElements(window.imagesData, window.imagesPerLoad || 9);
+    });
+});
+
+//显示导航栏
+const nav = document.getElementById('subNav');
+const avatar = document.getElementById('subAvatar');
+const origin = document.querySelector('.avatar');   // 页面里原来的头像
+const HIDE = 'hide';                              // 状态类
+
+window.addEventListener('scroll', () => {
+    const top = window.scrollY;
+    top > 120 ? nav.classList.remove(HIDE)
+        : nav.classList.add(HIDE);
 });
