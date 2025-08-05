@@ -326,6 +326,6 @@ const HIDE = 'hide';                              // 状态类
 
 window.addEventListener('scroll', () => {
     const top = window.scrollY;
-    top > 120 ? nav.classList.remove(HIDE)
+    top > 300 ? nav.classList.remove(HIDE)
         : nav.classList.add(HIDE);
 });
