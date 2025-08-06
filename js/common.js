@@ -3,6 +3,7 @@ var originalScrollPosition = 0; // 用于存储原始滚动位置
 var owner = "GrayfenXie";
 var repo = "GrayfenXie.github.io";
 var myUsername = "GrayfenXie";
+var mainpart = document.getElementById('mainpart');
 // 全局变量
 window.cachedIssues = []; // #2 随笔
 window.cachedIssues2 = []; // #6 弹棉花
@@ -63,7 +64,7 @@ document.addEventListener('click', e => {
     currentTabType = targetTab;
     anime();
     pauseAllVideos();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    mainpart.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 function anime() {
@@ -177,7 +178,7 @@ messageboxbutton.onclick = function () {
         messagemodal.style.opacity = 1;
     }, 100);
     // 记录当前滚动位置
-    originalScrollPosition = window.scrollY || document.documentElement.scrollTop;
+    originalScrollPosition = mainpart.scrollY || document.documentElement.scrollTop;
     //   // 将页面滚动位置设置为之前记录的位置，以避免页面跳转
     document.body.style.position = 'fixed';
     document.body.style.width = '100%';
@@ -201,7 +202,7 @@ span.onclick = function () {
         document.body.style.top = '';
         document.body.style.width = 'auto';
         // 恢复原始滚动位置
-        window.scrollTo(0, originalScrollPosition);
+        mainpart.scrollTo(0, originalScrollPosition);
     }, "100");
     document.body.classList.remove('no-scroll');
     flag2 = false;
@@ -221,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
         modalImg.alt = img.alt;
 
         // 记录当前滚动位置
-        originalScrollPosition = window.scrollY || document.documentElement.scrollTop;
+        originalScrollPosition = mainpart.scrollY || document.documentElement.scrollTop;
         // 添加禁止滚动的类
         document.body.classList.add('no-scroll');
         // 将页面滚动位置设置为之前记录的位置，以避免页面跳转
@@ -243,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.style.position = '';
             document.body.style.top = '';
             // 恢复原始滚动位置
-            window.scrollTo(0, originalScrollPosition);
+            mainpart.scrollTo(0, originalScrollPosition);
         }, "100");
         document.body.classList.remove('no-scroll');
         for (var i = a.length - 1; i >= 0; i--) {
@@ -283,16 +284,17 @@ function pauseAllVideos(excludePlayer) {
  */
 function initScrollLoader(tabName, loadMoreFn, threshold = 2) {
     const debounced = debounce(() => {
-        const nearBottom =
-            window.innerHeight + window.scrollY >=
-            document.body.offsetHeight - threshold;
+        // 关键：用 mainpart 的滚动信息
+        const { scrollTop, clientHeight, scrollHeight } = mainpart;
+        const nearBottom = scrollTop + clientHeight >= scrollHeight - threshold;
 
         if (nearBottom && currentTabType === tabName) {
             loadMoreFn();
         }
     }, 200);
 
-    document.addEventListener('scroll', debounced);
+    // 关键：把事件绑在 mainpart 上
+    mainpart.addEventListener('scroll', debounced);
 }
 
 /* ===== 为各 tab 注册滚动加载（在 DOM 完成后执行） ===== */
@@ -319,13 +321,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 //显示导航栏
-const nav = document.getElementById('subNav');
-const avatar = document.getElementById('subAvatar');
-const origin = document.querySelector('.avatar');   // 页面里原来的头像
-const HIDE = 'hide';                              // 状态类
-
-window.addEventListener('scroll', () => {
-    const top = window.scrollY;
-    top > 300 ? nav.classList.remove(HIDE)
-        : nav.classList.add(HIDE);
+const nav = document.getElementById('subNav');  
+const HIDE = 'hide'; 
+mainpart.addEventListener('scroll', () => {
+  const top = mainpart.scrollTop;   // ← 用 scrollTop，且用 mainpart 取值
+  top > 300
+    ? nav.classList.remove(HIDE)
+    : nav.classList.add(HIDE);
 });

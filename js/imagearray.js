@@ -63,7 +63,7 @@ function opens(self) {
   modalImg.src = self.firstElementChild.src;
   modalImg.alt = self.firstElementChild.alt;
   // 记录当前滚动位置
-  originalScrollPosition = window.scrollY || document.documentElement.scrollTop;
+  originalScrollPosition = mainpart.scrollY || document.documentElement.scrollTop;
   // 添加禁止滚动的类
   document.body.classList.add('no-scroll');
   // 将页面滚动位置设置为之前记录的位置，以避免页面跳转
