@@ -62,13 +62,14 @@ function opens(self) {
   modal.style.display = "block";
   modalImg.src = self.firstElementChild.src;
   modalImg.alt = self.firstElementChild.alt;
-  // 记录当前滚动位置
-  originalScrollPosition = mainpart.scrollY || document.documentElement.scrollTop;
-  // 添加禁止滚动的类
-  document.body.classList.add('no-scroll');
-  // 将页面滚动位置设置为之前记录的位置，以避免页面跳转
-  document.body.style.position = 'fixed';
-  document.body.style.top = -originalScrollPosition + 'px';
+  // // 记录当前滚动位置
+  // originalScrollPosition = mainpart.scrollY || document.documentElement.scrollTop;
+  // // 添加禁止滚动的类
+  // document.body.classList.add('no-scroll');
+  // // 将页面滚动位置设置为之前记录的位置，以避免页面跳转
+  // document.body.style.position = 'fixed';
+  // document.body.style.top = -originalScrollPosition + 'px';
+  freezeScroll();
   flag = true;
   setTimeout(() => {
     modalImg.style.opacity = 1;
