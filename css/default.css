@@ -434,7 +434,8 @@ a {
 
 #issue-list .issue-date {
     color: var(--second-color);
-    float: right;
+    text-align: right;
+    margin: 12px 0;
 }
 
 .image-overlay {
@@ -1045,6 +1046,86 @@ textarea {
 
 .rightmenu .tab {
     margin: 0 12px !important;
+}
+
+.waline-container {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px dashed #ddd;
+}
+
+.wl-editor, .wl-input{
+    box-sizing: border-box!important;
+}
+.wl-power{
+    display: none!important;
+}
+.wl-action .wl-md-icon,
+.wl-action .wl-md-text {
+  display: none !important;
+}
+.wl-footer .wl-actions a{
+    display: none!important;
+}
+.wl-panel{
+    margin: 0!important;
+}
+.issue-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.comment-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    color: #666;
+}
+
+.comment-toggle:hover {
+    background-color: #f0f0f0;
+}
+
+.night .comment-toggle:hover {
+    background-color: #333;
+}
+
+.night .comment-toggle {
+    color: #ccc;
+}
+
+.comment-toggle svg {
+    width: 16px;
+    height: 16px;
+}
+
+.comment-count {
+    font-size: 12px;
+    color: #999;
+}
+
+.night .comment-count {
+    color: #aaa;
+}
+
+.waline-container {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.night .waline-container {
+    border-top-color: #333;
 }
 
 @media screen and (max-width: 1024px) {
