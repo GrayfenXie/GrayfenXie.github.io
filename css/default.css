@@ -1003,7 +1003,7 @@ textarea {
     align-items: center;
     padding: 0 14%;
     box-shadow: 0 1px 0 rgba(0, 0, 0, .06);
-    z-index: 1000;
+    z-index: 3;
     transition: transform .35s ease, opacity .35s ease;
     transform: translateY(-100%);
     opacity: 0;
