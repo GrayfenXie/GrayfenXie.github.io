@@ -736,7 +736,7 @@ footer {
 .tab-content {
     display: none;
     border-radius: 5px;
-    min-height: calc(100vh - 616px);
+    min-height: calc(100vh - 608px);
 }
 
 .tab-content.active {
