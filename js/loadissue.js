@@ -26,7 +26,7 @@ async function fetchCommentCount(issueId) {
             `https://waline.grayfen.cn/comment?path=/issues/${issueId}`
         );
         const data = await res.json();
-        return Array.isArray(data) ? data.length : 0;
+        return data ? data.count :0;
     } catch {
         return 0;
     }
