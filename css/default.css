@@ -1070,6 +1070,18 @@ textarea {
 .wl-panel{
     margin: 0!important;
 }
+.wl-header input,.wl-header label,.wl-editor{
+    font-size: 1em!important;
+}
+.wl-editor{
+    margin: 0!important;
+    width: 100%!important;
+    resize: none!important;
+}
+.wl-panel textarea{
+    padding: 12px!important;
+}
+
 .issue-footer {
     display: flex;
     justify-content: space-between;
