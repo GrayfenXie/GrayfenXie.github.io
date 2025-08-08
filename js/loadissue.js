@@ -26,7 +26,7 @@ async function fetchCommentCount(issueId) {
             `https://waline.grayfen.cn/comment?path=/issues/${issueId}`
         );
         const data = await res.json();
-        return data ? data.count :0;
+        return data ? data.count : 0;
     } catch {
         return 0;
     }
@@ -85,13 +85,18 @@ function renderIssues(page, perPage, isAppend = false) {
             const isVisible = walineContainer.style.display !== 'none';
 
             if (isVisible) {
-                // 隐藏评论区
+                // 当前已显示，直接隐藏
                 walineContainer.style.display = 'none';
             } else {
-                // 显示评论区
+                /* 新增：先隐藏所有其他评论区 */
+                document.querySelectorAll('.waline-container').forEach(el => {
+                    el.style.display = 'none';
+                });
+
+                // 再打开当前评论区
                 walineContainer.style.display = 'block';
 
-                // 如果还没初始化 Waline，就初始化
+                // 以下原有逻辑保持不变
                 if (!walineContainer.hasAttribute('data-waline-inited')) {
                     Waline.init({
                         el: walineContainer,
@@ -113,7 +118,6 @@ function renderIssues(page, perPage, isAppend = false) {
                         highlighter: false,
                         meta: ['nick', 'mail']
                     });
-
                     walineContainer.setAttribute('data-waline-inited', '1');
                 }
             }
