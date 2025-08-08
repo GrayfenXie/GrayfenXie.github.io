@@ -1075,7 +1075,27 @@ textarea {
 .wl-panel textarea{
     padding: 12px!important;
 }
-
+.wl-content p ,.wl-head span{
+    color: var(--mainword-color)!important;
+}
+.wl-btn.primary{
+    background: var(--theme-color)!important;
+    border: none!important;
+    font-size: 1em!important;
+    color: var(--card-color)!important;
+}
+.wl-btn.primary:hover{
+    filter: brightness(110%)!important;
+}
+.wl-panel{
+    background-color: var(--card-color)!important;
+}
+.wl-header label{
+    color: var(--mainword-color)!important;
+}
+.wl-sort li.active{
+    color: var(--theme-color)!important;
+}
 .issue-footer {
     display: flex;
     justify-content: space-between;
@@ -1083,6 +1103,15 @@ textarea {
     margin-top: 10px;
     padding-top: 10px;
     border-top: 1px dashed #eee;
+}
+.wl-card .wl-delete, .wl-card .wl-like, .wl-card .wl-reply, .wl-card .wl-edit {
+    color: #666;
+}
+.wl-card .wl-delete:hover, .wl-card .wl-like:hover, .wl-card .wl-reply:hover, .wl-card .wl-edit:hover {
+    color: var(--theme-color)!important;
+}
+.wl-editor:focus, .wl-input:focus {
+    background: transparent!important;
 }
 
 .comment-toggle {
