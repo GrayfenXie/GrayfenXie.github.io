@@ -1048,12 +1048,6 @@ textarea {
     margin: 0 12px !important;
 }
 
-.waline-container {
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px dashed #ddd;
-}
-
 .wl-editor, .wl-input{
     box-sizing: border-box!important;
 }
@@ -1088,7 +1082,7 @@ textarea {
     align-items: center;
     margin-top: 10px;
     padding-top: 10px;
-    border-top: 1px solid #eee;
+    border-top: 1px dashed #eee;
 }
 
 .comment-toggle {
@@ -1131,9 +1125,7 @@ textarea {
 }
 
 .waline-container {
-    margin-top: 20px;
     padding-top: 20px;
-    border-top: 1px solid #eee;
 }
 
 .night .waline-container {
