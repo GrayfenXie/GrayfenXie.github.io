@@ -1068,7 +1068,7 @@ textarea {
     color: var(--theme-color)!important;
 }
 .wl-card .wl-meta>span{
-    color: var(--footer-color)!important;
+    background: var(--footer-color)!important;
 }
 .wl-power{
     display: none!important;
