@@ -1050,6 +1050,25 @@ textarea {
 
 .wl-editor, .wl-input{
     box-sizing: border-box!important;
+    color: var(--mainword-color)!important;
+}
+.wl-action,.wl-reply,.wl-like{
+    color: var(--second-color)!important;
+}
+.wl-action :hover{
+    color: var(--theme-color)!important;
+}
+.wl-text-number{
+    font-size: 1em!important;
+}
+.wl-count{
+    color: var(--mainword-color)!important;
+}
+.wl-count .wl-num{
+    color: var(--theme-color)!important;
+}
+.wl-card .wl-meta>span{
+    color: var(--footer-color)!important;
 }
 .wl-power{
     display: none!important;
