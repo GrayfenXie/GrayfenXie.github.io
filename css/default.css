@@ -53,6 +53,7 @@ button {
     --border-radius: 8px;
     --theme-color: #FFBF37;
     --nav-color: rgba(255, 255, 255, 0.72);
+    --waline-emoji-scrollbar: #FFBF37!important;
 }
 
 :root .night {
@@ -64,6 +65,7 @@ button {
     --footer-color: #0b0b0b;
     --theme-color: #B5F3FF;
     --nav-color: rgba(31, 31, 31, 0.72);
+    --waline-emoji-scrollbar: #B5F3FF!important;
 }
 
 body {
@@ -1133,9 +1135,6 @@ textarea {
     background: transparent!important;
 }
 [data-waline] a {
-    color: var(--theme-color)!important;
-}
-.wl-emoji-popup .wl-emoji-list::-webkit-scrollbar-thumb{
     color: var(--theme-color)!important;
 }
 
