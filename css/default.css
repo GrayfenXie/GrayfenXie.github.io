@@ -1132,6 +1132,9 @@ textarea {
 .wl-editor:focus, .wl-input:focus {
     background: transparent!important;
 }
+[data-waline] a {
+    color: var(--theme-color)!important;
+}
 
 .comment-toggle {
     background: none;
