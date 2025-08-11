@@ -1135,7 +1135,7 @@ textarea {
 [data-waline] a {
     color: var(--theme-color)!important;
 }
-.wl-tab-wrapper::-webkit-scrollbar{
+.wl-emoji-popup .wl-emoji-list::-webkit-scrollbar-thumb{
     color: var(--theme-color)!important;
 }
 
