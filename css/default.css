@@ -1135,6 +1135,9 @@ textarea {
 [data-waline] a {
     color: var(--theme-color)!important;
 }
+.wl-tab-wrapper::-webkit-scrollbar{
+    color: var(--theme-color)!important;
+}
 
 .comment-toggle {
     background: none;
