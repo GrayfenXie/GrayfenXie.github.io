@@ -192,12 +192,6 @@ messageboxbutton.onclick = function () {
     setTimeout(() => {
         messagemodal.style.opacity = 1;
     }, 100);
-    // // 记录当前滚动位置
-    // originalScrollPosition = mainpart.scrollY || document.documentElement.scrollTop;
-    // //   // 将页面滚动位置设置为之前记录的位置，以避免页面跳转
-    // document.body.style.position = 'fixed';
-    // document.body.style.width = '100%';
-    // document.body.style.top = -originalScrollPosition + 'px';
     freezeScroll();
     flag2 = true;
 }
@@ -211,14 +205,6 @@ span.onclick = function () {
     messagemodal.style.opacity = 0;
     setTimeout(() => {
         messagemodal.style.display = "none";
-        // // 移除禁止滚动的类
-        // document.body.classList.remove('no-scroll');
-        // // 恢复body的默认样式
-        // document.body.style.position = '';
-        // document.body.style.top = '';
-        // document.body.style.width = 'auto';
-        // // 恢复原始滚动位置
-        // mainpart.scrollTo(0, originalScrollPosition);
         unfreezeScroll();
     }, "100");
     document.body.classList.remove('no-scroll');
@@ -237,14 +223,6 @@ document.addEventListener('DOMContentLoaded', function () {
         modal.style.display = "block";
         modalImg.src = img.src;
         modalImg.alt = img.alt;
-
-        // // 记录当前滚动位置
-        // originalScrollPosition = mainpart.scrollY || document.documentElement.scrollTop;
-        // // 添加禁止滚动的类
-        // document.body.classList.add('no-scroll');
-        // // 将页面滚动位置设置为之前记录的位置，以避免页面跳转
-        // document.body.style.position = 'fixed';
-        // document.body.style.top = -originalScrollPosition + 'px';
         freezeScroll();
         setTimeout(() => {
             modalImg.style.opacity = 1;
@@ -256,13 +234,6 @@ document.addEventListener('DOMContentLoaded', function () {
         modalImg.style.opacity = 0;
         setTimeout(() => {
             modal.style.display = "none";
-            // 移除禁止滚动的类
-            // document.body.classList.remove('no-scroll');
-            // // 恢复body的默认样式
-            // document.body.style.position = '';
-            // document.body.style.top = '';
-            // // 恢复原始滚动位置
-            // mainpart.scrollTo(0, originalScrollPosition);
             unfreezeScroll();
         }, "100");
         document.body.classList.remove('no-scroll');
@@ -273,12 +244,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 使用事件委托处理动态加载的图片点击事件
-    document.getElementById('issue-list').addEventListener('click', function (event) {
-        const target = event.target;
-        if (target.tagName.toLowerCase() === 'img') {
-            opens(target);
-        }
-    });
+document.getElementById('issue-list').addEventListener('click', function (event) {
+    const target = event.target;
+
+    // 确保点击的是 img 元素，并且它在 .issue-body 内
+    if (target.tagName.toLowerCase() === 'img' && target.closest('.issue-body')) {
+        opens(target);
+    }
+});
 });
 
 // 替换原来的 pauseAllVideos
