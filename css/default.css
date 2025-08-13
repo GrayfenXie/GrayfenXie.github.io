@@ -53,6 +53,7 @@ button {
     --border-radius: 8px;
     --theme-color: #FFBF37;
     --nav-color: rgba(255, 255, 255, 0.72);
+    --line-color: #eeeeee;
 }
 
 :root .night {
@@ -64,6 +65,7 @@ button {
     --footer-color: #0b0b0b;
     --theme-color: #B5F3FF;
     --nav-color: rgba(31, 31, 31, 0.72);
+    --line-color: #575757;
 }
 
 body {
@@ -927,7 +929,7 @@ textarea {
     width: 600px;
 } */
 #guitar-list {
-    width: 72%;
+    width: 80%;
     margin: 0 auto;
     height: auto;
     display: flex;
@@ -945,7 +947,7 @@ textarea {
     overflow: hidden;
     opacity: 0;
     background: var(--card-color);
-    padding: 20px;
+    padding: 40px;
     border-radius: var(--border-radius);
 }
 
@@ -980,7 +982,7 @@ textarea {
 }
 
 .video-title {
-    font-size: 1.4em;
+    font-size: 1.3em;
     color: var(--mainword-color);
 }
 
@@ -1121,7 +1123,8 @@ textarea {
     align-items: center;
     margin-top: 10px;
     padding-top: 10px;
-    border-top: 1px dashed #eee;
+    border-top: 1px dashed;
+    border-color: var(--line-color);
 }
 .wl-card .wl-delete, .wl-card .wl-like, .wl-card .wl-reply, .wl-card .wl-edit {
     color: #666;
