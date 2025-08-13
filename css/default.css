@@ -241,8 +241,9 @@ a {
 
 #works,
 #issue-list,
-#portfolio-list {
-    width: 72%;
+#portfolio-list,
+#guitar-list {
+    width: 64%;
     margin: 0 auto;
     height: auto;
     display: flex;
@@ -524,7 +525,7 @@ footer {
 
 .footer-box {
     text-align: center;
-    width: 72%;
+    width: 64%;
     margin: 0 auto;
     padding: 16px 0 8px 0;
     font-size: 0.875rem;
@@ -928,7 +929,7 @@ textarea {
 /* .videoplayer {
     width: 600px;
 } */
-#guitar-list {
+/* #guitar-list {
     width: 80%;
     margin: 0 auto;
     height: auto;
@@ -937,7 +938,7 @@ textarea {
     flex-wrap: wrap;
     justify-content: space-around;
     align-content: center;
-}
+} */
 
 
 .guitar-item {
@@ -1004,7 +1005,7 @@ textarea {
     backdrop-filter: saturate(180%) blur(20px);
     display: flex;
     align-items: center;
-    padding: 0 14%;
+    padding: 0 18%;
     box-shadow: 0 1px 0 rgba(0, 0, 0, .06);
     z-index: 3;
     transition: transform .35s ease, opacity .35s ease;
@@ -1201,6 +1202,7 @@ textarea {
     .portfolio-item,
     .guitar-item {
         width: 100%;
+        padding: 20px;
     }
 
     .portfolio-item {
