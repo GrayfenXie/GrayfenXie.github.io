@@ -723,6 +723,8 @@ footer {
     opacity: 0.5;
     transition: all 1s;
     background: var(--card-color);
+    min-width: 132px;
+    text-align: center;
 }
 
 .tab:hover {
@@ -872,6 +874,7 @@ textarea {
     color: var(--card-color);
     margin: 16px 0;
     opacity: 1;
+    font-size: 1em;
 }
 
 #my-form-button:hover {
@@ -1278,7 +1281,6 @@ textarea {
         margin: 6px 0;
         padding: 10px 0;
         width: 32%;
-        text-align: center;
         flex: 0 0 calc(50% - 10px);
         box-sizing: border-box;
     }
