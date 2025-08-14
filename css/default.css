@@ -929,21 +929,6 @@ textarea {
     color: var(--mainword-color);
 }
 
-/* .videoplayer {
-    width: 600px;
-} */
-/* #guitar-list {
-    width: 80%;
-    margin: 0 auto;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-content: center;
-} */
-
-
 .guitar-item {
     width: 64%;
     margin: 6px 0;
@@ -951,7 +936,7 @@ textarea {
     overflow: hidden;
     opacity: 0;
     background: var(--card-color);
-    padding: 40px;
+    padding: 20px 40px;
     border-radius: var(--border-radius);
 }
 
