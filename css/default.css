@@ -936,7 +936,7 @@ textarea {
     overflow: hidden;
     opacity: 0;
     background: var(--card-color);
-    padding: 20px 40px;
+    padding: 32px 40px;
     border-radius: var(--border-radius);
 }
 
