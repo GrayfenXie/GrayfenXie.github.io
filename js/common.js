@@ -23,6 +23,25 @@ function unfreezeScroll() {
   mainpart.scrollTop = scrollTop;
 }
 
+//手机导航栏按钮
+var openit = document.getElementById('openit');
+var closeit = document.getElementById('closeit');
+var mobilemune = document.getElementById('mobilemune');
+function openitfc() {
+    mobilemune.style.visibility = 'visible';
+    mobilemune.style.opacity = '1';
+    closeit.style.display = 'block';
+    openit.style.display = 'none';
+};
+function closeitfc() {
+    mobilemune.style.opacity = '0';
+    mobilemune.style.visibility = 'hidden';
+    openit.style.display = 'block';
+    closeit.style.display = 'none';
+};
+openit.onclick = openitfc;
+closeit.onclick = closeitfc;
+
 
 async function fetchAllCommentsOnce() {
     if (_commentsPromise) return _commentsPromise;   // 如果已请求过，直接复用
@@ -80,6 +99,7 @@ document.addEventListener('click', e => {
     anime();
     pauseAllVideos();
     mainpart.scrollTo({ top: 0, behavior: 'smooth' });
+    closeitfc();
 });
 
 function anime() {
