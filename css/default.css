@@ -1185,6 +1185,12 @@ textarea {
     .leftmenu .title{
         display: none;
     }
+    #works, #issue-list, #portfolio-list, #guitar-list {
+        width: 88%;
+    }
+    .footer-box{
+        width: 88%;
+    }
 }
 
 
