@@ -1260,6 +1260,11 @@ textarea {
         padding: 0% 6.5%;
     }
 
+}
+
+
+@media screen and (max-width: 1024px) {
+    
     .menubutton {
         display: block;
     }
@@ -1308,15 +1313,6 @@ textarea {
         align-items: center;
         font-size: 1.25rem;
         font-size: 20px;
-    }
-
-}
-
-
-@media screen and (max-width: 1024px) {
-
-    .menubutton {
-        display: block;
     }
 
     #works,
