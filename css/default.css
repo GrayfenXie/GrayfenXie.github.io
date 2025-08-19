@@ -994,7 +994,7 @@ textarea {
     backdrop-filter: saturate(180%) blur(20px);
     display: flex;
     align-items: center;
-    padding: 0 18%;
+    padding: 0 18.4%;
     box-shadow: 0 1px 0 rgba(0, 0, 0, .06);
     z-index: 3;
     transition: transform .35s ease, opacity .35s ease;
@@ -1190,6 +1190,9 @@ textarea {
     }
     .footer-box{
         width: 88%;
+    }
+    #subNav{
+        padding: 0% 6.5%;
     }
 }
 
