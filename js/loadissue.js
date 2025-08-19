@@ -84,7 +84,7 @@ function renderIssues(page, perPage, isAppend = false) {
     moreButton.style.cursor = 'pointer';
     moreButton.style.pointerEvents = 'auto';
   }
-  document.getElementById('loadpic2').innerText = start + pageIssues.length;
+  document.getElementById('loadpic2').innerText = Math.min(end, window.cachedIssues.length);
 }
 
 // ===== 评论区切换事件（事件委托） =====
