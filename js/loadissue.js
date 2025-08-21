@@ -128,13 +128,22 @@ document.addEventListener('click', e => {
         onMounted(walineInstance) {
           const form = walineInstance.el.querySelector('.wl-form');
           const btn = form.querySelector('.wl-btn[type="submit"]');
+
           form.addEventListener('submit', () => {
             btn.textContent = '发送中…';
             btn.disabled = true;
-            setTimeout(() => {
-              btn.textContent = '发送';
-              btn.disabled = false;
-            }, 100);
+          });
+
+          /* 新增：监听成功 / 失败后复位 + toast */
+          walineInstance.el.addEventListener('waline:submitted', () => {
+            btn.textContent = '发送';
+            btn.disabled = false;
+            showToast('评论已发送 ✅');
+          });
+          walineInstance.el.addEventListener('waline:error', () => {
+            btn.textContent = '发送';
+            btn.disabled = false;
+            showToast('发送失败 ❌');
           });
         }
       });
