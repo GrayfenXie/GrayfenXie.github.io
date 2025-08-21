@@ -104,51 +104,48 @@ document.addEventListener('click', e => {
     container.style.display = 'block';
 
     // 首次点击初始化 Waline
-    if (!container.hasAttribute('data-waline-inited')) {
-      Waline.init({
-        el: container,
-        serverURL: 'https://waline.grayfen.cn/',
-        emoji: [
-          '//unpkg.com/@waline/emojis@1.2.0/weibo',
-          '//unpkg.com/@waline/emojis@1.2.0/bmoji',
-        ],
-        path: `/issues/${issueId}`,
-        components: {
-          VInfo: ({ nick }) => h('span', { class: 'wl-nick' }, nick),
-          MarkdownGuide: () => null,
-        },
-        lang: 'zh-CN',
-        dark: 'html[class="night"]',
-        search: false,
-        login: 'disable',
-        imageUploader: false,
-        highlighter: false,
-        meta: ['nick', 'mail'],
-        // ↓↓↓ 新增：按钮假秒回
-        onMounted(walineInstance) {
-          const form = walineInstance.el.querySelector('.wl-form');
-          const btn = form.querySelector('.wl-btn[type="submit"]');
-
-          form.addEventListener('submit', () => {
-            btn.textContent = '发送中…';
-            btn.disabled = true;
-          });
-
-          /* 新增：监听成功 / 失败后复位 + toast */
-          walineInstance.el.addEventListener('waline:submitted', () => {
-            btn.textContent = '发送';
-            btn.disabled = false;
-            showToast('评论已发送 ✅');
-          });
-          walineInstance.el.addEventListener('waline:error', () => {
-            btn.textContent = '发送';
-            btn.disabled = false;
-            showToast('发送失败 ❌');
-          });
-        }
-      });
-      container.setAttribute('data-waline-inited', '1');
-    }
+if (!container.hasAttribute('data-waline-inited')) {
+  Waline.init({
+    el: container,
+    serverURL: 'https://waline.grayfen.cn/',
+    emoji: [
+      '//unpkg.com/@waline/emojis@1.2.0/weibo',
+      '//unpkg.com/@waline/emojis@1.2.0/bmoji',
+    ],
+    path: `/issues/${issueId}`,
+    locale: {
+      nick: '昵称',
+      mail: '邮箱',
+      link: '网站',
+      placeholder: '评论支持 Markdown',
+    },
+    dark: 'html[class="night"]',
+    login: 'disable',
+    imageUploader: false,
+    tex: false,
+    search: false,
+    meta: ['nick', 'mail'],
+    // v3 专用钩子
+    onBeforeSubmit() {
+      const btn = this.el.querySelector('.wl-btn[type="submit"]');
+      btn.textContent = '发送中…';
+      btn.disabled = true;
+    },
+    onSuccess() {
+      const btn = this.el.querySelector('.wl-btn[type="submit"]');
+      btn.textContent = '发送';
+      btn.disabled = false;
+      showToast('评论已发送 ✅');
+    },
+    onError() {
+      const btn = this.el.querySelector('.wl-btn[type="submit"]');
+      btn.textContent = '发送';
+      btn.disabled = false;
+      showToast('发送失败 ❌');
+    },
+  });
+  container.setAttribute('data-waline-inited', '1');
+}
   }
 });
 
