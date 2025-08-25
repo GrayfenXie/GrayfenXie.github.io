@@ -11,16 +11,16 @@ let _commentsPromise = null;   // ← 缓存 Promise，保证只发一次
 
 // 冻结 mainpart 的滚动
 function freezeScroll() {
-  const scrollTop = mainpart.scrollTop;
-  mainpart.dataset.scrollTop = scrollTop;
-  mainpart.style.overflow = 'hidden';   // 关键：让 mainpart 不再滚动
+    const scrollTop = mainpart.scrollTop;
+    mainpart.dataset.scrollTop = scrollTop;
+    mainpart.style.overflow = 'hidden';   // 关键：让 mainpart 不再滚动
 }
 
 // 恢复 mainpart 的滚动
 function unfreezeScroll() {
-  const scrollTop = parseInt(mainpart.dataset.scrollTop || '0', 10);
-  mainpart.style.overflow = '';         // 恢复默认（或你之前的值）
-  mainpart.scrollTop = scrollTop;
+    const scrollTop = parseInt(mainpart.dataset.scrollTop || '0', 10);
+    mainpart.style.overflow = '';         // 恢复默认（或你之前的值）
+    mainpart.scrollTop = scrollTop;
 }
 
 //手机导航栏按钮
@@ -53,9 +53,14 @@ async function fetchAllCommentsOnce() {
         if (!res.ok) throw new Error(res.statusText);
 
         const all = await res.json();
-        const c2 = all.filter(c => c.issue_url.endsWith('/2') && c.user.login === myUsername);
-        const c6 = all.filter(c => c.issue_url.endsWith('/6') && c.user.login === myUsername);
-
+        const c2 = all.filter(c =>
+            c.issue_url.endsWith('/2') &&
+            (c.user.login === myUsername || c.user.login === 'grayfenxie[bot]')
+        );
+        const c6 = all.filter(c =>
+            c.issue_url.endsWith('/6') &&
+            (c.user.login === myUsername || c.user.login === 'grayfenxie[bot]')
+        );
         window.cachedIssues = c2.reverse();
         window.cachedIssues2 = c6.reverse();
     })();
@@ -264,14 +269,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 使用事件委托处理动态加载的图片点击事件
-document.getElementById('issue-list').addEventListener('click', function (event) {
-    const target = event.target;
+    document.getElementById('issue-list').addEventListener('click', function (event) {
+        const target = event.target;
 
-    // 确保点击的是 img 元素，并且它在 .issue-body 内
-    if (target.tagName.toLowerCase() === 'img' && target.closest('.issue-body')) {
-        opens(target);
-    }
-});
+        // 确保点击的是 img 元素，并且它在 .issue-body 内
+        if (target.tagName.toLowerCase() === 'img' && target.closest('.issue-body')) {
+            opens(target);
+        }
+    });
 });
 
 // 替换原来的 pauseAllVideos
@@ -333,11 +338,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 //显示导航栏
-const nav = document.getElementById('subNav');  
-const HIDE = 'hide'; 
+const nav = document.getElementById('subNav');
+const HIDE = 'hide';
 mainpart.addEventListener('scroll', () => {
-  const top = mainpart.scrollTop;   // ← 用 scrollTop，且用 mainpart 取值
-  top > 300
-    ? nav.classList.remove(HIDE)
-    : nav.classList.add(HIDE);
+    const top = mainpart.scrollTop;   // ← 用 scrollTop，且用 mainpart 取值
+    top > 300
+        ? nav.classList.remove(HIDE)
+        : nav.classList.add(HIDE);
 });
