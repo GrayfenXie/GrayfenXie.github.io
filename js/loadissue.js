@@ -140,3 +140,32 @@ document.getElementById('more2').addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
   loadAllIssues();
 });
+
+/* ========= 全局 loading & toast ========= */
+// 显示/隐藏 loading
+function toggleLoading(show = true) {
+  const mask = document.getElementById('waline-loading');
+  mask.style.display = show ? 'flex' : 'none';
+}
+
+// 显示 toast
+function showToast(msg, duration = 2000) {
+  const toast = document.getElementById('waline-toast');
+  toast.textContent = msg;
+  toast.style.display = 'block';
+  setTimeout(() => toast.style.display = 'none', duration);
+}
+
+/* 监听 Waline 事件（对所有已初始化的评论区都生效） */
+document.addEventListener('DOMContentLoaded', () => {
+  // 监听全局事件
+  document.addEventListener('waline:submit', () => toggleLoading(true));   // 发送前
+  document.addEventListener('waline:submitted', () => {                   // 发送成功
+    toggleLoading(false);
+    showToast('评论已发送 ✅');
+  });
+  document.addEventListener('waline:error', () => {                       // 发送失败
+    toggleLoading(false);
+    showToast('发送失败，请重试 ❌');
+  });
+});
