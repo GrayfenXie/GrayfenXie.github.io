@@ -647,7 +647,7 @@ footer {
 .modal-content {
     margin: auto;
     display: block;
-    height: 100vh;
+    height: 60vh;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -655,7 +655,7 @@ footer {
 }
 
 .big {
-    transform: translate(-50%, -50%) scale(1.2);
+    transform: translate(-50%, -50%) scale(1.4);
     top: 50%;
     left: 50%;
     padding: 0;
@@ -663,7 +663,7 @@ footer {
 
 #img01 {
     opacity: 0;
-    transition: all 1s;
+    transition: all .6s;
 }
 
 #caption {
