@@ -156,16 +156,16 @@ function showToast(msg, duration = 2000) {
   setTimeout(() => toast.style.display = 'none', duration);
 }
 
-/* 监听 Waline 事件（对所有已初始化的评论区都生效） */
-document.addEventListener('DOMContentLoaded', () => {
-  // 监听全局事件
-  document.addEventListener('waline:submit', () => toggleLoading(true));   // 发送前
-  document.addEventListener('waline:submitted', () => {                   // 发送成功
-    toggleLoading(false);
-    showToast('评论已发送 ✅');
-  });
-  document.addEventListener('waline:error', () => {                       // 发送失败
-    toggleLoading(false);
-    showToast('发送失败，请重试 ❌');
-  });
-});
+// /* 监听 Waline 事件（对所有已初始化的评论区都生效） */
+// document.addEventListener('DOMContentLoaded', () => {
+//   // 监听全局事件
+//   document.addEventListener('waline:submit', () => toggleLoading(true));   // 发送前
+//   document.addEventListener('waline:submitted', () => {                   // 发送成功
+//     toggleLoading(false);
+//     showToast('评论已发送 ✅');
+//   });
+//   document.addEventListener('waline:error', () => {                       // 发送失败
+//     toggleLoading(false);
+//     showToast('发送失败，请重试 ❌');
+//   });
+// });
