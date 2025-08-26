@@ -1,8 +1,8 @@
 // 缓存 & 分页
-window.cachedIssues   = [];
-window.currentPage    = 1;
-window.perPage        = 10;
-window.isLoading      = false;
+window.cachedIssues = [];
+window.currentPage = 1;
+window.perPage = 10;
+window.isLoading = false;
 
 // 拉取全部 Issue 数据
 async function loadAllIssues() {
@@ -38,17 +38,21 @@ async function fetchCommentCount(issueId) {
 function renderIssues(page, perPage, isAppend = false) {
   const issueList = document.getElementById('issue-list');
   const start = (page - 1) * perPage;
-  const end   = start + perPage;
+  const end = start + perPage;
   const pageIssues = window.cachedIssues.slice(start, end);
-
   if (!isAppend) issueList.innerHTML = '';
-
   pageIssues.forEach(issue => {
     const date = new Date(issue.created_at);
     const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
     const options = { gfm: true, breaks: true, smartLists: true };
     const bodyHTML = marked(issue.body || '', options);
-
+    function renderImages(html) {
+      // 简单正则：把 "<img ...><img ...>" 包成 <div class="gallery">...</div>
+      return html.replace(
+        /(<img[^>]*>)(?:\s*<img[^>]*>)+/g,
+        match => `<div class="gallery">${match}</div>`
+      );
+    }
     const li = document.createElement('li');
     li.innerHTML = `
       <div class="issue-body">${bodyHTML}</div>
@@ -76,11 +80,11 @@ function renderIssues(page, perPage, isAppend = false) {
   // “加载更多”按钮状态
   const moreButton = document.getElementById('more2');
   if (start + perPage >= window.cachedIssues.length) {
-    moreButton.innerText   = '加载到底部啦~';
+    moreButton.innerText = '加载到底部啦~';
     moreButton.style.cursor = 'unset';
     moreButton.style.pointerEvents = 'none';
   } else {
-    moreButton.innerText   = '滚动加载更多...';
+    moreButton.innerText = '滚动加载更多...';
     moreButton.style.cursor = 'pointer';
     moreButton.style.pointerEvents = 'auto';
   }

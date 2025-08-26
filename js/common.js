@@ -28,6 +28,7 @@ var openit = document.getElementById('openit');
 var closeit = document.getElementById('closeit');
 var mobilemune = document.getElementById('mobilemune');
 function openitfc() {
+    mobilemune.style.display = 'flex';
     mobilemune.style.visibility = 'visible';
     mobilemune.style.opacity = '1';
     closeit.style.display = 'block';
@@ -36,6 +37,7 @@ function openitfc() {
 function closeitfc() {
     mobilemune.style.opacity = '0';
     mobilemune.style.visibility = 'hidden';
+    mobilemune.style.display = 'none';
     openit.style.display = 'block';
     closeit.style.display = 'none';
 };
