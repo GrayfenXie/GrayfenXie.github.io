@@ -46,28 +46,29 @@ closeit.onclick = closeitfc;
 
 
 async function fetchAllCommentsOnce() {
-    if (_commentsPromise) return _commentsPromise;   // 如果已请求过，直接复用
+  if (_commentsPromise) return _commentsPromise;
 
-    _commentsPromise = (async () => {
-        const res = await fetch(
-            `https://api.github.com/repos/${owner}/${repo}/issues/comments?per_page=100&sort=created`
-        );
-        if (!res.ok) throw new Error(res.statusText);
+  _commentsPromise = (async () => {
+    const res = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/issues/comments?per_page=100&sort=created`,
+      { method: 'GET' }   // 无额外 headers
+    );
+    if (!res.ok) throw new Error(res.statusText);
 
-        const all = await res.json();
-        const c2 = all.filter(c =>
-            c.issue_url.endsWith('/2') &&
-            (c.user.login === myUsername || c.user.login === 'grayfenxie[bot]')
-        );
-        const c6 = all.filter(c =>
-            c.issue_url.endsWith('/6') &&
-            (c.user.login === myUsername || c.user.login === 'grayfenxie[bot]')
-        );
-        window.cachedIssues = c2.reverse();
-        window.cachedIssues2 = c6.reverse();
-    })();
+    const all = await res.json();
+    const c2 = all.filter(c =>
+      c.issue_url.endsWith('/2') &&
+      (c.user.login === myUsername || c.user.login === 'grayfenxie[bot]')
+    );
+    const c6 = all.filter(c =>
+      c.issue_url.endsWith('/6') &&
+      (c.user.login === myUsername || c.user.login === 'grayfenxie[bot]')
+    );
+    window.cachedIssues = c2.reverse();
+    window.cachedIssues2 = c6.reverse();
+  })();
 
-    return _commentsPromise;
+  return _commentsPromise;
 }
 
 // 页面加载时初始化当前标签页类型
