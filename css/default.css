@@ -1222,10 +1222,12 @@ textarea {
     width: 24px;
     height: 24px
 }
-.menubutton #openit{
+
+.menubutton #openit {
     display: block;
 }
-.menubutton #closeit{
+
+.menubutton #closeit {
     display: none;
 }
 
@@ -1238,6 +1240,22 @@ textarea {
 
 #mobilemune {
     display: none;
+}
+
+/* 九宫格容器 */
+.issue-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+}
+
+/* 图片本身 */
+.issue-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    aspect-ratio: 1 / 1;
 }
 
 @media screen and (max-width: 1400px) {
@@ -1264,7 +1282,7 @@ textarea {
 
 
 @media screen and (max-width: 1024px) {
-    
+
     .menubutton {
         display: block;
     }
@@ -1282,7 +1300,7 @@ textarea {
         justify-content: center;
         align-items: center;
         opacity: 0;
-        visibility: hidden; 
+        visibility: hidden;
         transition: all .6s;
     }
 
@@ -1426,5 +1444,9 @@ textarea {
     .leftmenu {
         margin: 0 auto;
         display: flex;
+    }
+
+    .issue-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 }

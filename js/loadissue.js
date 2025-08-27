@@ -1,27 +1,60 @@
-// 缓存 & 分页
+// ========== 缓存 & 分页 ==========
 window.cachedIssues = [];
-window.currentPage = 1;
-window.perPage = 10;
-window.isLoading = false;
+window.currentPage    = 1;
+window.perPage        = 10;
+window.isLoading      = false;
 
-// 拉取全部 Issue 数据
+// ========== marked 渲染器：把多张图收进九宫格 ==========
+(function () {
+  // 收集当前 issue 里的所有 <img>
+  const currentImages = [];
+
+  // 创建自定义 renderer
+  const renderer = new marked.Renderer();
+  const originImage = renderer.image.bind(renderer);
+
+  renderer.image = function (href, title, text) {
+    // 收集真正的 <img> 字符串
+    currentImages.push(originImage(href, title, text));
+    return '';   // 占位，稍后统一输出
+  };
+
+  // 全局暴露
+  window.renderMarkdown = function (md) {
+    currentImages.length = 0;                       // 每次清空
+    const html = marked(md || '', {
+      renderer,
+      gfm: true,
+      breaks: true,
+      smartLists: true
+    });
+    // 返回：正文 HTML + 九宫格 HTML（多张图时才套）
+    const gridHTML =
+      currentImages.length > 1
+        ? '<div class="issue-grid">' + currentImages.join('') + '</div>'
+        : currentImages.join('');
+    return html + gridHTML;
+  };
+})();
+
+// ========== 拉取全部 Issue 数据 ==========
 async function loadAllIssues() {
   if (window.isLoading) return;
   window.isLoading = true;
   try {
-    await fetchAllCommentsOnce();
+    await fetchAllCommentsOnce();        // 你原来的实现
     renderIssues(1, window.perPage);
     document.getElementById('allpic2').innerText = window.cachedIssues.length;
   } catch (e) {
     console.error(e);
     document.getElementById('issue-list').innerHTML =
-      '<li class=failtoload>加载失败，请稍后再试</li>';
+      '<li class="failtoload">加载失败，请稍后再试</li>';
   } finally {
     window.isLoading = false;
   }
 }
 
-// 获取某个 issue 的评论数
+// ========== 获取某个 issue 的评论数 ==========
 async function fetchCommentCount(issueId) {
   try {
     const res = await fetch(
@@ -34,25 +67,22 @@ async function fetchCommentCount(issueId) {
   }
 }
 
-// 渲染 Issue 列表
+// ========== 渲染 Issue 列表 ==========
 function renderIssues(page, perPage, isAppend = false) {
   const issueList = document.getElementById('issue-list');
   const start = (page - 1) * perPage;
-  const end = start + perPage;
+  const end   = start + perPage;
   const pageIssues = window.cachedIssues.slice(start, end);
+
   if (!isAppend) issueList.innerHTML = '';
+
   pageIssues.forEach(issue => {
     const date = new Date(issue.created_at);
     const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-    const options = { gfm: true, breaks: true, smartLists: true };
-    const bodyHTML = marked(issue.body || '', options);
-    function renderImages(html) {
-      // 简单正则：把 "<img ...><img ...>" 包成 <div class="gallery">...</div>
-      return html.replace(
-        /(<img[^>]*>)(?:\s*<img[^>]*>)+/g,
-        match => `<div class="gallery">${match}</div>`
-      );
-    }
+
+    // 使用上面封装好的函数
+    const bodyHTML = window.renderMarkdown(issue.body || '');
+
     const li = document.createElement('li');
     li.innerHTML = `
       <div class="issue-body">${bodyHTML}</div>
@@ -60,7 +90,7 @@ function renderIssues(page, perPage, isAppend = false) {
           <div class="issue-date">${formattedDate}</div>
           <button class="comment-toggle" data-issue-id="${issue.id}" title="显示/隐藏评论">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a 2 2 0 0 1 2 2z"></path>
               </svg>
               <span class="comment-count" data-issue-id="${issue.id}">0</span>
           </button>
@@ -70,28 +100,27 @@ function renderIssues(page, perPage, isAppend = false) {
     li.classList.add('aissue');
     issueList.appendChild(li);
 
-    // 设置评论数
     fetchCommentCount(issue.id).then(count => {
       const countEl = li.querySelector(`.comment-count[data-issue-id="${issue.id}"]`);
       if (countEl) countEl.textContent = count;
     });
   });
 
-  // “加载更多”按钮状态
+  // 加载更多按钮状态
   const moreButton = document.getElementById('more2');
   if (start + perPage >= window.cachedIssues.length) {
-    moreButton.innerText = '加载到底部啦~';
+    moreButton.innerText   = '加载到底部啦~';
     moreButton.style.cursor = 'unset';
     moreButton.style.pointerEvents = 'none';
   } else {
-    moreButton.innerText = '滚动加载更多...';
+    moreButton.innerText   = '滚动加载更多...';
     moreButton.style.cursor = 'pointer';
     moreButton.style.pointerEvents = 'auto';
   }
   document.getElementById('loadpic2').innerText = Math.min(end, window.cachedIssues.length);
 }
 
-// ===== 评论区切换事件（事件委托） =====
+// ========== 评论区开关 ==========
 document.addEventListener('click', e => {
   const btn = e.target.closest('.comment-toggle');
   if (!btn) return;
@@ -103,11 +132,9 @@ document.addEventListener('click', e => {
   if (isVisible) {
     container.style.display = 'none';
   } else {
-    // 关闭其它评论区
     document.querySelectorAll('.waline-container').forEach(el => el.style.display = 'none');
     container.style.display = 'block';
 
-    // 首次点击初始化 Waline
     if (!container.hasAttribute('data-waline-inited')) {
       Waline.init({
         el: container,
@@ -134,25 +161,22 @@ document.addEventListener('click', e => {
   }
 });
 
-// 加载更多按钮
+// ========== 加载更多按钮 ==========
 document.getElementById('more2').addEventListener('click', () => {
   window.currentPage++;
   renderIssues(window.currentPage, window.perPage, true);
 });
 
-// 初始化
+// ========== 初始化 ==========
 document.addEventListener('DOMContentLoaded', () => {
   loadAllIssues();
 });
 
-/* ========= 全局 loading & toast ========= */
-// 显示/隐藏 loading
+// ========== 全局 loading & toast ==========
 function toggleLoading(show = true) {
   const mask = document.getElementById('waline-loading');
   mask.style.display = show ? 'flex' : 'none';
 }
-
-// 显示 toast
 function showToast(msg, duration = 2000) {
   const toast = document.getElementById('waline-toast');
   toast.textContent = msg;
