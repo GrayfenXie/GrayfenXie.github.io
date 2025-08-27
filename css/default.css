@@ -1258,6 +1258,22 @@ textarea {
     aspect-ratio: 1 / 1;
 }
 
+.modal-nav{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+    padding: 14px 21px;
+    background: rgba(0, 0, 0, .4);
+    border-radius: 50%;
+    z-index: 2000;
+    font-family: cursive;
+}
+.modal-prev{ left: 20px; }
+.modal-next{ right: 20px; }
 @media screen and (max-width: 1400px) {
     .leftmenu .title {
         display: none;
