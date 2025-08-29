@@ -1,152 +1,158 @@
-window.imagesPerLoad = 9; 
+window.imagesPerLoad = 9;
+
+// 1. 原始数据：二维数组 → 对象数组
 window.imagesData = [
-  { src: 'https://cdn.grayfen.cn/summerbbq.png', alt: '夏日露营' },
-  { src: 'https://cdn.grayfen.cn/Nicholas2.png', alt: '北极星的眼泪' },
-  { src: 'https://cdn.grayfen.cn/cattle.png', alt: '放牛娃' },
-  { src: 'https://cdn.grayfen.cn/fallalone.png', alt: '一叶知秋' },
-  { src: 'https://cdn.grayfen.cn/feelalone.png', alt: '当你孤单你会想起谁' },
-  { src: 'https://cdn.grayfen.cn/gao.png', alt: '永恒' },
-  { src: 'https://cdn.grayfen.cn/grasses.png', alt: '稻草人' },
-  { src: 'https://cdn.grayfen.cn/makesnowman.png', alt: '堆雪人' },
-  { src: 'https://cdn.grayfen.cn/nuhcnay.png', alt: '夏日奇迹' },
-  { src: 'https://cdn.grayfen.cn/pinkspring.png', alt: '春日迟' },
-  { src: 'https://cdn.grayfen.cn/ridethebike.png', alt: '追风少年' },
-  { src: 'https://cdn.grayfen.cn/thelittlepark.png', alt: '未知的相遇' },
-  { src: 'https://cdn.grayfen.cn/fallcamera.png', alt: '秋日相片' },
-  { src: 'https://cdn.grayfen.cn/adventure.png', alt: '命运石之门' },
-  { src: 'https://cdn.grayfen.cn/rowboat.png', alt: '江上泛舟' },
-  { src: 'https://cdn.grayfen.cn/snowmoon.png', alt: '月光' },
-  { src: 'https://cdn.grayfen.cn/spring.png', alt: '春' },
-  { src: 'https://cdn.grayfen.cn/summer.png', alt: '夏' },
-  { src: 'https://cdn.grayfen.cn/nextlife.png', alt: '如果有来生' },
-  { src: 'https://cdn.grayfen.cn/winter.png', alt: '冬日' },
-  { src: 'https://cdn.grayfen.cn/coolman.png', alt: '帅' },
-  { src: 'https://cdn.grayfen.cn/blood.png', alt: '吸血鬼' },
-  { src: 'https://cdn.grayfen.cn/smile.png', alt: '微笑男孩' },
-  { src: 'https://cdn.grayfen.cn/sunset.png', alt: '日落西山' },
-  { src: 'https://cdn.grayfen.cn/sunman.png', alt: '落日垂钓' },
-  { src: 'https://cdn.grayfen.cn/sunboat.png', alt: '飘向远方' },
-  { src: 'https://cdn.grayfen.cn/swordquest.png', alt: '寻剑' },
-  { src: 'https://cdn.grayfen.cn/swordsman.png', alt: '侠客行' },
-  { src: 'https://cdn.grayfen.cn/tothemoon.png', alt: '划向明月的船' },
-  { src: 'https://cdn.grayfen.cn/topinkmoon.png', alt: '月海' },
-  { src: 'https://cdn.grayfen.cn/pinkwinter.png', alt: '粉色的冬天' },
-  { src: 'https://cdn.grayfen.cn/harrypoter.png', alt: '魔法生日' },
-  { src: 'https://cdn.grayfen.cn/anniversary.png', alt: '纪念日' },
-  { src: 'https://cdn.grayfen.cn/rideboat.png', alt: '林间划船' },
-  { src: 'https://cdn.grayfen.cn/forest.png', alt: '森林猎人' },
-  { src: 'https://cdn.grayfen.cn/butterfly.png', alt: '阿飞的小蝴蝶' },
-  { src: 'https://cdn.grayfen.cn/umbrella.png', alt: '雨蝶' },
-  { src: 'https://cdn.grayfen.cn/unamenight.png', alt: '没有名字的夜晚' },
-  { src: 'https://cdn.grayfen.cn/clouds.png', alt: '云舒' }
-];
+  ['summerbbq.png', '夏日露营'],
+  ['Nicholas2.png', '北极星的眼泪'],
+  ['cattle.png', '放牛娃'],
+  ['fallalone.png', '一叶知秋'],
+  ['feelalone.png', '当你孤单你会想起谁'],
+  ['gao.png', '永恒'],
+  ['grasses.png', '稻草人'],
+  ['makesnowman.png', '堆雪人'],
+  ['nuhcnay.png', '夏日奇迹'],
+  ['pinkspring.png', '春日迟'],
+  ['ridethebike.png', '追风少年'],
+  ['thelittlepark.png', '未知的相遇'],
+  ['fallcamera.png', '秋日相片'],
+  ['adventure.png', '命运石之门'],
+  ['rowboat.png', '江上泛舟'],
+  ['snowmoon.png', '月光'],
+  ['spring.png', '春'],
+  ['summer.png', '夏'],
+  ['nextlife.png', '如果有来生'],
+  ['winter.png', '冬日'],
+  ['coolman.png', '帅'],
+  ['blood.png', '吸血鬼'],
+  ['smile.png', '微笑男孩'],
+  ['sunset.png', '日落西山'],
+  ['sunman.png', '落日垂钓'],
+  ['sunboat.png', '飘向远方'],
+  ['swordquest.png', '寻剑'],
+  ['swordsman.png', '侠客行'],
+  ['tothemoon.png', '划向明月的船'],
+  ['topinkmoon.png', '月海'],
+  ['pinkwinter.png', '粉色的冬天'],
+  ['harrypoter.png', '魔法生日'],
+  ['anniversary.png', '纪念日'],
+  ['rideboat.png', '林间划船'],
+  ['forest.png', '森林猎人'],
+  ['butterfly.png', '阿飞的小蝴蝶'],
+  ['umbrella.png', '雨蝶'],
+  ['unamenight.png', '没有名字的夜晚'],
+  ['clouds.png', '云舒']
+].map(([file, alt]) => ({
+  src: `https://cdn.grayfen.cn/${file}`,
+  alt,
+  smallSrc: `https://cdn.grayfen.cn/${file.replace('.png', '_zip.jpg')}`
+}));
 
-//jq动画
-window.onload = anime();
+// 2. 洗牌（仅一次）
+shuffleArray(imagesData);
 
-window.onbeforeunload = function () {
-  //刷新后页面自动回到顶部
-  document.documentElement.scrollTop = 0;  //ie下
-  document.body.scrollTop = 0;  //非ie
-}
-
-//查看原图
-var modal = document.getElementById('myModal');
-var img = document.getElementById('myImg');
-var modalImg = document.getElementById("img01");
-var a = document.getElementsByClassName("modal-content");
-var b = document.getElementsByClassName("modal");
-var flag = true;
-
-function opens(self) {
-  modal.style.display = "block";
-  modalImg.src = self.firstElementChild.src;
-  modalImg.alt = self.firstElementChild.alt;
-  freezeScroll();
-  flag = true;
-  setTimeout(() => {
-    modalImg.style.opacity = 1;
-    for (var i = a.length - 1; i >= 0; i--) {
-      b[i].style.cursor = "zoom-in";
-    }
-  }, 100);
-}
-function look(self) {
-  if (flag) {
-    //放大
-    for (var i = a.length - 1; i >= 0; i--) {
-      b[i].style.cursor = "zoom-out";
-      a[i].classList.add('big');
-    }
-    flag = false;
-  }
-  else {
-    //缩小
-    for (var i = a.length - 1; i >= 0; i--) {
-      b[i].style.cursor = "zoom-in";
-      a[i].classList.remove('big');
-    }
-    flag = true;
-  }
-}
-// 当前已加载图片数量
+// 3. 图片懒加载相关变量
 let loadedImages = 0;
-// const imagesPerLoad = 9; // 每次加载的图片数量
 
-// 函数用于洗牌数组
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
+// 4. 工具函数
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
 }
 
-// 函数用于创建img元素并赋值src和alt
-var loadnum = 0;
-function createImageElements(imagesArray, limit) {
+// 5. 创建 DOM 并插入
+function createImageElements(arr, limit) {
+  if (loadedImages >= arr.length) return;
+
   const container = document.getElementById('works');
-  let imagesToLoad = imagesArray.slice(loadedImages, loadedImages + limit);
-  var loadpic = document.getElementById('loadpic');
-  var allpic = document.getElementById('allpic');
-  allpic.innerHTML = imagesArray.length;
-  imagesToLoad.forEach(image => {
+  const loadpic = document.getElementById('loadpic');
+  const allpic = document.getElementById('allpic');
+  allpic.textContent = arr.length;
+
+  const fragment = document.createDocumentFragment();
+  const sliceEnd = Math.min(loadedImages + limit, arr.length);
+  for (let i = loadedImages; i < sliceEnd; i++) {
+    const { src, alt, smallSrc } = arr[i];
+
     const li = document.createElement('li');
     const img = document.createElement('img');
-    img.src = image.src;
-    img.alt = image.alt;
+    img.src = smallSrc;
+    img.alt = alt;
     img.className = 'image-item';
+    img.dataset.src = src;
+
     const overlay = document.createElement('div');
     overlay.className = 'image-overlay';
-    overlay.textContent = image.alt;
-    li.appendChild(img);
-    li.appendChild(overlay);
-    container.appendChild(li);
-    li.addEventListener('click', function () {
-      opens(this);
-    });
-  });
-  loadedImages += limit;
-  loadnum = loadnum + limit;
-  const moreButton = document.getElementById('more');
-  if (loadedImages >= imagesArray.length) {
-    setTimeout(() => {
-      loadpic.innerHTML = imagesArray.length;
-      moreButton.innerHTML = '加载到底部啦~';
-      moreButton.style.cursor = 'unset';
-      moreButton.style.pointerEvents = "none";
-    }, "300")
-  } else {
-    loadpic.innerHTML = loadnum;
+    overlay.textContent = alt;
+
+    li.append(img, overlay);
+    li.addEventListener('click', () => opens(li));
+    fragment.appendChild(li);
   }
-  anime();
+  container.appendChild(fragment);
+
+  loadedImages = sliceEnd;
+  loadpic.textContent = loadedImages;
+
+  const moreBtn = document.getElementById('more');
+  if (loadedImages >= arr.length) {
+    setTimeout(() => {
+      moreBtn.textContent = '加载到底部啦~';
+      moreBtn.style.cursor = 'unset';
+      moreBtn.style.pointerEvents = 'none';
+    }, 300);
+  }
+
+  anime(); // 入场动画
 }
 
-// 初始化加载9张图片
-shuffleArray(imagesData);
-createImageElements(imagesData, imagesPerLoad);
+// 6. 首次加载
+createImageElements(imagesData, window.imagesPerLoad);
 
-//点击加载更多
-var more = document.getElementById("more");
-more.addEventListener("click", function () {
-  createImageElements(imagesData, imagesPerLoad);
-});
+// 7. 点击“加载更多”
+document.getElementById('more').addEventListener('click', () =>
+  createImageElements(imagesData, window.imagesPerLoad)
+);
+
+// 8. 刷新回到顶部
+window.onbeforeunload = () => {
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+};
+
+// 9. 模态框相关
+const modal = document.getElementById('myModal');
+const modalImg = document.getElementById('img01');
+let flag3 = true;
+
+function opens(li) {
+  modal.style.display = 'block';
+  modalImg.src = li.querySelector('img').dataset.src;
+  modalImg.alt = li.querySelector('img').alt;
+  freezeScroll();
+  flag3 = true;
+
+  // ✅ 隐藏左右箭头
+  document.querySelector('.modal-prev').style.display = 'none';
+  document.querySelector('.modal-next').style.display = 'none';
+
+  setTimeout(() => {
+    modalImg.style.opacity = 1;
+    modal.style.cursor = 'zoom-in';
+  }, 100);
+
+  modalImg.onclick = look;
+}
+
+function look() {
+    if (flag3) {
+        modalImg.classList.add('zoomed');
+        modal.style.cursor = 'zoom-out';
+        flag3 = false;
+    } else {
+        modalImg.classList.remove('zoomed');
+        modal.style.cursor = 'zoom-in';
+        flag3 = true;
+    }
+}

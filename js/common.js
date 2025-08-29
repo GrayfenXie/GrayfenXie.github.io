@@ -265,10 +265,10 @@ document.addEventListener('DOMContentLoaded', function () {
             unfreezeScroll();
         }, "100");
         document.body.classList.remove('no-scroll');
-        for (var i = a.length - 1; i >= 0; i--) {
-            b[i].style.cursor = "zoom-in";
-            a[i].classList.remove('big');
-        }
+        // for (var i = a.length - 1; i >= 0; i--) {
+        //     b[i].style.cursor = "zoom-in";
+        //     a[i].classList.remove('big');
+        // }
     }
 
     // 使用事件委托处理动态加载的图片点击事件
@@ -352,52 +352,53 @@ mainpart.addEventListener('scroll', () => {
 
 /* ===================== 大图左右切换 ===================== */
 (function () {
-    let currentImgs = [];   // 当前 issue 的所有图片 src
-    let currentIdx  = 0;    // 当前显示第几张
-    const modal     = document.getElementById('myModal');
-    const modalImg  = document.getElementById('img01');
-    const prevBtn   = document.querySelector('.modal-prev');
-    const nextBtn   = document.querySelector('.modal-next');
+  let currentImgs = [];   // 当前 issue 的所有图片 src
+  let currentIdx  = 0;    // 当前显示第几张
+  const modal     = document.getElementById('myModal');
+  const modalImg  = document.getElementById('img01');
+  const prevBtn   = document.querySelector('.modal-prev');
+  const nextBtn   = document.querySelector('.modal-next');
 
-    // 点击任意 issue-body 里的 img，收集列表并打开
-    document.addEventListener('click', function (e) {
-        const img = e.target.closest('.issue-body img');
-        if (!img) return;
-        const parent = img.closest('.issue-body');
-        currentImgs = Array.from(parent.querySelectorAll('img')).map(i => i.src);
-        currentIdx  = currentImgs.indexOf(img.src);
-        openModal(img.src);
-    });
+  // ✅ 修改：只绑定 #issue-content 内的图片，排除插画模块
+  document.addEventListener('click', function (e) {
+    const img = e.target.closest('#issue-content .issue-body img');
+    if (!img) return;
+    const parent = img.closest('.issue-body');
+    currentImgs = Array.from(parent.querySelectorAll('img')).map(i => i.src);
+    currentIdx  = currentImgs.indexOf(img.src);
+    openModal(img.src);
+  });
 
-    function openModal(src) {
-        modal.style.display = 'block';
-        modalImg.src = src;
-        modalImg.style.opacity = 1;
-        /* === 新增：单张隐藏箭头 === */
+  function openModal(src) {
+    modal.style.display = 'block';
+    modalImg.src = src;
+    modalImg.style.opacity = 1;
+
+    // ✅ 单张图片隐藏左右箭头
     const arrowsVisible = currentImgs.length > 1;
     prevBtn.style.display = arrowsVisible ? 'block' : 'none';
     nextBtn.style.display = arrowsVisible ? 'block' : 'none';
-    }
+  }
 
-    function showPrev() {
-        if (!currentImgs.length) return;
-        currentIdx = (currentIdx - 1 + currentImgs.length) % currentImgs.length;
-        modalImg.src = currentImgs[currentIdx];
-    }
+  function showPrev() {
+    if (!currentImgs.length) return;
+    currentIdx = (currentIdx - 1 + currentImgs.length) % currentImgs.length;
+    modalImg.src = currentImgs[currentIdx];
+  }
 
-    function showNext() {
-        if (!currentImgs.length) return;
-        currentIdx = (currentIdx + 1) % currentImgs.length;
-        modalImg.src = currentImgs[currentIdx];
-    }
+  function showNext() {
+    if (!currentImgs.length) return;
+    currentIdx = (currentIdx + 1) % currentImgs.length;
+    modalImg.src = currentImgs[currentIdx];
+  }
 
-    prevBtn.addEventListener('click', showPrev);
-    nextBtn.addEventListener('click', showNext);
+  prevBtn.addEventListener('click', showPrev);
+  nextBtn.addEventListener('click', showNext);
 
-    // 键盘左右箭头也能切换
-    document.addEventListener('keydown', function (e) {
-        if (modal.style.display !== 'block') return;
-        if (e.key === 'ArrowLeft')  showPrev();
-        if (e.key === 'ArrowRight') showNext();
-    });
+  // 键盘左右箭头也能切换
+  document.addEventListener('keydown', function (e) {
+    if (modal.style.display !== 'block') return;
+    if (e.key === 'ArrowLeft')  showPrev();
+    if (e.key === 'ArrowRight') showNext();
+  });
 })();
