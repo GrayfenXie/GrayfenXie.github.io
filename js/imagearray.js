@@ -145,14 +145,14 @@ function opens(li) {
   modalImg.onclick = look;
 }
 
-function look() {
-    if (flag3) {
-        modalImg.classList.add('zoomed');
-        modal.style.cursor = 'zoom-out';
-        flag3 = false;
-    } else {
-        modalImg.classList.remove('zoomed');
-        modal.style.cursor = 'zoom-in';
-        flag3 = true;
-    }
-}
+// function look() {
+//     if (flag3) {
+//         modalImg.classList.add('zoomed');
+//         modal.style.cursor = 'zoom-out';
+//         flag3 = false;
+//     } else {
+//         modalImg.classList.remove('zoomed');
+//         modal.style.cursor = 'zoom-in';
+//         flag3 = true;
+//     }
+// }

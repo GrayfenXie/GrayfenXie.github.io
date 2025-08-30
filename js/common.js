@@ -240,8 +240,17 @@ span.onclick = function () {
     document.getElementById("my-form-status").style.display = "none";
 }
 
-
-//关闭图片模态框
+function look() {
+    if (flag3) {
+        modalImg.classList.add('zoomed');
+        modal.style.cursor = 'zoom-out';
+        flag3 = false;
+    } else {
+        modalImg.classList.remove('zoomed');
+        modal.style.cursor = 'zoom-in';
+        flag3 = true;
+    }
+}
 document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('myModal');
     const modalImg = document.getElementById("img01");
@@ -255,6 +264,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(() => {
             modalImg.style.opacity = 1;
         }, 100);
+        modalImg.onclick = look;
     }
 
     // 获取 <span> 元素，设置关闭模态框按钮
@@ -265,10 +275,6 @@ document.addEventListener('DOMContentLoaded', function () {
             unfreezeScroll();
         }, "100");
         document.body.classList.remove('no-scroll');
-        // for (var i = a.length - 1; i >= 0; i--) {
-        //     b[i].style.cursor = "zoom-in";
-        //     a[i].classList.remove('big');
-        // }
     }
 
     // 使用事件委托处理动态加载的图片点击事件
