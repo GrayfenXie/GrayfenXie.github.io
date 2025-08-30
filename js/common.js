@@ -4,6 +4,8 @@ var owner = "GrayfenXie";
 var repo = "GrayfenXie.github.io";
 var myUsername = "GrayfenXie";
 var mainpart = document.getElementById('mainpart');
+let openpicflag = true;
+
 // 全局变量
 window.cachedIssues = []; // #2 随笔
 window.cachedIssues2 = []; // #6 弹棉花
@@ -113,7 +115,7 @@ document.addEventListener('click', e => {
 function anime() {
     const eles = document.getElementsByClassName('image-item');
     const eles2 = document.getElementsByClassName('aissue');
-    const eles3 = document.getElementById('my-form');
+    // const eles3 = document.getElementById('my-form');
     const eles4 = document.getElementsByClassName('portfolio-item');
     const eles5 = document.getElementsByClassName('guitar-item');
     // 重置动画状态
@@ -226,10 +228,10 @@ messageboxbutton.onclick = function () {
 
 //关闭留言板
 // 获取 <span> 元素，设置关闭模态框按钮
-var span = document.getElementsByClassName("close2")[0];
+var span2 = document.getElementsByClassName("close2")[0];
 var messagemodal = document.getElementById("message-content");
 // 点击 <span> 元素上的 (x), 关闭模态框
-span.onclick = function () {
+span2.onclick = function () {
     messagemodal.style.opacity = 0;
     setTimeout(() => {
         messagemodal.style.display = "none";
@@ -241,14 +243,14 @@ span.onclick = function () {
 }
 
 function look() {
-    if (flag3) {
+    if (openpicflag) {
         modalImg.classList.add('zoomed');
         modal.style.cursor = 'zoom-out';
-        flag3 = false;
+        openpicflag = false;
     } else {
         modalImg.classList.remove('zoomed');
         modal.style.cursor = 'zoom-in';
-        flag3 = true;
+        openpicflag = true;
     }
 }
 document.addEventListener('DOMContentLoaded', function () {
@@ -273,6 +275,9 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(() => {
             modal.style.display = "none";
             unfreezeScroll();
+            modalImg.classList.remove('zoomed');
+            modal.style.cursor = 'zoom-in';
+            openpicflag = true;
         }, "100");
         document.body.classList.remove('no-scroll');
     }
