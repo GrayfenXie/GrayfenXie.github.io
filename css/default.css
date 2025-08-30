@@ -1276,14 +1276,44 @@ textarea {
     color: #fff;
     cursor: pointer;
     user-select: none;
-    padding: 14px 21px;
+    padding: 20px;
     background: rgba(0, 0, 0, .4);
     border-radius: 50%;
     z-index: 2000;
-    font-family: cursive;
 }
-.modal-prev{ left: 20px; }
-.modal-next{ right: 20px; }
+
+.modal-nav:hover{
+    background: rgba(0, 0, 0, .6);
+    transition: all .4s;
+}
+
+.modal-prev{
+    left: 20px; 
+}
+.modal-prev::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 0;
+    left: 0;
+    background: url(../img/leftarrow.svg);
+}
+
+.modal-next{
+    right: 20px;
+}
+
+.modal-next::after{
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 0;
+    left: 0;
+    background: url(../img/rightarrow.svg);
+}
+
 @media screen and (max-width: 1400px) {
     .leftmenu .title {
         display: none;
