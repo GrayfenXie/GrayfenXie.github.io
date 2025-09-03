@@ -1,5 +1,5 @@
 // api/sendmail.js
-import nodemailer from 'nodemailer';
+const nodemailer = require('nodemailer');
 
 export default async function handler(req, res) {
   const { ip, ua } = req.query;
