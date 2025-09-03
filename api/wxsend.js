@@ -25,6 +25,7 @@ module.exports = async function handler(req, res) {
     const geo = await getIpGeo(ip);          // ← 新增
     const token = await getAccessToken();
     const url = `https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${token}`;
+    const chinatime = new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
     await axios.post(url, {
       touser: process.env.WX_OPEN_ID,
       template_id: process.env.WX_TPL_ID,
@@ -33,7 +34,7 @@ module.exports = async function handler(req, res) {
         ip: { value: ip, color: '#173177' },
         geo: { value: geo, color: '#173177' }, // ← 模板里加 {{geo.DATA}}
         ua: { value: ua, color: '#173177' },
-        time: { value: new Date().toLocaleString('zh-CN'), color: '#173177' },
+        time: { value: chinatime, color: '#173177' },
       },
     });
     res.status(200).send('wx sent');

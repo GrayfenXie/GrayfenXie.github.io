@@ -266,7 +266,7 @@
                     <div class="textarea-container">
                         <textarea id="myTextarea" placeholder="有啥事儿尽管说，只有俺能看到" name="message"></textarea>
                         <div class="wordnums">
-                            <span id="currentChars">0</span>/<span id="remainingChars">100</span>
+                            <span id="currentChars">0</span>/<span id   ="remainingChars">100</span>
                         </div>
                     </div>
                 </div>
@@ -293,7 +293,16 @@
 <!-- <div id="waline-toast" style="display:none;position:fixed;top:20px;left:50%;transform:translateX(-50%);padding:10px 20px;background:#000;color:#fff;border-radius:4px;font-size:14px;z-index:10000"></div> -->
 
 <script>
-  fetch('/api/log');
+(function(){
+  const key = 'grayfen_log_sent';
+  const now = Date.now();
+  const last = +localStorage.getItem(key) || 0;
+  // 48 小时内不再触发
+  if (now - last > 12 * 60 * 60 * 1000) {
+    fetch('/api/log');
+    localStorage.setItem(key, now);
+  }
+})();
 </script>
 </body>
 <script src="js/marked.min.js"></script>
