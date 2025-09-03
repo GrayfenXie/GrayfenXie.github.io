@@ -8,23 +8,12 @@ export default async function handler(req) {
     'unknown';
   const ua = req.headers.get('user-agent') || 'unknown';
 
-  // 推送到企业微信机器人
+  // 调用上面的 Node 函数
   await fetch(
-    process.env.WX_WEBHOOK,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        msgtype: 'text',
-        text: {
-          content:
-            `📍 访问提醒\n` +
-            `IP：${ip}\n` +
-            `UA：${ua}\n` +
-            `时间：${new Date().toLocaleString('zh-CN')}`,
-        },
-      }),
-    }
+    `${process.env.VERCEL_URL}/api/sendmail?ip=${encodeURIComponent(
+      ip
+    )}&ua=${encodeURIComponent(ua)}`
   );
+
   return new Response('ok', { status: 200 });
 }
