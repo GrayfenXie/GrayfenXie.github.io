@@ -13,13 +13,13 @@ let _commentsPromise = null;   // ← 缓存 Promise，保证只发一次
 function freezeScroll() {
     const scrollTop = mainpart.scrollTop;
     mainpart.dataset.scrollTop = scrollTop;
-    mainpart.style.overflow = 'hidden';   // 关键：让 mainpart 不再滚动
+    mainpart.style.overflow = 'hidden';   // 让 mainpart 不再滚动
 }
 
 // 恢复 mainpart 的滚动
 function unfreezeScroll() {
     const scrollTop = parseInt(mainpart.dataset.scrollTop || '0', 10);
-    mainpart.style.overflow = '';         // 恢复默认（或你之前的值）
+    mainpart.style.overflow = '';         // 恢复默认
     mainpart.scrollTop = scrollTop;
 }
 
@@ -46,29 +46,35 @@ closeit.onclick = closeitfc;
 
 
 async function fetchAllCommentsOnce() {
-  if (_commentsPromise) return _commentsPromise;
+    if (_commentsPromise) return _commentsPromise;
+    _commentsPromise = (async () => {
+        let page = 1;
+        let allComments = [];
+        while (true) {
+            const res = await fetch(
+                `https://api.github.com/repos/${owner}/${repo}/issues/comments?per_page=100&sort=created&page=${page}`,
+                { method: 'GET' }
+            );
+            if (!res.ok) throw new Error(res.statusText);
 
-  _commentsPromise = (async () => {
-    const res = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/issues/comments?per_page=100&sort=created`,
-      { method: 'GET' }   // 无额外 headers
-    );
-    if (!res.ok) throw new Error(res.statusText);
+            const data = await res.json();
+            if (!Array.isArray(data) || data.length === 0) break; // 拉完最后一页
+            allComments = allComments.concat(data);
+            page++;
+        }
+        const c2 = allComments.filter(c =>
+            c.issue_url.endsWith('/2') &&
+            (c.user.login === myUsername || c.user.login === 'grayfenxie[bot]')
+        );
+        const c6 = allComments.filter(c =>
+            c.issue_url.endsWith('/6') &&
+            (c.user.login === myUsername || c.user.login === 'grayfenxie[bot]')
+        );
+        window.cachedIssues = c2.reverse();
+        window.cachedIssues2 = c6.reverse();
+    })();
 
-    const all = await res.json();
-    const c2 = all.filter(c =>
-      c.issue_url.endsWith('/2') &&
-      (c.user.login === myUsername || c.user.login === 'grayfenxie[bot]')
-    );
-    const c6 = all.filter(c =>
-      c.issue_url.endsWith('/6') &&
-      (c.user.login === myUsername || c.user.login === 'grayfenxie[bot]')
-    );
-    window.cachedIssues = c2.reverse();
-    window.cachedIssues2 = c6.reverse();
-  })();
-
-  return _commentsPromise;
+    return _commentsPromise;
 }
 
 // 页面加载时初始化当前标签页类型
@@ -88,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// 点击任意 tab（主区域或副导航均可）
+// 点击任意 tab
 document.addEventListener('click', e => {
     const tab = e.target.closest('.tab[data-tab]');
     if (!tab) return;
@@ -317,7 +323,7 @@ function initScrollLoader(tabName, loadMoreFn, threshold = 2) {
     mainpart.addEventListener('scroll', debounced);
 }
 
-/* ===== 为各 tab 注册滚动加载（在 DOM 完成后执行） ===== */
+// 为各 tab 注册滚动加载
 document.addEventListener('DOMContentLoaded', () => {
     // 随笔
     initScrollLoader('issue-content', () => {
@@ -350,55 +356,55 @@ mainpart.addEventListener('scroll', () => {
         : nav.classList.add(HIDE);
 });
 
-/* ===================== 大图左右切换 ===================== */
+//大图左右切换
 (function () {
-  let currentImgs = [];   // 当前 issue 的所有图片 src
-  let currentIdx  = 0;    // 当前显示第几张
-  const modal     = document.getElementById('myModal');
-  const modalImg  = document.getElementById('img01');
-  const prevBtn   = document.querySelector('.modal-prev');
-  const nextBtn   = document.querySelector('.modal-next');
+    let currentImgs = [];   // 当前 issue 的所有图片 src
+    let currentIdx = 0;    // 当前显示第几张
+    const modal = document.getElementById('myModal');
+    const modalImg = document.getElementById('img01');
+    const prevBtn = document.querySelector('.modal-prev');
+    const nextBtn = document.querySelector('.modal-next');
 
-  // ✅ 修改：只绑定 #issue-content 内的图片，排除插画模块
-  document.addEventListener('click', function (e) {
-    const img = e.target.closest('#issue-content .issue-body img');
-    if (!img) return;
-    const parent = img.closest('.issue-body');
-    currentImgs = Array.from(parent.querySelectorAll('img')).map(i => i.src);
-    currentIdx  = currentImgs.indexOf(img.src);
-    openModal(img.src);
-  });
+    // ✅ 修改：只绑定 #issue-content 内的图片，排除插画模块
+    document.addEventListener('click', function (e) {
+        const img = e.target.closest('#issue-content .issue-body img');
+        if (!img) return;
+        const parent = img.closest('.issue-body');
+        currentImgs = Array.from(parent.querySelectorAll('img')).map(i => i.src);
+        currentIdx = currentImgs.indexOf(img.src);
+        openModal(img.src);
+    });
 
-  function openModal(src) {
-    modal.style.display = 'block';
-    modalImg.src = src;
-    modalImg.style.opacity = 1;
+    function openModal(src) {
+        modal.style.display = 'block';
+        modalImg.src = src;
+        modalImg.style.opacity = 1;
 
-    // ✅ 单张图片隐藏左右箭头
-    const arrowsVisible = currentImgs.length > 1;
-    prevBtn.style.display = arrowsVisible ? 'block' : 'none';
-    nextBtn.style.display = arrowsVisible ? 'block' : 'none';
-  }
+        // ✅ 单张图片隐藏左右箭头
+        const arrowsVisible = currentImgs.length > 1;
+        prevBtn.style.display = arrowsVisible ? 'block' : 'none';
+        nextBtn.style.display = arrowsVisible ? 'block' : 'none';
+    }
 
-  function showPrev() {
-    if (!currentImgs.length) return;
-    currentIdx = (currentIdx - 1 + currentImgs.length) % currentImgs.length;
-    modalImg.src = currentImgs[currentIdx];
-  }
+    function showPrev() {
+        if (!currentImgs.length) return;
+        currentIdx = (currentIdx - 1 + currentImgs.length) % currentImgs.length;
+        modalImg.src = currentImgs[currentIdx];
+    }
 
-  function showNext() {
-    if (!currentImgs.length) return;
-    currentIdx = (currentIdx + 1) % currentImgs.length;
-    modalImg.src = currentImgs[currentIdx];
-  }
+    function showNext() {
+        if (!currentImgs.length) return;
+        currentIdx = (currentIdx + 1) % currentImgs.length;
+        modalImg.src = currentImgs[currentIdx];
+    }
 
-  prevBtn.addEventListener('click', showPrev);
-  nextBtn.addEventListener('click', showNext);
+    prevBtn.addEventListener('click', showPrev);
+    nextBtn.addEventListener('click', showNext);
 
-  // 键盘左右箭头也能切换
-  document.addEventListener('keydown', function (e) {
-    if (modal.style.display !== 'block') return;
-    if (e.key === 'ArrowLeft')  showPrev();
-    if (e.key === 'ArrowRight') showNext();
-  });
+    // 键盘左右箭头也能切换
+    document.addEventListener('keydown', function (e) {
+        if (modal.style.display !== 'block') return;
+        if (e.key === 'ArrowLeft') showPrev();
+        if (e.key === 'ArrowRight') showNext();
+    });
 })();
