@@ -124,14 +124,13 @@ window.onbeforeunload = () => {
 // 9. 模态框相关
 const modal = document.getElementById('myModal');
 const modalImg = document.getElementById('img01');
-let flag3 = true;
 
 function opens(li) {
   modal.style.display = 'block';
   modalImg.src = li.querySelector('img').dataset.src;
   modalImg.alt = li.querySelector('img').alt;
   freezeScroll();
-  flag3 = true;
+  openpicflag = true;
 
   // ✅ 隐藏左右箭头
   document.querySelector('.modal-prev').style.display = 'none';
@@ -143,16 +142,4 @@ function opens(li) {
   }, 100);
 
   modalImg.onclick = look;
-}
-
-function look() {
-    if (flag3) {
-        modalImg.classList.add('zoomed');
-        modal.style.cursor = 'zoom-out';
-        flag3 = false;
-    } else {
-        modalImg.classList.remove('zoomed');
-        modal.style.cursor = 'zoom-in';
-        flag3 = true;
-    }
 }
