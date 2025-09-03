@@ -7,6 +7,11 @@ export default async function handler(req) {
     req.headers.get('x-real-ip') ||
     'unknown';
   const ua = req.headers.get('user-agent') || 'unknown';
+  // 过滤爬虫
+  if (/vercel-screenshot|bot|spider|crawl/i.test(ua)) {
+    return new Response('bot ignored', { status: 200 });
+  }
+
   try {
     const base = 'https://www.grayfen.cn';
     console.log('calling wxsend at', `${base}/api/wxsend`);
