@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "nodemailer": "^7.0.6"
+    "axios": "^1.11.0"
   }
 }
