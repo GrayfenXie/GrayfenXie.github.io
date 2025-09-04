@@ -9,17 +9,21 @@ const getAccessToken = async () => {
   return data.access_token;
 };
 
-// 免费 IP 归属地（高并发会限，个人够用）
+
+// 腾讯位置服务免费 IP 归属地（中文）
 const getIpGeo = async (ip) => {
   try {
-    const { data } = await axios.get(`https://ipapi.co/${ip}/json/`);
-    return [data.country_name || '', data.region || '', data.city || '']
-      .filter(Boolean)
-      .join(' ')
-      .trim() || '未知地区';
+    const { data } = await axios.get(
+      `https://apis.map.qq.com/ws/location/v1/ip?ip=${ip}&key=${process.env.TX_MAP_KEY}`
+    );
+    if (data.status === 0) {
+      const { nation, province, city } = data.result.ad_info;
+      return `${nation} ${province} ${city}`.trim();
+    }
   } catch {
-    return '未知地区';
+    /* ignore */
   }
+  return '未知地区';
 };
 
 module.exports = async function handler(req, res) {
