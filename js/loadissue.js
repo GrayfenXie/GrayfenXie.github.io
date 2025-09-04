@@ -29,11 +29,12 @@ window.isLoading      = false;
       smartLists: true
     });
     // 返回：正文 HTML + 九宫格 HTML（多张图时才套）
-    const gridHTML =
-      currentImages.length > 1
-        ? '<div class="issue-grid">' + currentImages.join('') + '</div>'
-        : currentImages.join('');
-    return html + gridHTML;
+    // const gridHTML =
+    //   currentImages.length > 1
+    //     ? '<div class="issue-grid">' + currentImages.join('') + '</div>'
+    //     : currentImages.join('');
+    // return html + gridHTML;
+    return html;
   };
 })();
 
@@ -183,6 +184,38 @@ function showToast(msg, duration = 2000) {
   toast.style.display = 'block';
   setTimeout(() => toast.style.display = 'none', duration);
 }
+
+// ========== 把正文里的 <img> 统一搬进九宫格 ==========
+(function () {
+  // 统一处理所有 issue
+  function packImagesToGrid() {
+    document.querySelectorAll('.issue-body').forEach(body => {
+      // 已处理过就跳过
+      if (body.querySelector('.issue-grid')) return;
+
+      const imgs = [...body.querySelectorAll('img')];
+      if (imgs.length <= 1) return;   // 单张不处理
+
+      // 创建九宫格
+      const grid = document.createElement('div');
+      grid.className = 'issue-grid';
+
+      // 把现有 img 按原顺序搬进九宫格（DOM 移动）
+      imgs.forEach(img => grid.appendChild(img));
+
+      // 追加到 body 末尾
+      body.appendChild(grid);
+    });
+  }
+
+  // 在 renderIssues 渲染完 DOM 后统一执行
+  const oldRenderIssues = window.renderIssues;
+  window.renderIssues = function (...args) {
+    oldRenderIssues.apply(this, args);
+    // 让浏览器先完成 DOM 渲染
+    setTimeout(packImagesToGrid, 0);
+  };
+})();
 
 // /* 监听 Waline 事件（对所有已初始化的评论区都生效） */
 // document.addEventListener('DOMContentLoaded', () => {
