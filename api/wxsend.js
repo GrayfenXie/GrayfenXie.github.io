@@ -9,7 +9,6 @@ const getAccessToken = async () => {
   return data.access_token;
 };
 
-
 // 腾讯位置服务免费 IP 归属地（中文）
 const getIpGeo = async (ip) => {
   try {
@@ -18,8 +17,7 @@ const getIpGeo = async (ip) => {
     );
     if (data.status === 0) {
       const { nation, province, city } = data.result.ad_info;
-      const isp = data.result.ad_info.district || ''; // 运营商字段
-      return `${nation} ${province} ${city} ${isp}`.trim();
+      return `${nation}${province}${city}`.trim();
     }
   } catch {
     /* ignore */
