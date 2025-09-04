@@ -298,7 +298,7 @@
   const now = Date.now();
   const last = +localStorage.getItem(key) || 0;
   // 48 小时内不再触发
-  if (now - last > 12 * 60 * 60 * 1000) {
+  if (now - last > 2 * 60 * 60 * 1000) {
     fetch('/api/log');
     localStorage.setItem(key, now);
   }
