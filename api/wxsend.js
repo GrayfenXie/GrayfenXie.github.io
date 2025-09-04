@@ -13,7 +13,10 @@ const getAccessToken = async () => {
 const getIpGeo = async (ip) => {
   try {
     const { data } = await axios.get(`https://ipapi.co/${ip}/json/`);
-    return `${data.country_name || ''} ${data.region || ''} ${data.city || ''}`.trim() || '未知地区';
+    return [data.country_name || '', data.region || '', data.city || '']
+      .filter(Boolean)
+      .join(' ')
+      .trim() || '未知地区';
   } catch {
     return '未知地区';
   }
