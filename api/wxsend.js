@@ -18,7 +18,8 @@ const getIpGeo = async (ip) => {
     );
     if (data.status === 0) {
       const { nation, province, city } = data.result.ad_info;
-      return `${nation} ${province} ${city}`.trim();
+      const isp = data.result.ad_info.district || ''; // 运营商字段
+      return `${nation} ${province} ${city} ${isp}`.trim();
     }
   } catch {
     /* ignore */
