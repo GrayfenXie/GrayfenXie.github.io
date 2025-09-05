@@ -29,12 +29,12 @@ window.isLoading      = false;
       smartLists: true
     });
     // 返回：正文 HTML + 九宫格 HTML（多张图时才套）
-    // const gridHTML =
-    //   currentImages.length > 1
-    //     ? '<div class="issue-grid">' + currentImages.join('') + '</div>'
-    //     : currentImages.join('');
-    // return html + gridHTML;
-    return html;
+    const gridHTML =
+      currentImages.length > 1
+        ? '<div class="issue-grid">' + currentImages.join('') + '</div>'
+        : currentImages.join('');
+    return html + gridHTML;
+    // return html;
   };
 })();
 
