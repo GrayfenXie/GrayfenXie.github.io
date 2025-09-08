@@ -62,6 +62,7 @@ function shuffleArray(arr) {
 }
 
 // 5. 创建 DOM 并插入
+// 5. 创建 DOM 并插入
 function createImageElements(arr, limit) {
   if (loadedImages >= arr.length) return;
 
@@ -72,6 +73,7 @@ function createImageElements(arr, limit) {
 
   const fragment = document.createDocumentFragment();
   const sliceEnd = Math.min(loadedImages + limit, arr.length);
+
   for (let i = loadedImages; i < sliceEnd; i++) {
     const { src, alt, smallSrc } = arr[i];
 
@@ -90,7 +92,14 @@ function createImageElements(arr, limit) {
     li.addEventListener('click', () => opens(li));
     fragment.appendChild(li);
   }
+
   container.appendChild(fragment);
+
+  // ✅ 强制重排，确保动画触发
+  container.offsetHeight;
+
+  // ✅ 再触发动画
+  anime();
 
   loadedImages = sliceEnd;
   loadpic.textContent = loadedImages;
@@ -103,8 +112,6 @@ function createImageElements(arr, limit) {
       moreBtn.style.pointerEvents = 'none';
     }, 300);
   }
-
-  anime(); // 入场动画
 }
 
 // 6. 首次加载

@@ -6,35 +6,28 @@ window.isLoading      = false;
 
 // ========== marked 渲染器：把多张图收进九宫格 ==========
 (function () {
-  // 收集当前 issue 里的所有 <img>
   const currentImages = [];
-
-  // 创建自定义 renderer
   const renderer = new marked.Renderer();
   const originImage = renderer.image.bind(renderer);
 
   renderer.image = function (href, title, text) {
-    // 收集真正的 <img> 字符串
     currentImages.push(originImage(href, title, text));
-    return '';   // 占位，稍后统一输出
+    return '';
   };
 
-  // 全局暴露
   window.renderMarkdown = function (md) {
-    currentImages.length = 0;                       // 每次清空
+    currentImages.length = 0;
     const html = marked(md || '', {
       renderer,
       gfm: true,
       breaks: true,
       smartLists: true
     });
-    // 返回：正文 HTML + 九宫格 HTML（多张图时才套）
     const gridHTML =
       currentImages.length > 1
         ? '<div class="issue-grid">' + currentImages.join('') + '</div>'
         : currentImages.join('');
     return html + gridHTML;
-    // return html;
   };
 })();
 
@@ -43,7 +36,7 @@ async function loadAllIssues() {
   if (window.isLoading) return;
   window.isLoading = true;
   try {
-    await fetchAllCommentsOnce();        // 你原来的实现
+    await fetchAllCommentsOnce();
     renderIssues(1, window.perPage);
     document.getElementById('allpic2').innerText = window.cachedIssues.length;
   } catch (e) {
@@ -58,9 +51,7 @@ async function loadAllIssues() {
 // ========== 获取某个 issue 的评论数 ==========
 async function fetchCommentCount(issueId) {
   try {
-    const res = await fetch(
-      `https://waline.grayfen.cn/comment?path=/issues/${issueId}`
-    );
+    const res = await fetch(`https://waline.grayfen.cn/comment?path=/issues/${issueId}`);
     const data = await res.json();
     return data ? data.count : 0;
   } catch {
@@ -80,8 +71,6 @@ function renderIssues(page, perPage, isAppend = false) {
   pageIssues.forEach(issue => {
     const date = new Date(issue.created_at);
     const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-
-    // 使用上面封装好的函数
     const bodyHTML = window.renderMarkdown(issue.body || '');
 
     const li = document.createElement('li');
@@ -186,47 +175,49 @@ function showToast(msg, duration = 2000) {
 }
 
 // ========== 把正文里的 <img> 统一搬进九宫格 ==========
+/* ========== 九宫格 & 动画（一次性解决） ========== */
 (function () {
-  // 统一处理所有 issue
+  /* 打包九宫格 */
   function packImagesToGrid() {
     document.querySelectorAll('.issue-body').forEach(body => {
-      // 已处理过就跳过
-      if (body.querySelector('.issue-grid')) return;
-
+      if (body.querySelector('.issue-grid')) return;          // 已处理过
       const imgs = [...body.querySelectorAll('img')];
-      if (imgs.length <= 1) return;   // 单张不处理
-
-      // 创建九宫格
+      if (imgs.length <= 1) return;                           // 单张不处理
       const grid = document.createElement('div');
       grid.className = 'issue-grid';
-
-      // 把现有 img 按原顺序搬进九宫格（DOM 移动）
       imgs.forEach(img => grid.appendChild(img));
-
-      // 追加到 body 末尾
       body.appendChild(grid);
     });
   }
 
-  // 在 renderIssues 渲染完 DOM 后统一执行
+  /* 播放动画：只针对带 [data-animate-new] 标记的新节点 */
+  function playAnimeForNew() {
+    const news = document.querySelectorAll('.aissue[data-animate-new]');
+    news.forEach(el => {
+      el.style.transform = 'scale(1)';
+      el.style.opacity   = '1';
+      el.removeAttribute('data-animate-new');   // 标记用完即焚
+    });
+  }
+
+  /* 拦截 renderIssues */
   const oldRenderIssues = window.renderIssues;
-  window.renderIssues = function (...args) {
-    oldRenderIssues.apply(this, args);
-    // 让浏览器先完成 DOM 渲染
-    setTimeout(packImagesToGrid, 0);
+  window.renderIssues = function (page, perPage, isAppend = false) {
+    /* 1. 先记录“旧”节点 */
+    const oldOnes = new Set(document.querySelectorAll('.aissue'));
+
+    /* 2. 真正渲染 DOM（此时新节点已插入） */
+    oldRenderIssues.call(this, page, perPage, isAppend);
+
+    /* 3. 给所有“新”节点打标记 */
+    document.querySelectorAll('.aissue').forEach(li => {
+      if (!oldOnes.has(li)) li.setAttribute('data-animate-new', '');
+    });
+
+    /* 4. 等浏览器完成搬图、重排后再播动画 */
+    requestAnimationFrame(() => {
+      packImagesToGrid();      // 搬运 <img>
+      playAnimeForNew();       // 统一播放
+    });
   };
 })();
-
-// /* 监听 Waline 事件（对所有已初始化的评论区都生效） */
-// document.addEventListener('DOMContentLoaded', () => {
-//   // 监听全局事件
-//   document.addEventListener('waline:submit', () => toggleLoading(true));   // 发送前
-//   document.addEventListener('waline:submitted', () => {                   // 发送成功
-//     toggleLoading(false);
-//     showToast('评论已发送 ✅');
-//   });
-//   document.addEventListener('waline:error', () => {                       // 发送失败
-//     toggleLoading(false);
-//     showToast('发送失败，请重试 ❌');
-//   });
-// });
