@@ -48,12 +48,10 @@ function renderGuitars(page, perPage2, isAppend = false) {
     const urlMatch = body.match(/url:\s*(https:\/\/cdn\.grayfen\.cn\/[^\s\n\r]+)/i);
     const nameMatch = body.match(/name:\s*([^\n\r]+)/i);
     if (!urlMatch || !nameMatch) return;
-
     const videoSrc  = decodeURIComponent(urlMatch[1]);
     const videoName = nameMatch[1].trim();
     const date2     = new Date(guitar.created_at);
-    const formattedDate2 = `${date2.toLocaleDateString()} ${date2.toLocaleTimeString()}`;
-
+    const formattedDate2 = `${date2.toLocaleDateString()} ${date2.toLocaleString('en-US', { weekday: 'short' })} ${date2.toLocaleTimeString()}`;
     const li = document.createElement('li');
     const vid = `guitar-${guitar.id}-${idx}`;
     li.innerHTML = `

@@ -70,7 +70,7 @@ function renderIssues(page, perPage, isAppend = false) {
 
   pageIssues.forEach(issue => {
     const date = new Date(issue.created_at);
-    const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+    const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleString('en-US', { weekday: 'short' })} ${date.toLocaleTimeString()}`;
     const bodyHTML = window.renderMarkdown(issue.body || '');
 
     const li = document.createElement('li');
