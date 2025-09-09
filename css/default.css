@@ -1332,9 +1332,6 @@ textarea {
 }
 
 @media screen and (max-width: 1400px) {
-    .leftmenu .title {
-        display: none;
-    }
 
     #works,
     #issue-list,
