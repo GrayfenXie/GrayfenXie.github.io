@@ -402,7 +402,7 @@ a {
     width: 99%;
     background: var(--card-color);
     border-radius: var(--border-radius);
-    padding: 20px 40px;
+    padding: 24px 40px;
     margin: 6px 0;
     transition: all 1s;
     transform: scale(0.8);
@@ -1095,9 +1095,18 @@ textarea {
 .wl-footer .wl-actions a {
     display: none !important;
 }
+.wl-footer{
+    margin: 1em .75em!important;
+}
 
 .wl-panel {
     margin: 0 !important;
+    border: none!important;
+    border-radius: var(--border-radius) !important;
+    padding: 0 12px;
+}
+.wl-header{
+    border: none!important;
 }
 
 .wl-header input,
@@ -1173,6 +1182,10 @@ textarea {
     background: transparent !important;
 }
 
+.wl-comment-actions button{
+    padding: 0 8px !important;
+}
+
 [data-waline] a {
     color: var(--theme-color) !important;
 }
@@ -1217,15 +1230,18 @@ textarea {
 }
 
 .waline-container {
-    padding-top: 20px;
+    /* padding-top: 20px; */
+    background: var(--bg-color);
+    padding: 24px;
+    border-radius: var(--border-radius);
+}
+
+.wl-header-item{
+        border-bottom: 1px solid var(--line-color);
 }
 
 .night .waline-container {
     border-top-color: #333;
-}
-
-.wl-panel {
-    border-radius: var(--border-radius) !important;
 }
 
 .menubutton {
