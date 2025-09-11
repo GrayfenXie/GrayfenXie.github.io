@@ -1232,8 +1232,13 @@ textarea {
 .waline-container {
     /* padding-top: 20px; */
     background: var(--bg-color);
-    padding: 24px;
+    /* padding: 24px; */
+    padding: 24px 24px 0 24px;
     border-radius: var(--border-radius);
+}
+
+.wl-card .wl-comment-actions {
+    margin-right: -8px!important;
 }
 
 .wl-header-item{
