@@ -1466,13 +1466,13 @@ textarea {
 
     .links .alink {
         margin: 0;
-        padding: 16px 0;
-        width: 17%;
+        padding: 12px 0;
+        width: 14%;
         display: block;
     }
 
     .links .alink .linkpic {
-        width: 2.8rem;
+        width: 3rem;
     }
 
     .links .alink .linkbox {
