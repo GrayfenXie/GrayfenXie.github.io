@@ -32,14 +32,18 @@ var mobilemune = document.getElementById('mobilemune');
 function openitfc() {
     mobilemune.style.display = 'flex';
     mobilemune.style.visibility = 'visible';
-    mobilemune.style.opacity = '1';
+    setTimeout(function () {
+        mobilemune.style.opacity = '1';
+    }, 250);
     closeit.style.display = 'block';
     openit.style.display = 'none';
 };
 function closeitfc() {
     mobilemune.style.opacity = '0';
-    mobilemune.style.visibility = 'hidden';
-    mobilemune.style.display = 'none';
+    setTimeout(function () {
+        mobilemune.style.visibility = 'hidden';
+        mobilemune.style.display = 'none';
+    }, 250);
     openit.style.display = 'block';
     closeit.style.display = 'none';
 };
