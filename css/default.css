@@ -1095,18 +1095,20 @@ textarea {
 .wl-footer .wl-actions a {
     display: none !important;
 }
-.wl-footer{
-    margin: 1em .75em!important;
+
+.wl-footer {
+    margin: 1em .75em !important;
 }
 
 .wl-panel {
     margin: 0 !important;
-    border: none!important;
+    border: none !important;
     border-radius: var(--border-radius) !important;
     padding: 0 12px;
 }
-.wl-header{
-    border: none!important;
+
+.wl-header {
+    border: none !important;
 }
 
 .wl-header input,
@@ -1182,7 +1184,7 @@ textarea {
     background: transparent !important;
 }
 
-.wl-comment-actions button{
+.wl-comment-actions button {
     padding: 0 8px !important;
 }
 
@@ -1238,11 +1240,11 @@ textarea {
 }
 
 .wl-card .wl-comment-actions {
-    margin-right: -8px!important;
+    margin-right: -8px !important;
 }
 
-.wl-header-item{
-        border-bottom: 1px solid var(--line-color);
+.wl-header-item {
+    border-bottom: 1px solid var(--line-color);
 }
 
 .night .waline-container {
@@ -1290,7 +1292,7 @@ textarea {
     aspect-ratio: 1 / 1;
 }
 
-.modal-nav{
+.modal-nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -1304,14 +1306,15 @@ textarea {
     z-index: 2000;
 }
 
-.modal-nav:hover{
+.modal-nav:hover {
     background: rgba(0, 0, 0, .6);
     transition: all .4s;
 }
 
-.modal-prev{
-    left: 20px; 
+.modal-prev {
+    left: 20px;
 }
+
 .modal-prev::after {
     content: '';
     position: absolute;
@@ -1322,11 +1325,11 @@ textarea {
     background: url(../img/leftarrow.svg);
 }
 
-.modal-next{
+.modal-next {
     right: 20px;
 }
 
-.modal-next::after{
+.modal-next::after {
     content: '';
     position: absolute;
     width: 40px;
@@ -1525,7 +1528,39 @@ textarea {
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
 .anime-in {
-  transform: scale(1);
-  opacity: 1;
+    transform: scale(1);
+    opacity: 1;
+}
+
+.ip-mascot {
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
+    width: 120px;
+    height: auto;
+    z-index: 9;
+    cursor: pointer;
+    animation: float 6s ease-in-out infinite;
+    /* filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.05)); */
+}
+
+.ip-mascot img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 轻微浮动动画，增加灵动感 */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
 }
