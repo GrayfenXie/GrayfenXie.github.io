@@ -54,7 +54,7 @@ button {
     --theme-color: #FFBF37;
     --nav-color: rgba(255, 255, 255, 0.72);
     --line-color: #eeeeee;
-    --box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    --box-shadow: 0 4px 12px rgba(0,0,0,.05);
 }
 
 :root .night {
@@ -67,7 +67,7 @@ button {
     --theme-color: #B5F3FF;
     --nav-color: rgba(31, 31, 31, 0.8);
     --line-color: #575757;
-    --box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+    --box-shadow: 0 4px 12px rgba(255, 255, 255, .05);
 }
 
 body {
