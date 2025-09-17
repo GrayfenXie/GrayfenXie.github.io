@@ -423,3 +423,10 @@ mainpart.addEventListener('scroll', () => {
         if (e.key === 'ArrowRight') showNext();
     });
 })();
+const mascot = document.getElementById('ipMascot');
+const bubble = document.getElementById('ipBubble');
+
+mascot.addEventListener('click', () => {
+  bubble.classList.toggle('show');
+  setTimeout(() => { bubble.classList.remove('show'); }, 2000);
+});
