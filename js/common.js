@@ -425,8 +425,17 @@ mainpart.addEventListener('scroll', () => {
 })();
 const mascot = document.getElementById('ipMascot');
 const bubble = document.getElementById('ipBubble');
-
+let clickflag = true;
+let timer = null; 
 mascot.addEventListener('click', () => {
-  bubble.classList.toggle('show');
-  setTimeout(() => { bubble.classList.remove('show'); }, 2000);
+    if (!clickflag) return;
+    clickflag = false;
+
+    bubble.classList.add('show');
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+        bubble.classList.remove('show');
+        clickflag = true;
+    }, 2000);
 });
