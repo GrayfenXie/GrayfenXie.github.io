@@ -1,6 +1,4 @@
 window.imagesPerLoad = 9;
-
-// 1. 原始数据：二维数组 → 对象数组
 window.imagesData = [
   ['summerbbq.png', '夏日露营'],
   ['Nicholas2.png', '北极星的眼泪'],
@@ -47,13 +45,13 @@ window.imagesData = [
   smallSrc: `https://cdn.grayfen.cn/${file.replace('.png', '_zip.jpg')}`
 }));
 
-// 2. 洗牌（仅一次）
+// 洗牌（仅一次）
 shuffleArray(imagesData);
 
-// 3. 图片懒加载相关变量
+// 图片懒加载相关变量
 let loadedImages = 0;
 
-// 4. 工具函数
+// 工具函数
 function shuffleArray(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -61,8 +59,7 @@ function shuffleArray(arr) {
   }
 }
 
-// 5. 创建 DOM 并插入
-// 5. 创建 DOM 并插入
+// 创建 DOM 并插入
 function createImageElements(arr, limit) {
   if (loadedImages >= arr.length) return;
 
@@ -95,10 +92,10 @@ function createImageElements(arr, limit) {
 
   container.appendChild(fragment);
 
-  // ✅ 强制重排，确保动画触发
+  // 强制重排，确保动画触发
   container.offsetHeight;
 
-  // ✅ 再触发动画
+  // 再触发动画
   anime();
 
   loadedImages = sliceEnd;
@@ -114,21 +111,21 @@ function createImageElements(arr, limit) {
   }
 }
 
-// 6. 首次加载
+// 首次加载
 createImageElements(imagesData, window.imagesPerLoad);
 
-// 7. 点击“加载更多”
+// 点击“加载更多”
 document.getElementById('more').addEventListener('click', () =>
   createImageElements(imagesData, window.imagesPerLoad)
 );
 
-// 8. 刷新回到顶部
+// 刷新回到顶部
 window.onbeforeunload = () => {
   document.documentElement.scrollTop = 0;
   document.body.scrollTop = 0;
 };
 
-// 9. 模态框相关
+// 模态框相关
 const modal = document.getElementById('myModal');
 const modalImg = document.getElementById('img01');
 
@@ -139,7 +136,7 @@ function opens(li) {
   freezeScroll();
   openpicflag = true;
 
-  // ✅ 隐藏左右箭头
+  // 隐藏左右箭头
   document.querySelector('.modal-prev').style.display = 'none';
   document.querySelector('.modal-next').style.display = 'none';
 

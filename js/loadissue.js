@@ -1,10 +1,10 @@
-// ========== 缓存 & 分页 ==========
+// 缓存 & 分页 
 window.cachedIssues = [];
 window.currentPage    = 1;
 window.perPage        = 10;
 window.isLoading      = false;
 
-// ========== marked 渲染器：把多张图收进九宫格 ==========
+// marked 渲染器：把多张图收进九宫格 
 (function () {
   const currentImages = [];
   const renderer = new marked.Renderer();
@@ -31,7 +31,7 @@ window.isLoading      = false;
   };
 })();
 
-// ========== 拉取全部 Issue 数据 ==========
+// 拉取全部 Issue 数据 
 async function loadAllIssues() {
   if (window.isLoading) return;
   window.isLoading = true;
@@ -48,7 +48,7 @@ async function loadAllIssues() {
   }
 }
 
-// ========== 获取某个 issue 的评论数 ==========
+// 获取某个 issue 的评论数 
 async function fetchCommentCount(issueId) {
   try {
     const res = await fetch(`https://waline.grayfen.cn/comment?path=/issues/${issueId}`);
@@ -59,7 +59,7 @@ async function fetchCommentCount(issueId) {
   }
 }
 
-// ========== 渲染 Issue 列表 ==========
+// 渲染 Issue 列表 
 function renderIssues(page, perPage, isAppend = false) {
   const issueList = document.getElementById('issue-list');
   const start = (page - 1) * perPage;
@@ -110,7 +110,7 @@ function renderIssues(page, perPage, isAppend = false) {
   document.getElementById('loadpic2').innerText = Math.min(end, window.cachedIssues.length);
 }
 
-// ========== 评论区开关 ==========
+// 评论区开关 
 document.addEventListener('click', e => {
   const btn = e.target.closest('.comment-toggle');
   if (!btn) return;
@@ -151,18 +151,18 @@ document.addEventListener('click', e => {
   }
 });
 
-// ========== 加载更多按钮 ==========
+// 加载更多按钮 
 document.getElementById('more2').addEventListener('click', () => {
   window.currentPage++;
   renderIssues(window.currentPage, window.perPage, true);
 });
 
-// ========== 初始化 ==========
+// 初始化 
 document.addEventListener('DOMContentLoaded', () => {
   loadAllIssues();
 });
 
-// ========== 全局 loading & toast ==========
+// 全局 loading & toast 
 function toggleLoading(show = true) {
   const mask = document.getElementById('waline-loading');
   mask.style.display = show ? 'flex' : 'none';
@@ -174,8 +174,7 @@ function showToast(msg, duration = 2000) {
   setTimeout(() => toast.style.display = 'none', duration);
 }
 
-// ========== 把正文里的 <img> 统一搬进九宫格 ==========
-/* ========== 九宫格 & 动画（一次性解决） ========== */
+// 把正文里的 <img> 统一搬进九宫格 
 (function () {
   /* 打包九宫格 */
   function packImagesToGrid() {
@@ -190,7 +189,7 @@ function showToast(msg, duration = 2000) {
     });
   }
 
-  /* 播放动画：只针对带 [data-animate-new] 标记的新节点 */
+  //播放动画：只针对带 [data-animate-new] 标记的新节点
   function playAnimeForNew() {
     const news = document.querySelectorAll('.aissue[data-animate-new]');
     news.forEach(el => {
@@ -200,21 +199,21 @@ function showToast(msg, duration = 2000) {
     });
   }
 
-  /* 拦截 renderIssues */
+  //拦截 renderIssues
   const oldRenderIssues = window.renderIssues;
   window.renderIssues = function (page, perPage, isAppend = false) {
-    /* 1. 先记录“旧”节点 */
+    //先记录“旧”节点
     const oldOnes = new Set(document.querySelectorAll('.aissue'));
 
-    /* 2. 真正渲染 DOM（此时新节点已插入） */
+    //真正渲染 DOM（此时新节点已插入）
     oldRenderIssues.call(this, page, perPage, isAppend);
 
-    /* 3. 给所有“新”节点打标记 */
+    //给所有“新”节点打标记
     document.querySelectorAll('.aissue').forEach(li => {
       if (!oldOnes.has(li)) li.setAttribute('data-animate-new', '');
     });
 
-    /* 4. 等浏览器完成搬图、重排后再播动画 */
+    //等浏览器完成搬图、重排后再播动画
     requestAnimationFrame(() => {
       packImagesToGrid();      // 搬运 <img>
       playAnimeForNew();       // 统一播放

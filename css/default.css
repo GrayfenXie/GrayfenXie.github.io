@@ -1529,6 +1529,9 @@ textarea {
     .issue-grid {
         grid-template-columns: repeat(3, 1fr);
     }
+    .waline-container{
+        padding: 16px 16px 0 16px;
+    }
 }
 
 .anime-in {
@@ -1572,7 +1575,7 @@ textarea {
   position: fixed;
   right: 140px;          /* 在 IP 左侧 */
   bottom: 40px;
-  max-width: 220px;
+  max-width: 176px;
   padding: 12px 16px;
   background: var(--card-color);
   border-radius: 12px;

@@ -1,7 +1,7 @@
 // api/wxsend.js  (Vercel Node Runtime)
 const axios = require('axios');
 
-/* 1. 获取微信 access_token */
+//获取微信 access_token
 const getAccessToken = async () => {
   const { data } = await axios.get(
     'https://api.weixin.qq.com/cgi-bin/token',
@@ -19,7 +19,7 @@ const getAccessToken = async () => {
   return data.access_token;
 };
 
-/* 2. 根据 IP 查归属地（含运营商） */
+//根据 IP 查归属地（含运营商）
 const getIpGeo = async (ip) => {
   try {
     const url =
@@ -42,7 +42,7 @@ const getIpGeo = async (ip) => {
   return '未知地区';
 };
 
-/* 3. Vercel Serverless 入口 */
+//3. Vercel Serverless 入口
 module.exports = async function handler(req, res) {
   try {
     const { ip, ua } = req.query;
