@@ -425,11 +425,20 @@ mainpart.addEventListener('scroll', () => {
 })();
 const mascot = document.getElementById('ipMascot');
 const bubble = document.getElementById('ipBubble');
+const slogans = [
+  '（歪嘴）桀桀桀桀桀桀桀桀桀桀桀桀',
+  '所有杀不死我的，都会让我变得更强大！',
+  '在下鬼凤，誓要成为一名独当一面的冒险家！',
+  '大侠饶命！我刚出新手村！！！'
+];
 let clickflag = true;
 let timer = null; 
 mascot.addEventListener('click', () => {
     if (!clickflag) return;
     clickflag = false;
+    
+    const idx = Math.floor(Math.random() * slogans.length);
+    bubble.textContent = slogans[idx];
 
     bubble.classList.add('show');
     clearTimeout(timer);
@@ -437,5 +446,5 @@ mascot.addEventListener('click', () => {
     timer = setTimeout(() => {
         bubble.classList.remove('show');
         clickflag = true;
-    }, 2000);
+    }, 1000);
 });

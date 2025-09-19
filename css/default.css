@@ -1547,7 +1547,7 @@ textarea {
     height: auto;
     z-index: 9;
     cursor: pointer;
-    animation: float 6s ease-in-out infinite;
+    /* animation: float 6s ease-in-out infinite; */
     /* filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.05)); */
 }
 
@@ -1558,7 +1558,7 @@ textarea {
 }
 
 /* 轻微浮动动画，增加灵动感 */
-@keyframes float {
+/* @keyframes float {
 
     0%,
     100% {
@@ -1566,9 +1566,9 @@ textarea {
     }
 
     50% {
-        transform: translateY(-8px);
+        transform: translateY(-1px);
     }
-}
+} */
 
 /* 2. 对话气泡 */
 .ip-bubble{
