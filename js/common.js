@@ -447,5 +447,5 @@ mascot.addEventListener('click', () => {
     timer = setTimeout(() => {
         bubble.classList.remove('show');
         clickflag = true;
-    }, 1000);
+    }, 2000);
 });
