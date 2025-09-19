@@ -1573,7 +1573,7 @@ textarea {
 /* 2. 对话气泡 */
 .ip-bubble{
   position: fixed;
-  right: 140px;          /* 在 IP 左侧 */
+  right: 120px;          /* 在 IP 左侧 */
   bottom: 40px;
   max-width: 176px;
   padding: 12px 16px;
