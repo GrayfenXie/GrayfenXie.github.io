@@ -1,10 +1,10 @@
-// =================  缓存 & 分页  =================
+// 缓存 & 分页 
 window.cachedIssues2 = [];
 window.currentPage2   = 1;
 window.perPage2       = 10;
 window.isLoading2     = false;
 
-// =================  入口：拉取全部吉他视频  =================
+// 入口：拉取全部吉他视频 
 async function loadAllGuitar() {
   if (window.isLoading2) return;
   window.isLoading2 = true;
@@ -25,7 +25,7 @@ async function loadAllGuitar() {
   }
 }
 
-// =================  获取单个视频评论数  =================
+// 获取单个视频评论数 
 async function fetchCommentCount2(videoId) {
   try {
     const res = await fetch(`https://waline.grayfen.cn/comment?path=/videos/${videoId}`);
@@ -36,7 +36,7 @@ async function fetchCommentCount2(videoId) {
   }
 }
 
-// =================  渲染吉他列表  =================
+// 渲染吉他列表 
 function renderGuitars(page, perPage2, isAppend = false) {
   const guitarList = document.getElementById('guitar-list');
   const start2 = (page - 1) * perPage2;
@@ -150,11 +150,11 @@ function renderGuitars(page, perPage2, isAppend = false) {
   document.getElementById('loadpic3').innerText = Math.min(start2 + perPage2, window.cachedIssues2.length);
 }
 
-// =================  绑定「加载更多」按钮  =================
+// 绑定「加载更多」按钮 
 document.getElementById('more3').addEventListener('click', () => {
   window.currentPage2++;
   renderGuitars(window.currentPage2, window.perPage2, true);
 });
 
-// =================  初始化  =================
+// 初始化 
 document.addEventListener('DOMContentLoaded', () => { loadAllGuitar(); });
