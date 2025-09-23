@@ -45,11 +45,12 @@ function renderGuitars(page, perPage2, isAppend = false) {
 
   pageIssues.forEach((guitar, idx) => {
     const body = guitar.body || '';
-    const urlMatch = body.match(/url:\s*(https:\/\/cdn\.grayfen\.cn\/[^\s\n\r]+)/i);
+    const urlMatch = body.match(/url:\s*(https:\/\/img\.grayfen\.cn\/[^\s\n\r]+)/i);
     const nameMatch = body.match(/name:\s*([^\n\r]+)/i);
     if (!urlMatch || !nameMatch) return;
     const videoSrc  = decodeURIComponent(urlMatch[1]);
     const videoName = nameMatch[1].trim();
+     const posterSrc = `${videoSrc}?frame=5000&w=1000&cs=srgb`;
     const date2     = new Date(guitar.created_at);
     const formattedDate2 = `${date2.toLocaleDateString()} ${date2.toLocaleString('en-US', { weekday: 'short' })} ${date2.toLocaleTimeString()}`;
     const li = document.createElement('li');
@@ -58,7 +59,7 @@ function renderGuitars(page, perPage2, isAppend = false) {
       <video id="${vid}"
              class="video-js vjs-default-skin vjs-loading"
              preload="none"
-             poster="${videoSrc}?vframe/jpg/offset/2.5/w/1200/h/675"
+             poster="${posterSrc}"
              controls muted>
         <source src="${videoSrc}" type="video/mp4">
       </video>
