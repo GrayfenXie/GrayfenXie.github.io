@@ -40,9 +40,9 @@ window.imagesData = [
   ['unamenight.png', '没有名字的夜晚'],
   ['clouds.png', '云舒']
 ].map(([file, alt]) => ({
-  src: `https://cdn.grayfen.cn/${file}`,
+  src: `https://img.grayfen.cn/draw/${file}`,
   alt,
-  smallSrc: `https://cdn.grayfen.cn/${file.replace('.png', '_zip.jpg')}`
+  smallSrc: `https://img.grayfen.cn/draw/${file.replace('.png', '_zip.jpg')}`
 }));
 
 // 洗牌（仅一次）
