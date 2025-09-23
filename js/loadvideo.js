@@ -151,7 +151,7 @@ function renderGuitars(page, perPage2, isAppend = false) {
   // 强制触发动画，让元素显示
 setTimeout(() => {
   anime();
-}, 50);
+}, 10);
 }
 
 // 绑定「加载更多」按钮 
