@@ -307,7 +307,8 @@ document.addEventListener('DOMContentLoaded', function () {
 function pauseAllVideos(excludePlayer) {
     // 1. 原生 <video>
     document.querySelectorAll('video').forEach(v => {
-        if (v !== excludePlayer?.tech()?.el()) v.pause();
+        if (excludePlayer && v === excludePlayer.el().querySelector('video')) return;
+        v.pause();
     });
 
     // 2. Video.js 实例
