@@ -148,6 +148,10 @@ function renderGuitars(page, perPage2, isAppend = false) {
     moreBtn.style.pointerEvents = 'auto';
   }
   document.getElementById('loadpic3').innerText = Math.min(start2 + perPage2, window.cachedIssues2.length);
+  // 强制触发动画，让元素显示
+setTimeout(() => {
+  anime();
+}, 50);
 }
 
 // 绑定「加载更多」按钮 
