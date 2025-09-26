@@ -427,8 +427,8 @@ mainpart.addEventListener('scroll', () => {
 const mascot = document.getElementById('ipMascot');
 const bubble = document.getElementById('ipBubble');
 const mascotimg = document.getElementById('ipMascotImg');
-const DEFAULT_GIF = 'img/ip-default.gif';
-const TALK_GIF   = 'img/ip-talk.gif';
+const DEFAULT_GIF = 'https://img.grayfen.cn/ip/ip-default.gif';
+const TALK_GIF   = 'https://img.grayfen.cn/ip/ip-talk.gif';
 const slogans = [
   '（歪嘴）桀桀桀桀桀桀桀桀桀桀桀桀',
   '所有杀不死我的，都会让我变得更强大！',
