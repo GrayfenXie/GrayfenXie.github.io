@@ -424,34 +424,55 @@ mainpart.addEventListener('scroll', () => {
         if (e.key === 'ArrowRight') showNext();
     });
 })();
+
+//ip形象动画切换
+
 const mascot = document.getElementById('ipMascot');
 const bubble = document.getElementById('ipBubble');
 const mascotimg = document.getElementById('ipMascotImg');
 const DEFAULT_GIF = 'https://img.grayfen.cn/ip/ip-default.gif';
-const TALK_GIF   = 'https://img.grayfen.cn/ip/ip-talk.gif';
+const TALK_GIF = 'https://img.grayfen.cn/ip/ip-talk.gif';
+const AUDIO_MAP = [
+    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%AD%AA%E5%98%B4%E7%AC%91.mp3?no-wait=on', // 桀桀桀桀桀
+    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%94%BE%E7%8B%A0%E8%AF%9D.mp3?no-wait=on', // 所有杀不死我的…
+    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D.mp3?no-wait=on', // 在下鬼凤…
+    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%B1%82%E9%A5%B6.mp3?no-wait=on', // 大侠饶命…
+    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E5%89%91.mp3?no-wait=on'  // 我手里这把剑…
+];
 const slogans = [
-  '（歪嘴）桀桀桀桀桀桀桀桀桀桀桀桀',
-  '所有杀不死我的，都会让我变得更强大！',
-  '在下鬼凤，誓要成为一名独当一面的冒险家！',
-  '大侠饶命！我刚出新手村！！！',
-  '我手里这把剑，虽是新手铁剑，但专治各种不服！',
+    '（歪嘴）桀桀桀桀桀桀桀桀桀桀桀桀',
+    '所有杀不死我的，都会让我变得更强大！',
+    '在下鬼凤，誓要成为一名独当一面的冒险家！',
+    '大侠饶命！我刚出新手村！！！',
+    '吾手里这把剑，专治各种不服！',
 ];
 let clickflag = true;
-let timer = null; 
+let timer = null;
+
+/* ========== 预加载 ========== */
+AUDIO_MAP.forEach(url => {
+  // 先发一个无声音请求，把文件塞进浏览器缓存
+  fetch(url, { mode: 'no-cors' });   // no-cors 避免跨域报错
+});
+
 mascot.addEventListener('click', () => {
     if (!clickflag) return;
     clickflag = false;
-    mascotimg.src = TALK_GIF;
 
     const idx = Math.floor(Math.random() * slogans.length);
     bubble.textContent = slogans[idx];
-
     bubble.classList.add('show');
     clearTimeout(timer);
 
-    timer = setTimeout(() => {
+    /* 播放对应音频 再出现文字 */
+    const audio = new Audio(AUDIO_MAP[idx]);
+    audio.play().catch(() => { }); 
+    mascotimg.src = TALK_GIF;
+
+    /* 音频结束后切回默认状态 */
+    audio.addEventListener('ended', () => {
         mascotimg.src = DEFAULT_GIF;
         bubble.classList.remove('show');
         clickflag = true;
-    }, 2000);
+    }, { once: true });   // once:true 保证只触发一次
 });

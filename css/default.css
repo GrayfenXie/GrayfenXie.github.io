@@ -423,6 +423,7 @@ a {
 #issue-list .issue-body li {
     list-style-type: '👉';
     color: var(--second-color);
+    margin-left: 20px;
 }
 
 .issue-img {
