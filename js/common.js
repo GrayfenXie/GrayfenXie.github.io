@@ -462,7 +462,7 @@ const anim = lottie.loadAnimation({
     autoplay: false,                                  // 先不自动播放
     path: 'img/default.json'                          // JSON 文件路径（同目录）
 });
-
+anim.setSpeed(1.1);
 // 手动播放
 anim.play();
 
