@@ -425,73 +425,85 @@ mainpart.addEventListener('scroll', () => {
     });
 })();
 
-//ip形象动画切换
-const mascot = document.getElementById('ipMascot');
-const bubble = document.getElementById('ipBubble');
+
+/* ==========  配置  ========== */
+const mascot   = document.getElementById('ipMascot');
+const bubble   = document.getElementById('ipBubble');
 const AUDIO_MAP = [
-    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%AD%AA%E5%98%B4%E7%AC%91.mp3?no-wait=on', // 桀桀桀桀桀
-    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%94%BE%E7%8B%A0%E8%AF%9D.mp3?no-wait=on', // 所有杀不死我的…
-    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D.mp3?no-wait=on', // 在下鬼凤…
-    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%B1%82%E9%A5%B6.mp3?no-wait=on', // 大侠饶命…
-    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E5%89%91.mp3?no-wait=on'  // 我手里这把剑…
+  'https://img.grayfen.cn/ip/IP语音/歪嘴笑.mp3?no-wait=on',
+  'https://img.grayfen.cn/ip/IP语音/放狠话.mp3?no-wait=on',
+  'https://img.grayfen.cn/ip/IP语音/自我介绍.mp3?no-wait=on',
+  'https://img.grayfen.cn/ip/IP语音/求饶.mp3?no-wait=on',
+  'https://img.grayfen.cn/ip/IP语音/剑.mp3?no-wait=on'
 ];
 const slogans = [
-    '（歪嘴）桀桀桀桀桀桀桀桀桀桀桀桀',
-    '所有杀不死我的，都会让我变得更强大！',
-    '在下鬼凤，誓要成为一名独当一面的冒险家！',
-    '大侠饶命！我刚出新手村！！！',
-    '吾手里这把剑，专治各种不服！',
+  '（歪嘴）桀桀桀桀桀桀桀桀桀桀桀桀',
+  '所有杀不死我的，都会让我变得更强大！',
+  '在下鬼凤，誓要成为一名独当一面的冒险家！',
+  '大侠饶命！我刚出新手村！！！',
+  '吾手里这把剑，专治各种不服！'
 ];
-let clickflag = true;
-let timer = null;
 
-/* ========== 预加载 ========== */
-AUDIO_MAP.forEach(url => {
-    // 先发一个无声音请求，把文件塞进浏览器缓存
-    fetch(url, { mode: 'no-cors' });   // no-cors 避免跨域报错
-});
+/* ==========  状态  ========== */
+let clickFlag = true;
+let currentAnim = null;          // 当前 lottie 实例
 
-// 把默认 JSON 先写死，后面点击时换成 talk JSON
-let anim = null;
-function loadAnimation(jsonPath) {
-  // 如果已有实例，先清掉
-    if (anim && typeof anim.destroy === 'function') {
-    anim.destroy();
+/* ==========  工具：安全销毁  ========== */
+function safeDestroy(anim) {
+  if (!anim) return;
+  try {
+    if (typeof anim.destroy === 'function') anim.destroy();
+  } catch (e) {
+    console.warn('Lottie destroy 出错，已忽略', e);
   }
-
-  anim = lottie.loadAnimation({
-    container: document.getElementById('ipMascot'),
-    renderer: 'svg',
-    autoplay: false,
-    path: jsonPath
-  });
-anim.addEventListener('data_failed', () => {
-    console.error('Lottie 加载失败：', jsonPath);
-    anim = null;          // 把垃圾清掉，避免下次再 destroy 报错
-  });
-
-  anim.setSpeed(0.9);
-  anim.play();
 }
 
-// 页面初始化
+/* ==========  工具：加载动画  ========== */
+function loadAnimation(path) {
+  // 1. 先把旧的干掉
+  safeDestroy(currentAnim);
+  currentAnim = null;
+
+  // 2. 创建新的
+  currentAnim = lottie.loadAnimation({
+    container: mascot,
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: path
+  });
+
+  // 3. 监听加载失败
+  currentAnim.addEventListener('data_failed', () => {
+    console.error('Lottie 加载失败：', path);
+    safeDestroy(currentAnim);
+    currentAnim = null;
+  });
+}
+
+/* ==========  预加载音频  ========== */
+AUDIO_MAP.forEach(url => fetch(url, { mode: 'no-cors' }));
+
+/* ==========  初始动画  ========== */
 loadAnimation('ip/default.json');
 
-/* ---------- 点击切换 ---------- */
+/* ==========  点击切换  ========== */
 mascot.addEventListener('click', async () => {
-  if (!clickflag) return;
-  clickflag = false;
+  if (!clickFlag) return;
+  clickFlag = false;
 
-  // 把加载、回切都包在 async/await 里，等音频真正结束再解锁
-  const idx = Math.floor(Math.random() * slogans.length);
+  const idx  = Math.floor(Math.random() * slogans.length);
   bubble.textContent = slogans[idx];
   bubble.classList.add('show');
+
   loadAnimation('ip/talk.json');
+
   const audio = new Audio(AUDIO_MAP[idx]);
   await audio.play().catch(() => {});
+
   audio.addEventListener('ended', () => {
     bubble.classList.remove('show');
     loadAnimation('ip/default.json');
-    clickflag = true;
+    clickFlag = true;
   }, { once: true });
 });
