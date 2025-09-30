@@ -426,12 +426,8 @@ mainpart.addEventListener('scroll', () => {
 })();
 
 //ip形象动画切换
-
 const mascot = document.getElementById('ipMascot');
 const bubble = document.getElementById('ipBubble');
-const mascotimg = document.getElementById('ipMascotImg');
-const DEFAULT_GIF = 'https://img.grayfen.cn/ip/ip-default.gif';
-const TALK_GIF = 'https://img.grayfen.cn/ip/ip-talk.gif';
 const AUDIO_MAP = [
     'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%AD%AA%E5%98%B4%E7%AC%91.mp3?no-wait=on', // 桀桀桀桀桀
     'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%94%BE%E7%8B%A0%E8%AF%9D.mp3?no-wait=on', // 所有杀不死我的…
@@ -455,41 +451,13 @@ AUDIO_MAP.forEach(url => {
     fetch(url, { mode: 'no-cors' });   // no-cors 避免跨域报错
 });
 
-// // 加载 JSON 并播放
-// const anim = lottie.loadAnimation({
-//     container: document.getElementById('ipMascot'), // 挂载点
-//     renderer: 'svg',                                  // 渲染方式
-//     autoplay: false,                                  // 先不自动播放
-//     path: 'ip/default.json'                          // JSON 文件路径（同目录）
-// });
-// anim.setSpeed(0.9);
-// // 手动播放
-// anim.play();
-
-// mascot.addEventListener('click', () => {
-//     if (!clickflag) return;
-//     clickflag = false;
-
-//     const idx = Math.floor(Math.random() * slogans.length);
-//     bubble.textContent = slogans[idx];
-//     bubble.classList.add('show');
-//     clearTimeout(timer);
-
-//     /* 播放对应音频 再出现文字 */
-//     const audio = new Audio(AUDIO_MAP[idx]);
-//     audio.play().catch(() => { });
-//     /* 音频结束后切回默认状态 */
-//     audio.addEventListener('ended', () => {
-//         bubble.classList.remove('show');
-//         clickflag = true;
-//     }, { once: true });   // once:true 保证只触发一次
-// });
-
 // 把默认 JSON 先写死，后面点击时换成 talk JSON
-let anim;
+let anim = null;
 function loadAnimation(jsonPath) {
   // 如果已有实例，先清掉
-  if (anim) anim.destroy();
+    if (anim && typeof anim.destroy === 'function') {
+    anim.destroy();
+  }
 
   anim = lottie.loadAnimation({
     container: document.getElementById('ipMascot'),
@@ -497,6 +465,11 @@ function loadAnimation(jsonPath) {
     autoplay: false,
     path: jsonPath
   });
+anim.addEventListener('data_failed', () => {
+    console.error('Lottie 加载失败：', jsonPath);
+    anim = null;          // 把垃圾清掉，避免下次再 destroy 报错
+  });
+
   anim.setSpeed(0.9);
   anim.play();
 }
@@ -505,26 +478,20 @@ function loadAnimation(jsonPath) {
 loadAnimation('ip/default.json');
 
 /* ---------- 点击切换 ---------- */
-mascot.addEventListener('click', () => {
+mascot.addEventListener('click', async () => {
   if (!clickflag) return;
   clickflag = false;
 
+  // 把加载、回切都包在 async/await 里，等音频真正结束再解锁
   const idx = Math.floor(Math.random() * slogans.length);
   bubble.textContent = slogans[idx];
   bubble.classList.add('show');
-  clearTimeout(timer);
-
-  // 1. 切到 talk 动画
   loadAnimation('ip/talk.json');
-
-  // 2. 播放对应音频
   const audio = new Audio(AUDIO_MAP[idx]);
-  audio.play().catch(() => {});
-
-  // 3. 音频结束后切回默认动画
+  await audio.play().catch(() => {});
   audio.addEventListener('ended', () => {
     bubble.classList.remove('show');
-    loadAnimation('ip/default.json');   // 恢复默认
+    loadAnimation('ip/default.json');
     clickflag = true;
   }, { once: true });
 });
