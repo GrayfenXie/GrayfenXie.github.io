@@ -447,6 +447,10 @@ a {
     text-align: right;
     margin: 8px 0;
 }
+#issue-list a{
+    color: var(--theme-color);
+    text-decoration:underline;
+}
 
 .image-overlay {
     position: absolute;
