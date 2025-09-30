@@ -485,7 +485,7 @@ function loadAnimation(path) {
 AUDIO_MAP.forEach(url => fetch(url, { mode: 'no-cors' }));
 
 /* ==========  初始动画  ========== */
-loadAnimation('ip/default.json');
+loadAnimation('ip/talk.json');
 
 /* ==========  点击切换  ========== */
 mascot.addEventListener('click', async () => {
