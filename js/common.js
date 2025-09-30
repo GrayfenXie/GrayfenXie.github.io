@@ -455,32 +455,76 @@ AUDIO_MAP.forEach(url => {
     fetch(url, { mode: 'no-cors' });   // no-cors 避免跨域报错
 });
 
-// 加载 JSON 并播放
-const anim = lottie.loadAnimation({
-    container: document.getElementById('ipMascot'), // 挂载点
-    renderer: 'svg',                                  // 渲染方式
-    autoplay: false,                                  // 先不自动播放
-    path: 'img/default.json'                          // JSON 文件路径（同目录）
-});
-anim.setSpeed(0.9);
-// 手动播放
-anim.play();
+// // 加载 JSON 并播放
+// const anim = lottie.loadAnimation({
+//     container: document.getElementById('ipMascot'), // 挂载点
+//     renderer: 'svg',                                  // 渲染方式
+//     autoplay: false,                                  // 先不自动播放
+//     path: 'ip/default.json'                          // JSON 文件路径（同目录）
+// });
+// anim.setSpeed(0.9);
+// // 手动播放
+// anim.play();
 
+// mascot.addEventListener('click', () => {
+//     if (!clickflag) return;
+//     clickflag = false;
+
+//     const idx = Math.floor(Math.random() * slogans.length);
+//     bubble.textContent = slogans[idx];
+//     bubble.classList.add('show');
+//     clearTimeout(timer);
+
+//     /* 播放对应音频 再出现文字 */
+//     const audio = new Audio(AUDIO_MAP[idx]);
+//     audio.play().catch(() => { });
+//     /* 音频结束后切回默认状态 */
+//     audio.addEventListener('ended', () => {
+//         bubble.classList.remove('show');
+//         clickflag = true;
+//     }, { once: true });   // once:true 保证只触发一次
+// });
+
+// 把默认 JSON 先写死，后面点击时换成 talk JSON
+let anim;
+function loadAnimation(jsonPath) {
+  // 如果已有实例，先清掉
+  if (anim) anim.destroy();
+
+  anim = lottie.loadAnimation({
+    container: document.getElementById('ipMascot'),
+    renderer: 'svg',
+    autoplay: false,
+    path: jsonPath
+  });
+  anim.setSpeed(0.9);
+  anim.play();
+}
+
+// 页面初始化
+loadAnimation('ip/default.json');
+
+/* ---------- 点击切换 ---------- */
 mascot.addEventListener('click', () => {
-    if (!clickflag) return;
-    clickflag = false;
+  if (!clickflag) return;
+  clickflag = false;
 
-    const idx = Math.floor(Math.random() * slogans.length);
-    bubble.textContent = slogans[idx];
-    bubble.classList.add('show');
-    clearTimeout(timer);
+  const idx = Math.floor(Math.random() * slogans.length);
+  bubble.textContent = slogans[idx];
+  bubble.classList.add('show');
+  clearTimeout(timer);
 
-    /* 播放对应音频 再出现文字 */
-    const audio = new Audio(AUDIO_MAP[idx]);
-    audio.play().catch(() => { });
-    /* 音频结束后切回默认状态 */
-    audio.addEventListener('ended', () => {
-        bubble.classList.remove('show');
-        clickflag = true;
-    }, { once: true });   // once:true 保证只触发一次
+  // 1. 切到 talk 动画
+  loadAnimation('ip/talk.json');
+
+  // 2. 播放对应音频
+  const audio = new Audio(AUDIO_MAP[idx]);
+  audio.play().catch(() => {});
+
+  // 3. 音频结束后切回默认动画
+  audio.addEventListener('ended', () => {
+    bubble.classList.remove('show');
+    loadAnimation('ip/default.json');   // 恢复默认
+    clickflag = true;
+  }, { once: true });
 });
