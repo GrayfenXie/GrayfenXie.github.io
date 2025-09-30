@@ -451,9 +451,20 @@ let timer = null;
 
 /* ========== 预加载 ========== */
 AUDIO_MAP.forEach(url => {
-  // 先发一个无声音请求，把文件塞进浏览器缓存
-  fetch(url, { mode: 'no-cors' });   // no-cors 避免跨域报错
+    // 先发一个无声音请求，把文件塞进浏览器缓存
+    fetch(url, { mode: 'no-cors' });   // no-cors 避免跨域报错
 });
+
+// 加载 JSON 并播放
+const anim = lottie.loadAnimation({
+    container: document.getElementById('ipMascot'), // 挂载点
+    renderer: 'svg',                                  // 渲染方式
+    autoplay: false,                                  // 先不自动播放
+    path: 'img/default.json'                          // JSON 文件路径（同目录）
+});
+
+// 手动播放
+anim.play();
 
 mascot.addEventListener('click', () => {
     if (!clickflag) return;
@@ -466,7 +477,7 @@ mascot.addEventListener('click', () => {
 
     /* 播放对应音频 再出现文字 */
     const audio = new Audio(AUDIO_MAP[idx]);
-    audio.play().catch(() => { }); 
+    audio.play().catch(() => { });
     mascotimg.src = TALK_GIF;
 
     /* 音频结束后切回默认状态 */
