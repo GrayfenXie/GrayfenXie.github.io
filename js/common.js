@@ -478,11 +478,8 @@ mascot.addEventListener('click', () => {
     /* 播放对应音频 再出现文字 */
     const audio = new Audio(AUDIO_MAP[idx]);
     audio.play().catch(() => { });
-    mascotimg.src = TALK_GIF;
-
     /* 音频结束后切回默认状态 */
     audio.addEventListener('ended', () => {
-        mascotimg.src = DEFAULT_GIF;
         bubble.classList.remove('show');
         clickflag = true;
     }, { once: true });   // once:true 保证只触发一次
