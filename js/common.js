@@ -89,8 +89,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (firstTab) {
         currentTabType = firstTab.getAttribute('data-tab');
     }
-    fetch('ip/talk.json');
-    fetch('ip/default.json')
 });
 
 document.addEventListener('DOMContentLoaded', () => {
