@@ -1,8 +1,8 @@
 // 缓存 & 分页 
 window.cachedIssues = [];
-window.currentPage    = 1;
-window.perPage        = 10;
-window.isLoading      = false;
+window.currentPage = 1;
+window.perPage = 10;
+window.isLoading = false;
 
 // marked 渲染器：把多张图收进九宫格 
 (function () {
@@ -16,19 +16,33 @@ window.isLoading      = false;
   };
 
   window.renderMarkdown = function (md) {
-    currentImages.length = 0;
-    const html = marked(md || '', {
-      renderer,
-      gfm: true,
-      breaks: true,
-      smartLists: true
-    });
-    const gridHTML =
-      currentImages.length > 1
-        ? '<div class="issue-grid">' + currentImages.join('') + '</div>'
-        : currentImages.join('');
-    return html + gridHTML;
-  };
+  currentImages.length = 0;
+
+  // 1. 先干掉 Markdown 末尾所有换行/空白
+  md = (md || '').replace(/\n\s*$/g, '');
+
+  // 2. 再解析
+  const html = marked(md, {
+    renderer,
+    gfm: true,
+    breaks: true,
+    smartLists: true
+  });
+
+  // 3. 再去掉 marked 可能产生的末尾空 <p></p> 或 <br>
+  const trimmed = html
+  .replace(/(?:\s*<p>(?:\s*<br\s*\/?>)+\s*<\/p>\s*)+$/gi, '')
+  .replace(/(?:\s*<p>\s*<\/p>\s*)+$/gi, '')   // 再清一遍纯空段落
+  .replace(/(<br\s*\/?>\s*){2,}(?=<\/p>)/gi, '')
+  .trimEnd();
+
+  const gridHTML =
+    currentImages.length > 1
+      ? '<div class="issue-grid">' + currentImages.join('') + '</div>'
+      : currentImages.join('');
+
+  return trimmed + gridHTML;
+};
 })();
 
 // 拉取全部 Issue 数据 
@@ -63,7 +77,7 @@ async function fetchCommentCount(issueId) {
 function renderIssues(page, perPage, isAppend = false) {
   const issueList = document.getElementById('issue-list');
   const start = (page - 1) * perPage;
-  const end   = start + perPage;
+  const end = start + perPage;
   const pageIssues = window.cachedIssues.slice(start, end);
 
   if (!isAppend) issueList.innerHTML = '';
@@ -99,11 +113,11 @@ function renderIssues(page, perPage, isAppend = false) {
   // 加载更多按钮状态
   const moreButton = document.getElementById('more2');
   if (start + perPage >= window.cachedIssues.length) {
-    moreButton.innerText   = '加载到底部啦~';
+    moreButton.innerText = '加载到底部啦~';
     moreButton.style.cursor = 'unset';
     moreButton.style.pointerEvents = 'none';
   } else {
-    moreButton.innerText   = '滚动加载更多...';
+    moreButton.innerText = '滚动加载更多...';
     moreButton.style.cursor = 'pointer';
     moreButton.style.pointerEvents = 'auto';
   }
@@ -178,23 +192,33 @@ function showToast(msg, duration = 2000) {
 (function () {
   /* 打包九宫格 */
   function packImagesToGrid() {
-    document.querySelectorAll('.issue-body').forEach(body => {
-      if (body.querySelector('.issue-grid')) return;          // 已处理过
-      const imgs = [...body.querySelectorAll('img')];
-      if (imgs.length <= 1) return;                           // 单张不处理
-      const grid = document.createElement('div');
-      grid.className = 'issue-grid';
-      imgs.forEach(img => grid.appendChild(img));
-      body.appendChild(grid);
+  document.querySelectorAll('.issue-body').forEach(body => {
+    if (body.querySelector('.issue-grid')) return;   // 已处理过
+
+    const imgs = [...body.querySelectorAll('img')];
+    if (imgs.length <= 1) return;                    // 单张不处理
+
+    // 1. 创建九宫格
+    const grid = document.createElement('div');
+    grid.className = 'issue-grid';
+    imgs.forEach(img => grid.appendChild(img));
+
+    // 2. 把 grid 插到 body 末尾（或你想放的位置）
+    body.appendChild(grid);
+
+    // 3. 关键：删掉因“搬家”而变空的 <p></p>
+    body.querySelectorAll('p').forEach(p => {
+      if (p.innerHTML.replace(/\s|<br\s*\/?>/gi, '') === '') p.remove();
     });
-  }
+  });
+} 
 
   //播放动画：只针对带 [data-animate-new] 标记的新节点
   function playAnimeForNew() {
     const news = document.querySelectorAll('.aissue[data-animate-new]');
     news.forEach(el => {
       el.style.transform = 'scale(1)';
-      el.style.opacity   = '1';
+      el.style.opacity = '1';
       el.removeAttribute('data-animate-new');   // 标记用完即焚
     });
   }
