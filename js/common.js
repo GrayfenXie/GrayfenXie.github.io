@@ -568,3 +568,21 @@ document.addEventListener('click', e => {
     if (!tab) return;
     setTimeout(refreshTabLottie, 10);
 })
+
+//头像动画
+const avatarAnim = lottie.loadAnimation({
+  container: document.getElementById('avatar-animation'),
+  renderer: 'svg',
+  loop: false,
+  autoplay: false,
+  path: "ip/avatar.json"
+})
+
+// 立即先播放一次
+function playAvatar() {
+  avatarAnim.goToAndPlay(0, true)
+}
+playAvatar();
+
+// 每10s触发一遍
+setInterval(playAvatar, 10000)
