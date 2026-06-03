@@ -499,10 +499,10 @@ mascot.addEventListener('click', () => {
 });
 
 const animSrc = {
-    paint:"ip/paint.json",
-    daily:"ip/daily.json",
-    book:"ip/book.json",
-    guitar:"ip/guitar.json"
+    paint:"https://img.grayfen.cn/ip/paint.json",
+    daily:"https://img.grayfen.cn/ip/daily.json",
+    book:"https://img.grayfen.cn/ip/book.json",
+    guitar:"https://img.grayfen.cn/ip/guitar.json"
 }
 
 // 全局统一播放速度
