@@ -575,7 +575,7 @@ const avatarAnim = lottie.loadAnimation({
   renderer: 'svg',
   loop: false,
   autoplay: false,
-  path: "ip/avatar.json"
+  path: "https://img.grayfen.cn/ip/avatar.json"
 })
 
 // 立即先播放一次
