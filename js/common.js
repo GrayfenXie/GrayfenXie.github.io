@@ -497,3 +497,74 @@ mascot.addEventListener('click', () => {
         clickflag = true;
     }, { once: true });   // once:true 保证只触发一次
 });
+
+const animSrc = {
+    paint:"ip/paint.json",
+    daily:"ip/daily.json",
+    book:"ip/book.json",
+    guitar:"ip/guitar.json"
+}
+
+// 全局统一播放速度
+const ANIM_SPEED = 1.5
+const animMap = {};
+const allTabDom = document.querySelectorAll('.tab');
+
+// 初始化所有lottie
+allTabDom.forEach(tab=>{
+  const icon = tab.querySelector('.lottie-icon');
+  if(!icon) return;
+  const key = icon.dataset.anim;
+  const anim = lottie.loadAnimation({
+    container: icon,
+    renderer: 'svg',
+    loop: true,
+    autoplay: false,
+    path: animSrc[key]
+  })
+  anim.setSpeed(ANIM_SPEED)
+  animMap[key] = anim;
+})
+
+// 统一刷新所有图标状态：active播放，其余停止回原点
+function refreshTabLottie(){
+  allTabDom.forEach(tab=>{
+    const icon = tab.querySelector('.lottie-icon');
+    if(!icon) return;
+    const anim = animMap[icon.dataset.anim];
+    if(tab.classList.contains('active')){
+      anim.play()
+    }else{
+      anim.pause()
+      anim.goToAndStop(0,true)
+    }
+  })
+}
+
+// hover逻辑
+allTabDom.forEach(tab=>{
+  const icon = tab.querySelector('.lottie-icon');
+  if(!icon) return;
+  const anim = animMap[icon.dataset.anim];
+
+  tab.addEventListener('mouseenter',()=>{
+    anim.play();
+  })
+  tab.addEventListener('mouseleave',()=>{
+    // 如果是active标签，离开继续播放；非active离开停止复位
+    if(!tab.classList.contains('active')){
+      anim.pause();
+      anim.goToAndStop(0,true);
+    }
+  })
+})
+
+// 页面载入初始化，当前active直接动起来
+refreshTabLottie()
+
+// 监听全局tab点击，切换标签立刻刷新动画
+document.addEventListener('click', e => {
+    const tab = e.target.closest('.tab[data-tab]');
+    if (!tab) return;
+    setTimeout(refreshTabLottie, 10);
+})
