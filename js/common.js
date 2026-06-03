@@ -498,75 +498,80 @@ mascot.addEventListener('click', () => {
     }, { once: true });   // once:true 保证只触发一次
 });
 
+//图标动画
 const animSrc = {
     paint:"https://img.grayfen.cn/ip/paint_compressed.json",
     daily:"https://img.grayfen.cn/ip/daily_compressed.json",
     book:"https://img.grayfen.cn/ip/book_compressed.json",
     guitar:"https://img.grayfen.cn/ip/guitar_compressed.json"
 }
-
-// 全局统一播放速度
 const ANIM_SPEED = 1.5
-const animMap = {};
-const allTabDom = document.querySelectorAll('.tab');
+const animRight = {}
+const animMain = {}
 
-// 初始化所有lottie
-allTabDom.forEach(tab=>{
-  const icon = tab.querySelector('.lottie-icon');
-  if(!icon) return;
-  const key = icon.dataset.anim;
+document.addEventListener('DOMContentLoaded',()=>{
+//1.右侧菜单 rightmenu
+const rightTabs = document.querySelectorAll('.rightmenu .tab')
+rightTabs.forEach(tab=>{
+  const icon = tab.querySelector('.lottie-icon')
+  const key = icon.dataset.anim
   const anim = lottie.loadAnimation({
-    container: icon,
-    renderer: 'svg',
-    loop: true,
-    autoplay: false,
-    path: animSrc[key]
+    container:icon,renderer:'svg',loop:true,autoplay:false,path:animSrc[key]
   })
   anim.setSpeed(ANIM_SPEED)
-  animMap[key] = anim;
+  animRight[key] = anim
+})
+//2.主体main tabs
+const mainTabs = document.querySelectorAll('.tabs > .tab:not(.rightmenu .tab)')
+mainTabs.forEach(tab=>{
+  const icon = tab.querySelector('.lottie-icon')
+  const key = icon.dataset.anim
+  const anim = lottie.loadAnimation({
+    container:icon,renderer:'svg',loop:true,autoplay:false,path:animSrc[key]
+  })
+  anim.setSpeed(ANIM_SPEED)
+  animMain[key] = anim
 })
 
-// 统一刷新所有图标状态：active播放，其余停止回原点
-function refreshTabLottie(){
-  allTabDom.forEach(tab=>{
-    const icon = tab.querySelector('.lottie-icon');
-    if(!icon) return;
-    const anim = animMap[icon.dataset.anim];
-    if(tab.classList.contains('active')){
-      anim.play()
-    }else{
-      anim.pause()
-      anim.goToAndStop(0,true)
-    }
+//统一刷新状态
+function refreshAll(){
+  //右侧
+  rightTabs.forEach(t=>{
+    const k = t.querySelector('.lottie-icon').dataset.anim
+    const a = animRight[k]
+    t.classList.contains('active') ? a.play() : (a.pause(),a.goToAndStop(0,true))
+  })
+  //主体
+  mainTabs.forEach(t=>{
+    const k = t.querySelector('.lottie-icon').dataset.anim
+    const a = animMain[k]
+    t.classList.contains('active') ? a.play() : (a.pause(),a.goToAndStop(0,true))
   })
 }
 
-// hover逻辑
-allTabDom.forEach(tab=>{
-  const icon = tab.querySelector('.lottie-icon');
-  if(!icon) return;
-  const anim = animMap[icon.dataset.anim];
-
-  tab.addEventListener('mouseenter',()=>{
-    anim.play();
-  })
-  tab.addEventListener('mouseleave',()=>{
-    // 如果是active标签，离开继续播放；非active离开停止复位
-    if(!tab.classList.contains('active')){
-      anim.pause();
-      anim.goToAndStop(0,true);
-    }
-  })
+//hover绑定【修复classList.active错误】
+rightTabs.forEach(t=>{
+  const k = t.querySelector('.lottie-icon').dataset.anim
+  const a = animRight[k]
+  t.onmouseenter=()=>a.play()
+  t.onmouseleave=()=>{
+    if(!t.classList.contains('active')){a.pause();a.goToAndStop(0,true)}
+  }
+})
+mainTabs.forEach(t=>{
+  const k = t.querySelector('.lottie-icon').dataset.anim
+  const a = animMain[k]
+  t.onmouseenter=()=>a.play()
+  t.onmouseleave=()=>{
+    if(!t.classList.contains('active')){a.pause();a.goToAndStop(0,true)}
+  }
 })
 
-// 页面载入初始化，当前active直接动起来
-refreshTabLottie()
-
-// 监听全局tab点击，切换标签立刻刷新动画
-document.addEventListener('click', e => {
-    const tab = e.target.closest('.tab[data-tab]');
-    if (!tab) return;
-    setTimeout(refreshTabLottie, 10);
+refreshAll()
+//点击切换
+document.addEventListener('click',e=>{
+  if(e.target.closest('.tab')) setTimeout(refreshAll,10)
+})
 })
 
 //头像动画
@@ -577,12 +582,8 @@ const avatarAnim = lottie.loadAnimation({
   autoplay: false,
   path: "https://img.grayfen.cn/ip/avatar.json"
 })
-
-// 立即先播放一次
 function playAvatar() {
   avatarAnim.goToAndPlay(0, true)
 }
 playAvatar();
-
-// 每10s触发一遍
 setInterval(playAvatar, 10000)
