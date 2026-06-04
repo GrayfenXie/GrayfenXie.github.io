@@ -1627,3 +1627,8 @@ textarea {
     border-radius: 50%;
     overflow: hidden;
 }
+
+.linktitle img{
+    width: 24px;
+    height: 24px;
+}
