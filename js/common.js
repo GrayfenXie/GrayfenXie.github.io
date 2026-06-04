@@ -578,7 +578,7 @@ document.addEventListener('DOMContentLoaded', function() {
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'ip/avatar.json'
+    path: 'https://img.grayfen.cn/ip/avatar.json'
   });
 
   // lottie画面渲染完成再渐变浮现动画
@@ -602,7 +602,7 @@ document.addEventListener('DOMContentLoaded', function() {
     renderer: 'svg',
     loop: true,
     autoplay: true, // 关键修改：设置为true，页面加载后自动播放
-    path: 'ip/avatar.json' // 替换为你的JSON文件路径
+    path: 'https://img.grayfen.cn/ip/avatar.json' // 替换为你的JSON文件路径
   });
 });
 
