@@ -577,26 +577,20 @@ document.addEventListener('DOMContentLoaded', function() {
     container: avatarAnimContainer,
     renderer: 'svg',
     loop: true,
-    autoplay: false,
+    autoplay: true,
     path: 'ip/avatar.json'
   });
 
-  // 资源就绪→渐变切换，无闪烁
-  avatarAnim.addEventListener('DOMLoaded', function() {
-    avatarAnim.play();
+  // lottie画面渲染完成再渐变浮现动画
+  avatarAnim.addEventListener('DOMLoaded', () => {
+    avatarAnimContainer.style.transition = 'opacity 0.3s';
     avatarAnimContainer.style.opacity = '1';
-    staticAvatar.style.opacity = '0';
-    // 渐变结束后彻底隐藏静态图（可选，节省渲染）
-    setTimeout(()=> staticAvatar.style.display='none',300)
+    // 静态图片永久保留在底层，不隐藏！永远兜底防空白
   });
 
-  // 3s超时兜底
-  setTimeout(()=>{
-    if(staticAvatar.style.opacity !== '0'){
-      avatarAnimContainer.style.opacity = '1';
-      staticAvatar.style.opacity = '0';
-      avatarAnim.play()
-    }
+  // 超时兜底
+  setTimeout(() => {
+    avatarAnimContainer.style.opacity = '1';
   },3000)
 });
 
