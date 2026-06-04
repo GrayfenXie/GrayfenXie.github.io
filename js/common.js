@@ -569,7 +569,38 @@ document.addEventListener('click', e => {
     setTimeout(refreshTabLottie, 10);
 })
 
-// JavaScript逻辑
+document.addEventListener('DOMContentLoaded', function() {
+  const staticAvatar = document.querySelector('.avatar-static');
+  const avatarAnimContainer = document.getElementById('avatar-animation');
+
+  const avatarAnim = lottie.loadAnimation({
+    container: avatarAnimContainer,
+    renderer: 'svg',
+    loop: true,
+    autoplay: false,
+    path: 'ip/avatar.json'
+  });
+
+  // 资源就绪→渐变切换，无闪烁
+  avatarAnim.addEventListener('DOMLoaded', function() {
+    avatarAnim.play();
+    avatarAnimContainer.style.opacity = '1';
+    staticAvatar.style.opacity = '0';
+    // 渐变结束后彻底隐藏静态图（可选，节省渲染）
+    setTimeout(()=> staticAvatar.style.display='none',300)
+  });
+
+  // 3s超时兜底
+  setTimeout(()=>{
+    if(staticAvatar.style.opacity !== '0'){
+      avatarAnimContainer.style.opacity = '1';
+      staticAvatar.style.opacity = '0';
+      avatarAnim.play()
+    }
+  },3000)
+});
+
+//头像动画
 document.addEventListener('DOMContentLoaded', function() {
   // 1. 加载头像动画，设置为自动播放
   const avatarAnim = lottie.loadAnimation({
