@@ -603,3 +603,9 @@ window.addEventListener('load', function() { // 等待所有资源加载完成
     });
   }, 1000); // 延迟1秒加载，给页面其他内容腾资源
 });
+
+// 页面休眠暂停所有动画
+document.addEventListener('visibilitychange',()=>{
+  const status = document.hidden;
+  Object.values(animMap).forEach(anim=>status?anim.pause():anim.play());
+})
