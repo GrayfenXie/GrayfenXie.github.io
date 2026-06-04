@@ -426,72 +426,71 @@ const animSrc = {
     book: "https://img.grayfen.cn/ip/book_compressed.json",
     guitar: "https://img.grayfen.cn/ip/guitar_compressed.json"
 }
-
-// 全局统一播放速度
 const ANIM_SPEED = 1.5
+// 改用对象带区分key：格式 key_元素下标，避免同名图标覆盖
 const animMap = {};
-const allTabDom = document.querySelectorAll('.tab');
+// 同时选中【顶部tab + 右侧rightmenu菜单】两类按钮
+const allTabDom = document.querySelectorAll('.tab, .rightmenu .tab');
 
-// 初始化所有lottie
-allTabDom.forEach(tab => {
+// 初始化所有lottie（顶部+右侧菜单统一初始化）
+allTabDom.forEach((tab, idx) => {
     const icon = tab.querySelector('.lottie-icon');
-    if (!icon) return;
-    const key = icon.dataset.anim;
+    if (!icon || !icon.dataset.anim) return;
+    const animKey = icon.dataset.anim + '_' + idx; // 唯一key，防止同名覆盖
     const anim = lottie.loadAnimation({
         container: icon,
         renderer: 'svg',
         loop: true,
         autoplay: false,
-        path: animSrc[key]
+        path: animSrc[icon.dataset.anim]
     })
     anim.setSpeed(ANIM_SPEED)
-    animMap[key] = anim;
+    animMap[animKey] = { anim, dom: tab };
 })
 
-// 统一刷新所有图标状态：active播放，其余停止回原点
+// 刷新所有：顶部tab + 右侧菜单一起更新active动画
 function refreshTabLottie() {
-    allTabDom.forEach(tab => {
-        const icon = tab.querySelector('.lottie-icon');
-        if (!icon) return;
-        const anim = animMap[icon.dataset.anim];
-        if (tab.classList.contains('active')) {
-            anim.setSpeed(ANIM_SPEED); // 恢复速度
+    Object.values(animMap).forEach(item => {
+        const { anim, dom } = item;
+        if (dom.classList.contains('active')) {
+            anim.setSpeed(ANIM_SPEED);
             anim.play();
         } else {
             anim.pause();
-            anim.goToAndStop(0, true);
-            // 额外优化：降低非活跃动画的渲染精度
-            anim.setSpeed(0);
         }
     })
 }
 
-// hover逻辑
-allTabDom.forEach(tab => {
-    const icon = tab.querySelector('.lottie-icon');
-    if (!icon) return;
-    const anim = animMap[icon.dataset.anim];
-
-    tab.addEventListener('mouseenter', () => {
-        anim.play();
+// 统一绑定hover（顶部+右侧菜单全部生效）
+Object.values(animMap).forEach(item => {
+    const { anim, dom } = item;
+    dom.addEventListener('mouseenter', () => {
+        anim.setSpeed(ANIM_SPEED);
+        anim.goToAndPlay(0, true); // hover从头播放
     })
-    tab.addEventListener('mouseleave', () => {
-        // 如果是active标签，离开继续播放；非active离开停止复位
-        if (!tab.classList.contains('active')) {
+    dom.addEventListener('mouseleave', () => {
+        // active保持播放，非active归零暂停
+        if (!dom.classList.contains('active')) {
             anim.pause();
             anim.goToAndStop(0, true);
         }
     })
 })
 
-// 页面载入初始化，当前active直接动起来
+// 初始化页面默认active动画
 refreshTabLottie()
 
-// 监听全局tab点击，切换标签立刻刷新动画
+// 点击标签延时刷新（左右菜单同步变更active）
 document.addEventListener('click', e => {
     const tab = e.target.closest('.tab[data-tab]');
     if (!tab) return;
-    setTimeout(refreshTabLottie, 10);
+    setTimeout(refreshTabLottie, 300);
+})
+
+// 页面切后台暂停动画
+document.addEventListener('visibilitychange', () => {
+    const isHide = document.hidden;
+    Object.values(animMap).forEach(({anim}) => isHide ? anim.pause() : anim.play())
 })
 
 document.addEventListener('DOMContentLoaded', function () {
