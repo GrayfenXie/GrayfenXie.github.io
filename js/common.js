@@ -100,10 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+let typeTimer = null;
 // 点击任意 tab
 document.addEventListener('click', e => {
     const tab = e.target.closest('.tab[data-tab]');
     if (!tab) return;
+    // 清理打字机
+    clearTimeout(typeTimer);
     const targetTab = tab.dataset.tab;
     if (targetTab === currentTabType) return; // 重复点击当前页
     const targetContent = document.getElementById(targetTab);
@@ -157,39 +160,31 @@ function anime() {
 
 // 打印机动画
 document.addEventListener("DOMContentLoaded", function () {
-    const text = "分享作品和日常"; // 要打印的文本
-    const sloganElement = document.getElementById("slogen");
+    const slogenElement = document.getElementById("slogen");
+    const text = "分享作品和日常";
     let index = 0;
 
     function typeWriter() {
         if (index < text.length) {
-            sloganElement.textContent += text.charAt(index); // 插入当前字符
-            index++; // 移动到下一个字符
-            setTimeout(typeWriter, 150); // 每个字符的打印间隔
+            slogenElement.textContent += text.charAt(index);
+            index++;
+            typeTimer = setTimeout(typeWriter, 150);
         } else {
-            // 打印完成后，开始逐个删除字符
-            setTimeout(() => {
-                deleteText();
-            }, 2000); // 打印完成后等待2秒，然后开始删除
+            typeTimer = setTimeout(deleteText, 2000);
         }
     }
 
     function deleteText() {
         if (index > 0) {
-            sloganElement.textContent = text.substring(0, index - 1); // 删除最后一个字符
-            index--; // 移动到上一个字符
-            setTimeout(deleteText, 60); // 删除字符的间隔时间
+            slogenElement.textContent = text.substring(0, index - 1);
+            index--;
+            typeTimer = setTimeout(deleteText, 60);
         } else {
-            // 删除完成后，重新开始打印
-            setTimeout(() => {
-                typeWriter(); // 重新开始打印
-            }, 1000); // 删除完成后等待1秒，然后重新开始
+            typeTimer = setTimeout(typeWriter, 1000);
         }
     }
 
-    setTimeout(() => {
-        typeWriter();
-    }, 500); // 启动动画
+    setTimeout(() => typeWriter(), 500);
 });
 
 // 防抖函数
@@ -425,84 +420,11 @@ mainpart.addEventListener('scroll', () => {
     });
 })();
 
-//ip形象动画切换
-
-const mascot = document.getElementById('ipMascot');
-const bubble = document.getElementById('ipBubble');
-const mascotimg = document.getElementById('ipMascotImg');
-const AUDIO_MAP = [
-    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%AD%AA%E5%98%B4%E7%AC%91.mp3?no-wait=on ', // 桀桀桀桀桀
-    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%94%BE%E7%8B%A0%E8%AF%9D.mp3?no-wait=on ', // 所有杀不死我的…
-    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D.mp3?no-wait=on ', // 在下鬼凤…
-    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%B1%82%E9%A5%B6.mp3?no-wait=on ', // 大侠饶命…
-    'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E5%89%91.mp3?no-wait=on '  // 我手里这把剑…
-];
-const slogans = [
-    '（歪嘴）桀桀桀桀桀桀桀桀桀桀桀桀',
-    '所有杀不死我的，都会让我变得更强大！',
-    '在下鬼凤，誓要成为一名独当一面的冒险家！',
-    '大侠饶命！我刚出新手村！！！',
-    '吾手里这把剑，专治各种不服！',
-];
-let clickflag = true;
-let timer = null;
-
-/* ========== 预加载 ========== */
-AUDIO_MAP.forEach(url => {
-    // 先发一个无声音请求，把文件塞进浏览器缓存
-    fetch(url, { mode: 'no-cors' });   // no-cors 避免跨域报错
-});
-
-// 加载 JSON 并播放
-const anim = lottie.loadAnimation({
-    container: document.getElementById('ipMascot'), // 挂载点
-    renderer: 'svg',
-    loop: false,                                  // 渲染方式
-    autoplay: false,                                  // 先不自动播放
-    path: 'ip/ip.json'                          // JSON 文件路径（同目录）
-});
-
-/* 工具函数：按 marker 名播放 */
-function playMarker(name, loop = false) {
-  const m = anim.animationData.markers.find(o => o.cm === name);
-  if (!m) return;
-  anim.loop = loop;
-  anim.playSegments([m.tm, m.tm + m.dr], true);
-}
-
-/* 初始状态 */
-anim.addEventListener('DOMLoaded', () => {
-  playMarker('default', true);          // 循环 idle 段
-});
-
-mascot.addEventListener('click', () => {
-    if (!clickflag) return;
-    clickflag = false;
-
-    const idx = Math.floor(Math.random() * slogans.length);
-    bubble.textContent = slogans[idx];
-    bubble.classList.add('show');
-    clearTimeout(timer);
-
-    /* 播放对应音频 再出现文字 */
-    const audio = new Audio(AUDIO_MAP[idx]);
-    audio.play().catch(() => { });
-
-    playMarker('talk', false);
-
-    /* 音频结束后切回默认状态 */
-    audio.addEventListener('ended', () => {
-        bubble.classList.remove('show');
-        playMarker('default', true); 
-        clickflag = true;
-    }, { once: true });   // once:true 保证只触发一次
-});
-
 const animSrc = {
-    paint:"https://img.grayfen.cn/ip/paint_compressed.json",
-    daily:"https://img.grayfen.cn/ip/daily_compressed.json",
-    book:"https://img.grayfen.cn/ip/book_compressed.json",
-    guitar:"https://img.grayfen.cn/ip/guitar_compressed.json"
+    paint: "https://img.grayfen.cn/ip/paint_compressed.json",
+    daily: "https://img.grayfen.cn/ip/daily_compressed.json",
+    book: "https://img.grayfen.cn/ip/book_compressed.json",
+    guitar: "https://img.grayfen.cn/ip/guitar_compressed.json"
 }
 
 // 全局统一播放速度
@@ -511,52 +433,55 @@ const animMap = {};
 const allTabDom = document.querySelectorAll('.tab');
 
 // 初始化所有lottie
-allTabDom.forEach(tab=>{
-  const icon = tab.querySelector('.lottie-icon');
-  if(!icon) return;
-  const key = icon.dataset.anim;
-  const anim = lottie.loadAnimation({
-    container: icon,
-    renderer: 'svg',
-    loop: true,
-    autoplay: false,
-    path: animSrc[key]
-  })
-  anim.setSpeed(ANIM_SPEED)
-  animMap[key] = anim;
+allTabDom.forEach(tab => {
+    const icon = tab.querySelector('.lottie-icon');
+    if (!icon) return;
+    const key = icon.dataset.anim;
+    const anim = lottie.loadAnimation({
+        container: icon,
+        renderer: 'svg',
+        loop: true,
+        autoplay: false,
+        path: animSrc[key]
+    })
+    anim.setSpeed(ANIM_SPEED)
+    animMap[key] = anim;
 })
 
 // 统一刷新所有图标状态：active播放，其余停止回原点
-function refreshTabLottie(){
-  allTabDom.forEach(tab=>{
-    const icon = tab.querySelector('.lottie-icon');
-    if(!icon) return;
-    const anim = animMap[icon.dataset.anim];
-    if(tab.classList.contains('active')){
-      anim.play()
-    }else{
-      anim.pause()
-      anim.goToAndStop(0,true)
-    }
-  })
+function refreshTabLottie() {
+    allTabDom.forEach(tab => {
+        const icon = tab.querySelector('.lottie-icon');
+        if (!icon) return;
+        const anim = animMap[icon.dataset.anim];
+        if (tab.classList.contains('active')) {
+            anim.setSpeed(ANIM_SPEED); // 恢复速度
+            anim.play();
+        } else {
+            anim.pause();
+            anim.goToAndStop(0, true);
+            // 额外优化：降低非活跃动画的渲染精度
+            anim.setSpeed(0);
+        }
+    })
 }
 
 // hover逻辑
-allTabDom.forEach(tab=>{
-  const icon = tab.querySelector('.lottie-icon');
-  if(!icon) return;
-  const anim = animMap[icon.dataset.anim];
+allTabDom.forEach(tab => {
+    const icon = tab.querySelector('.lottie-icon');
+    if (!icon) return;
+    const anim = animMap[icon.dataset.anim];
 
-  tab.addEventListener('mouseenter',()=>{
-    anim.play();
-  })
-  tab.addEventListener('mouseleave',()=>{
-    // 如果是active标签，离开继续播放；非active离开停止复位
-    if(!tab.classList.contains('active')){
-      anim.pause();
-      anim.goToAndStop(0,true);
-    }
-  })
+    tab.addEventListener('mouseenter', () => {
+        anim.play();
+    })
+    tab.addEventListener('mouseleave', () => {
+        // 如果是active标签，离开继续播放；非active离开停止复位
+        if (!tab.classList.contains('active')) {
+            anim.pause();
+            anim.goToAndStop(0, true);
+        }
+    })
 })
 
 // 页面载入初始化，当前active直接动起来
@@ -569,68 +494,138 @@ document.addEventListener('click', e => {
     setTimeout(refreshTabLottie, 10);
 })
 
-document.addEventListener('DOMContentLoaded', function() {
-  const staticAvatar = document.querySelector('.avatar-static');
-  const avatarAnimContainer = document.getElementById('avatar-animation');
+document.addEventListener('DOMContentLoaded', function () {
+    //ip形象动画切换
 
-  const avatarAnim = lottie.loadAnimation({
-    container: avatarAnimContainer,
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: 'https://img.grayfen.cn/ip/avatar.json'
-  });
+    const mascot = document.getElementById('ipMascot');
+    const bubble = document.getElementById('ipBubble');
+    const mascotimg = document.getElementById('ipMascotImg');
+    const AUDIO_MAP = [
+        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%AD%AA%E5%98%B4%E7%AC%91.mp3?no-wait=on ', // 桀桀桀桀桀
+        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%94%BE%E7%8B%A0%E8%AF%9D.mp3?no-wait=on ', // 所有杀不死我的…
+        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D.mp3?no-wait=on ', // 在下鬼凤…
+        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%B1%82%E9%A5%B6.mp3?no-wait=on ', // 大侠饶命…
+        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E5%89%91.mp3?no-wait=on '  // 我手里这把剑…
+    ];
+    const slogans = [
+        '（歪嘴）桀桀桀桀桀桀桀桀桀桀桀桀',
+        '所有杀不死我的，都会让我变得更强大！',
+        '在下鬼凤，誓要成为一名独当一面的冒险家！',
+        '大侠饶命！我刚出新手村！！！',
+        '吾手里这把剑，专治各种不服！',
+    ];
+    let clickflag = true;
+    let timer = null;
 
-  // lottie画面渲染完成再渐变浮现动画
-  avatarAnim.addEventListener('DOMLoaded', () => {
-    avatarAnimContainer.style.transition = 'opacity 0.3s';
-    avatarAnimContainer.style.opacity = '1';
-    // 静态图片永久保留在底层，不隐藏！永远兜底防空白
-  });
+    /* ========== 预加载 ========== */
+    AUDIO_MAP.forEach(url => {
+        // 先发一个无声音请求，把文件塞进浏览器缓存
+        fetch(url, { mode: 'no-cors' });   // no-cors 避免跨域报错
+    });
 
-  // 超时兜底
-  setTimeout(() => {
-    avatarAnimContainer.style.opacity = '1';
-  },3000)
+    // 加载 JSON 并播放
+    const anim = lottie.loadAnimation({
+        container: document.getElementById('ipMascot'), // 挂载点
+        renderer: 'svg',
+        loop: false,                                  // 渲染方式
+        autoplay: false,                                  // 先不自动播放
+        path: 'ip/ip.json'                          // JSON 文件路径（同目录）
+    });
+
+    /* 工具函数：按 marker 名播放 */
+    function playMarker(name, loop = false) {
+        const m = anim.animationData.markers.find(o => o.cm === name);
+        if (!m) return;
+        anim.loop = loop;
+        anim.playSegments([m.tm, m.tm + m.dr], true);
+    }
+
+    /* 初始状态 */
+    anim.addEventListener('DOMLoaded', () => {
+        playMarker('default', true);          // 循环 idle 段
+    });
+
+    mascot.addEventListener('click', () => {
+        if (!clickflag) return;
+        clickflag = false;
+
+        const idx = Math.floor(Math.random() * slogans.length);
+        bubble.textContent = slogans[idx];
+        bubble.classList.add('show');
+        clearTimeout(timer);
+
+        /* 播放对应音频 再出现文字 */
+        const audio = new Audio(AUDIO_MAP[idx]);
+        audio.play().catch(() => { });
+
+        playMarker('talk', false);
+
+        /* 音频结束后切回默认状态 */
+        audio.addEventListener('ended', () => {
+            bubble.classList.remove('show');
+            playMarker('default', true);
+            clickflag = true;
+        }, { once: true });   // once:true 保证只触发一次
+    });
+
+
+    const staticAvatar = document.querySelector('.avatar-static');
+    const avatarAnimContainer = document.getElementById('avatar-animation');
+
+    const avatarAnim = lottie.loadAnimation({
+        container: avatarAnimContainer,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'https://img.grayfen.cn/ip/avatar.json'
+    });
+
+    // lottie画面渲染完成再渐变浮现动画
+    avatarAnim.addEventListener('DOMLoaded', () => {
+        avatarAnimContainer.style.transition = 'opacity 0.3s';
+        avatarAnimContainer.style.opacity = '1';
+        // 静态图片永久保留在底层，不隐藏！永远兜底防空白
+    });
+
+    // 超时兜底
+    setTimeout(() => {
+        avatarAnimContainer.style.opacity = '1';
+    }, 3000)
 });
-
-//头像动画
-document.addEventListener('DOMContentLoaded', function() {
-  // 1. 加载头像动画，设置为自动播放
-  const avatarAnim = lottie.loadAnimation({
-    container: document.getElementById('avatar-animation'),
-    renderer: 'svg',
-    loop: true,
-    autoplay: true, // 关键修改：设置为true，页面加载后自动播放
-    path: 'https://img.grayfen.cn/ip/avatar.json' 
-});
-})
 
 function getParticleCount() {
-  // 检测是否为移动设备/低性能设备
-  const isMobile = /Mobile|Android|iOS/.test(navigator.userAgent);
-  const isLowEnd = isMobile && window.innerWidth < 768;
-  return isLowEnd ? 60 : 120; // 移动端低配60个，其他120个
+    // 检测是否为移动设备/低性能设备
+    const isMobile = /Mobile|Android|iOS/.test(navigator.userAgent);
+    const isLowEnd = isMobile && window.innerWidth < 768;
+    return isLowEnd ? 60 : 120; // 移动端低配60个，其他120个
 }
 
-// 加载时动态修改配置
-fetch('particlesjs-config.json')
-  .then(res => res.json())
-  .then(config => {
-    config.particles.number.value = getParticleCount();
-    particlesJS('particles-js', config);
-  });
+// 全局标记：防止重复初始化
+let isParticleLoaded = false;
 
-window.addEventListener('load', function() { // 等待所有资源加载完成
-  setTimeout(() => {
-    particlesJS.load('particles-js', 'particlesjs-config.json', function() {
-      console.log('粒子配置加载完成');
-    });
-  }, 1000); // 延迟1秒加载，给页面其他内容腾资源
+window.addEventListener('load', function () {
+    if (isParticleLoaded) return;
+    setTimeout(() => {
+        // 先销毁已有粒子（兜底防重复）
+        if (window.pJSDom?.length > 0) {
+            window.pJSDom.forEach(item => item.pJS.fn.vendors.destroypJS());
+            window.pJSDom = [];
+        }
+        // 统一走fetch动态修改配置，只初始化一次
+        fetch('particlesjs-config.json')
+            .then(res => res.json())
+            .then(config => {
+                config.particles.number.value = getParticleCount();
+                particlesJS('particles-js', config);
+                isParticleLoaded = true; // 标记初始化完毕
+                console.log('粒子配置加载完成');
+            });
+    }, 1000);
 });
 
 // 页面休眠暂停所有动画
-document.addEventListener('visibilitychange',()=>{
-  const status = document.hidden;
-  Object.values(animMap).forEach(anim=>status?anim.pause():anim.play());
+document.addEventListener('visibilitychange', () => {
+    const status = document.hidden;
+    Object.values(animMap).forEach(anim => status ? anim.pause() : anim.play());
+    if (anim) status ? anim.pause() : anim.play();
 })
