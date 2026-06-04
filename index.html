@@ -12,12 +12,14 @@
     <link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css" />
     <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@v2.0.0/particles.min.js"></script>
     <title>Grayfen's Canvas</title>
     <meta name="keywords" content="UI设计师/插画师">
     <meta name="description" content="Grayfen的个人画展">
 </head>
 
 <body>
+    <div id="particles-js" style="position:fixed;top:0;left:0;width:100%;height:100vh;z-index:-1;"></div>
     <nav id="subNav" class="hide">
         <div class="leftmenu">
             <img id="subAvatar" src="img/avatar.png" alt="avatar" />
@@ -172,7 +174,8 @@
         <footer>
             <div class="footer-box">
                 <div class="links">
-                    <div class="linktitle"><img src="img/friends.png">友情链接 <span style="font-size: 12px;">(排序不分先后) </span></div>
+                    <div class="linktitle"><img src="img/friends.png">友情链接 <span style="font-size: 12px;">(排序不分先后)
+                        </span></div>
                     <div class="alllink">
                         <div class="row">
                             <a class="alink" href="https://www.leoon.cn/" target="_blank">
@@ -347,6 +350,7 @@
     </script>
     <div class="ip-mascot" id="ipMascot"></div>
     <div class="ip-bubble" id="ipBubble"></div>
+    </div>
 </body>
 <script src="js/marked.min.js"></script>
 <script src="js/common.js"></script>

@@ -580,3 +580,26 @@ document.addEventListener('DOMContentLoaded', function() {
     path: 'ip/avatar.json' // 替换为你的JSON文件路径
   });
 });
+
+function getParticleCount() {
+  // 检测是否为移动设备/低性能设备
+  const isMobile = /Mobile|Android|iOS/.test(navigator.userAgent);
+  const isLowEnd = isMobile && window.innerWidth < 768;
+  return isLowEnd ? 60 : 120; // 移动端低配60个，其他120个
+}
+
+// 加载时动态修改配置
+fetch('particlesjs-config.json')
+  .then(res => res.json())
+  .then(config => {
+    config.particles.number.value = getParticleCount();
+    particlesJS('particles-js', config);
+  });
+
+window.addEventListener('load', function() { // 等待所有资源加载完成
+  setTimeout(() => {
+    particlesJS.load('particles-js', 'particlesjs-config.json', function() {
+      console.log('粒子配置加载完成');
+    });
+  }, 1000); // 延迟1秒加载，给页面其他内容腾资源
+});
