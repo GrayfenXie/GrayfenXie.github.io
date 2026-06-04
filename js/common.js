@@ -602,9 +602,9 @@ document.addEventListener('DOMContentLoaded', function() {
     renderer: 'svg',
     loop: true,
     autoplay: true, // 关键修改：设置为true，页面加载后自动播放
-    path: 'https://img.grayfen.cn/ip/avatar.json' // 替换为你的JSON文件路径
-  });
+    path: 'https://img.grayfen.cn/ip/avatar.json' 
 });
+})
 
 function getParticleCount() {
   // 检测是否为移动设备/低性能设备
