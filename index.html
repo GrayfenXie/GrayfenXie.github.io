@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer" />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <link href="https://unpkg.com/video.js@7/dist/video-js.min.css" rel="stylesheet">
+    <link rel="preload" href="https://unpkg.com/video.js@7/dist/video-js.min.css" as="style" onload="this.rel='stylesheet'">
     <link rel="stylesheet" type="text/css" href="css/default.css">
     <!-- Waline -->
-    <link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css" />
+    <link rel="preload" href="https://unpkg.com/@waline/client@v2/dist/waline.css"  as="style" onload="this.rel='stylesheet'" />
     <script src="https://unpkg.com/@waline/client@v2/dist/waline.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js" async></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@v2.0.0/particles.min.js" async></script>
