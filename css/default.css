@@ -213,19 +213,19 @@ a {
 
 /* 四个图标默认静态兜底图 */
 .lottie-icon[data-anim="book"] {
-    background-image: url("./img/book.png");
+    background-image: url("../img/book.png");
 }
 
 .lottie-icon[data-anim="daily"] {
-    background-image: url("./img/daily.png");
+    background-image: url("../img/daily.png");
 }
 
 .lottie-icon[data-anim="guitar"] {
-    background-image: url("./img/guitar.png");
+    background-image: url("../img/guitar.png");
 }
 
 .lottie-icon[data-anim="paint"] {
-    background-image: url("./img/paint.png");
+    background-image: url("../img/paint.png");
 }
 
 /* Lottie动画加载成功后，隐藏背景静态图 */
