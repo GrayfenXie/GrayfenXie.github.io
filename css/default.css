@@ -192,14 +192,23 @@ a {
 } */
 
 .lottie-icon {
-    width: 24px;
-    height: 24px;
-    display: inline-block;
+    width: 48px !important;
+    /* 根据你设计的图标尺寸修改 */
+    height: 48px !important;
+    display: inline-block !important;
+    overflow: hidden;
+    opacity: 1 !important;
     /* 禁止透明空白 */
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    opacity: 1 !important;
+}
+
+/* 兜底静态样式，动画加载失败时显示背景图 */
+.lottie-icon.fallback {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 /* 四个图标默认静态兜底图 */
@@ -1677,21 +1686,4 @@ textarea {
 .linktitle img {
     width: 24px;
     height: 24px;
-}
-
-/* 图标Lottie容器强制尺寸，禁止宽高为0 */
-.lottie-icon {
-    width: 24px !important;
-    /* 根据你设计的图标尺寸修改 */
-    height: 24px !important;
-    display: inline-block !important;
-    overflow: hidden;
-    opacity: 1 !important;
-}
-
-/* 兜底静态样式，动画加载失败时显示背景图 */
-.lottie-icon.fallback {
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
 }
