@@ -5,11 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer" />
+    <!-- 禁用页面缓存，解决后退/二次进入缓存异常 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <link rel="preload" href="https://unpkg.com/video.js@7/dist/video-js.min.css" as="style" onload="this.rel='stylesheet'">
+    <link rel="preload" href="https://unpkg.com/video.js@7/dist/video-js.min.css" as="style"
+        onload="this.rel='stylesheet'">
     <link rel="stylesheet" type="text/css" href="css/default.css">
+    <!-- 预加载静态兜底图标，消除图片加载闪烁 -->
+    <link rel="preload" href="./img/book.png" as="image">
+    <link rel="preload" href="./img/daily.png" as="image">
+    <link rel="preload" href="./img/guitar.png" as="image">
+    <link rel="preload" href="./img/paint.png" as="image">
     <!-- Waline -->
-    <link rel="preload" href="https://unpkg.com/@waline/client@v2/dist/waline.css"  as="style" onload="this.rel='stylesheet'" />
+    <link rel="preload" href="https://unpkg.com/@waline/client@v2/dist/waline.css" as="style"
+        onload="this.rel='stylesheet'" />
+    <!-- 预加载lottie动画JSON -->
+    <link rel="preload" href="https://img.grayfen.cn/ip/paint_compressed.json" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="https://img.grayfen.cn/ip/daily_compressed.json" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="https://img.grayfen.cn/ip/book_compressed.json" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="https://img.grayfen.cn/ip/guitar_compressed.json" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="https://img.grayfen.cn/ip/avatar.json" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="ip/ip.json" as="fetch" crossorigin="anonymous">
+    <!-- 预加载粒子配置 -->
+    <link rel="preload" href="particlesjs-config.json" as="fetch" crossorigin="anonymous">
     <script src="https://unpkg.com/@waline/client@v2/dist/waline.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js" async></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@v2.0.0/particles.min.js" async></script>
@@ -74,6 +94,7 @@
             弹棉花
         </div>
     </div>
+
     <div id="mainpart">
         <div class="infor">
             <div class="avatar">

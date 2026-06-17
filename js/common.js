@@ -1,56 +1,55 @@
-let currentTabType = ''; // 当前激活的标签页类型
-var originalScrollPosition = 0; // 用于存储原始滚动位置
+let currentTabType = '';
+var originalScrollPosition = 0;
 var owner = "GrayfenXie";
 var repo = "GrayfenXie.github.io";
 var myUsername = "GrayfenXie";
 var mainpart = document.getElementById('mainpart');
 let openpicflag = true;
 
-// 全局变量
-window.cachedIssues = []; // #2 随笔
-window.cachedIssues2 = []; // #6 弹棉花
-let _commentsPromise = null;   // ← 缓存 Promise，保证只发一次
+window.cachedIssues = [];
+window.cachedIssues2 = [];
+let _commentsPromise = null;
+window.ipAnimInstance = null;
+// 全局缓存Lottie JSON数据（核心：预加载复用，避免重复请求）
+window.lottieJsonCache = {};
 
-// 冻结 mainpart 的滚动
+// 冻结滚动
 function freezeScroll() {
     const scrollTop = mainpart.scrollTop;
     mainpart.dataset.scrollTop = scrollTop;
-    mainpart.style.overflow = 'hidden';   // 让 mainpart 不再滚动
+    mainpart.style.overflow = 'hidden';
 }
-
-// 恢复 mainpart 的滚动
+// 恢复滚动
 function unfreezeScroll() {
     const scrollTop = parseInt(mainpart.dataset.scrollTop || '0', 10);
-    mainpart.style.overflow = '';         // 恢复默认
+    mainpart.style.overflow = '';
     mainpart.scrollTop = scrollTop;
 }
 
-//手机导航栏按钮
+// 移动端导航
 var openit = document.getElementById('openit');
 var closeit = document.getElementById('closeit');
 var mobilemune = document.getElementById('mobilemune');
 function openitfc() {
     mobilemune.style.display = 'flex';
     mobilemune.style.visibility = 'visible';
-    setTimeout(function () {
-        mobilemune.style.opacity = '1';
-    }, 250);
+    setTimeout(() => mobilemune.style.opacity = '1', 250);
     closeit.style.display = 'block';
     openit.style.display = 'none';
-};
+}
 function closeitfc() {
     mobilemune.style.opacity = '0';
-    setTimeout(function () {
+    setTimeout(() => {
         mobilemune.style.visibility = 'hidden';
         mobilemune.style.display = 'none';
     }, 250);
     openit.style.display = 'block';
     closeit.style.display = 'none';
-};
-openit.onclick = openitfc;
-closeit.onclick = closeitfc;
+}
+if (openit) openit.onclick = openitfc;
+if (closeit) closeit.onclick = closeitfc;
 
-
+// 加载评论
 async function fetchAllCommentsOnce() {
     if (_commentsPromise) return _commentsPromise;
     _commentsPromise = (async () => {
@@ -62,9 +61,8 @@ async function fetchAllCommentsOnce() {
                 { method: 'GET' }
             );
             if (!res.ok) throw new Error(res.statusText);
-
             const data = await res.json();
-            if (!Array.isArray(data) || data.length === 0) break; // 拉完最后一页
+            if (!Array.isArray(data) || data.length === 0) break;
             allComments = allComments.concat(data);
             page++;
         }
@@ -79,18 +77,14 @@ async function fetchAllCommentsOnce() {
         window.cachedIssues = c2.reverse();
         window.cachedIssues2 = c6.reverse();
     })();
-
     return _commentsPromise;
 }
 
-// 页面加载时初始化当前标签页类型
+// Tab 初始化
 document.addEventListener('DOMContentLoaded', function () {
     const firstTab = document.querySelector('.tab');
-    if (firstTab) {
-        currentTabType = firstTab.getAttribute('data-tab');
-    }
+    if (firstTab) currentTabType = firstTab.getAttribute('data-tab');
 });
-
 document.addEventListener('DOMContentLoaded', () => {
     const firstTab = document.querySelector('.tab[data-tab]');
     if (firstTab) {
@@ -101,14 +95,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 let typeTimer = null;
-// 点击任意 tab
+// Tab 点击切换
 document.addEventListener('click', e => {
     const tab = e.target.closest('.tab[data-tab]');
     if (!tab) return;
-    // 清理打字机
     clearTimeout(typeTimer);
     const targetTab = tab.dataset.tab;
-    if (targetTab === currentTabType) return; // 重复点击当前页
+    if (targetTab === currentTabType) return;
     const targetContent = document.getElementById(targetTab);
     if (!targetContent) {
         console.error('Target content not found:', targetTab);
@@ -125,21 +118,18 @@ document.addEventListener('click', e => {
     closeitfc();
 });
 
+// 入场动画
 function anime() {
     const eles = document.getElementsByClassName('image-item');
     const eles2 = document.getElementsByClassName('aissue');
-    // const eles3 = document.getElementById('my-form');
     const eles4 = document.getElementsByClassName('portfolio-item');
     const eles5 = document.getElementsByClassName('guitar-item');
-    // 重置动画状态
     function resetStyles(elements) {
         for (let i = 0; i < elements.length; i++) {
             elements[i].style.transform = 'scale(0)';
             elements[i].style.opacity = '0';
         }
     }
-
-    // 触发动画
     function triggerAnimation(elements) {
         for (let i = 0; i < elements.length; i++) {
             elements[i].style.transform = 'scale(1)';
@@ -158,12 +148,12 @@ function anime() {
     }, 10);
 }
 
-// 打印机动画
+// 打字机动画
 document.addEventListener("DOMContentLoaded", function () {
     const slogenElement = document.getElementById("slogen");
+    if (!slogenElement) return;
     const text = "分享作品和日常";
     let index = 0;
-
     function typeWriter() {
         if (index < text.length) {
             slogenElement.textContent += text.charAt(index);
@@ -173,7 +163,6 @@ document.addEventListener("DOMContentLoaded", function () {
             typeTimer = setTimeout(deleteText, 2000);
         }
     }
-
     function deleteText() {
         if (index > 0) {
             slogenElement.textContent = text.substring(0, index - 1);
@@ -183,11 +172,10 @@ document.addEventListener("DOMContentLoaded", function () {
             typeTimer = setTimeout(typeWriter, 1000);
         }
     }
-
     setTimeout(() => typeWriter(), 500);
 });
 
-// 防抖函数
+// 防抖
 function debounce(func, delay) {
     let debounceTimer;
     return function () {
@@ -200,53 +188,53 @@ function debounce(func, delay) {
     };
 }
 
-//模式切换
+// 日夜模式切换
 var flag = true;
-var bgImage1 = 'url("img/sun.svg")'; // 注意路径是相对于HTML文件的
+var bgImage1 = 'url("img/sun.svg")';
 var bgImage2 = 'url("img/moon.svg")';
 var switchbutton = document.getElementById('switch');
-switchbutton.addEventListener('click', function () {
-    if (flag) {
-        document.body.classList.add("night");
-        switchbutton.style.backgroundImage = bgImage2;
-        flag = false;
-    }
-    else {
-        document.body.classList.remove("night");
-        switchbutton.style.backgroundImage = bgImage1;
-        flag = true;
-    }
-});
+if (switchbutton) {
+    switchbutton.addEventListener('click', function () {
+        if (flag) {
+            document.body.classList.add("night");
+            switchbutton.style.backgroundImage = bgImage2;
+            flag = false;
+        } else {
+            document.body.classList.remove("night");
+            switchbutton.style.backgroundImage = bgImage1;
+            flag = true;
+        }
+    });
+}
 
-//留言板
-var Messageboard = document.getElementById("message-board");
+// 留言板
 var messageboxbutton = document.getElementById("messageboxbutton");
 var flag2 = true;
-messageboxbutton.onclick = function () {
-    messagemodal.style.display = "block";
-    setTimeout(() => {
-        messagemodal.style.opacity = 1;
-    }, 100);
-    freezeScroll();
-    flag2 = true;
-}
-
-//关闭留言板
-// 获取 <span> 元素，设置关闭模态框按钮
-var span2 = document.getElementsByClassName("close2")[0];
 var messagemodal = document.getElementById("message-content");
-// 点击 <span> 元素上的 (x), 关闭模态框
-span2.onclick = function () {
-    messagemodal.style.opacity = 0;
-    setTimeout(() => {
-        messagemodal.style.display = "none";
-        unfreezeScroll();
-    }, "100");
-    document.body.classList.remove('no-scroll');
-    flag2 = false;
-    document.getElementById("my-form-status").style.display = "none";
+if (messageboxbutton && messagemodal) {
+    messageboxbutton.onclick = function () {
+        messagemodal.style.display = "block";
+        setTimeout(() => messagemodal.style.opacity = 1, 100);
+        freezeScroll();
+        flag2 = true;
+    }
+}
+var span2 = document.getElementsByClassName("close2")[0];
+if (span2 && messagemodal) {
+    span2.onclick = function () {
+        messagemodal.style.opacity = 0;
+        setTimeout(() => {
+            messagemodal.style.display = "none";
+            unfreezeScroll();
+        }, 100);
+        document.body.classList.remove('no-scroll');
+        flag2 = false;
+        const statusDom = document.getElementById("my-form-status");
+        if (statusDom) statusDom.style.display = "none";
+    }
 }
 
+// 大图缩放
 function look() {
     if (openpicflag) {
         modalImg.classList.add('zoomed');
@@ -262,51 +250,45 @@ document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('myModal');
     const modalImg = document.getElementById("img01");
     const span = document.getElementsByClassName("close")[0];
-    // 定义打开模态框的函数
+    if (!modal || !modalImg) return;
     function opens(img) {
         modal.style.display = "block";
         modalImg.src = img.src;
         modalImg.alt = img.alt;
         freezeScroll();
-        setTimeout(() => {
-            modalImg.style.opacity = 1;
-        }, 100);
+        setTimeout(() => modalImg.style.opacity = 1, 100);
         modalImg.onclick = look;
     }
-
-    // 获取 <span> 元素，设置关闭模态框按钮
-    span.onclick = function () {
-        modalImg.style.opacity = 0;
-        setTimeout(() => {
-            modal.style.display = "none";
-            unfreezeScroll();
-            modalImg.classList.remove('zoomed');
-            modal.style.cursor = 'zoom-in';
-            openpicflag = true;
-        }, "100");
-        document.body.classList.remove('no-scroll');
-    }
-
-    // 使用事件委托处理动态加载的图片点击事件
-    document.getElementById('issue-list').addEventListener('click', function (event) {
-        const target = event.target;
-
-        // 确保点击的是 img 元素，并且它在 .issue-body 内
-        if (target.tagName.toLowerCase() === 'img' && target.closest('.issue-body')) {
-            opens(target);
+    if (span) {
+        span.onclick = function () {
+            modalImg.style.opacity = 0;
+            setTimeout(() => {
+                modal.style.display = "none";
+                unfreezeScroll();
+                modalImg.classList.remove('zoomed');
+                modal.style.cursor = 'zoom-in';
+                openpicflag = true;
+            }, 100);
+            document.body.classList.remove('no-scroll');
         }
-    });
+    }
+    const issueList = document.getElementById('issue-list');
+    if (issueList) {
+        issueList.addEventListener('click', function (event) {
+            const target = event.target;
+            if (target.tagName.toLowerCase() === 'img' && target.closest('.issue-body')) {
+                opens(target);
+            }
+        });
+    }
 });
 
-// 替换原来的 pauseAllVideos
+// 暂停视频
 function pauseAllVideos(excludePlayer) {
-    // 1. 原生 <video>
     document.querySelectorAll('video').forEach(v => {
-        if (excludePlayer && v === excludePlayer.el().querySelector('video')) return;
+        if (excludePlayer && v === excludePlayer.el()?.querySelector('video')) return;
         v.pause();
     });
-
-    // 2. Video.js 实例
     if (window.videojs) {
         Object.values(videojs.getPlayers()).forEach(p => {
             if (p !== excludePlayer && !p.paused()) p.pause();
@@ -314,69 +296,53 @@ function pauseAllVideos(excludePlayer) {
     }
 }
 
-/**
- * @param {string}   tabName      data-tab 值
- * @param {Function} loadMoreFn   到底部时执行的加载函数
- * @param {number}   threshold    距离底部多少 px 触发
- */
+// 滚动加载
 function initScrollLoader(tabName, loadMoreFn, threshold = 2) {
     const debounced = debounce(() => {
-        // 关键：用 mainpart 的滚动信息
         const { scrollTop, clientHeight, scrollHeight } = mainpart;
         const nearBottom = scrollTop + clientHeight >= scrollHeight - threshold;
-
         if (nearBottom && currentTabType === tabName) {
             loadMoreFn();
         }
     }, 200);
-
-    // 关键：把事件绑在 mainpart 上
     mainpart.addEventListener('scroll', debounced);
 }
-
-// 为各 tab 注册滚动加载
 document.addEventListener('DOMContentLoaded', () => {
-    // 随笔
     initScrollLoader('issue-content', () => {
         if (window.isLoading) return;
         window.currentPage++;
         renderIssues(window.currentPage, window.perPage, true);
     });
-
-    // 弹棉花
     initScrollLoader('guitar-content', () => {
         if (window.isLoading2) return;
         window.currentPage2++;
         renderGuitars(window.currentPage2, window.perPage2, true);
     });
-
-    // 插画（可选，如已使用“点击加载更多”可跳过）
     initScrollLoader('image-content', () => {
-        if (window.loadedImages >= window.imagesData?.length) return;
+        if (window.loadedImages >= (window.imagesData?.length || 0)) return;
         createImageElements(window.imagesData, window.imagesPerLoad || 9);
     });
 });
 
-//显示导航栏
+// 导航栏显示隐藏
 const nav = document.getElementById('subNav');
 const HIDE = 'hide';
-mainpart.addEventListener('scroll', () => {
-    const top = mainpart.scrollTop;   // ← 用 scrollTop，且用 mainpart 取值
-    top > 300
-        ? nav.classList.remove(HIDE)
-        : nav.classList.add(HIDE);
-});
+if (mainpart && nav) {
+    mainpart.addEventListener('scroll', () => {
+        const top = mainpart.scrollTop;
+        top > 300 ? nav.classList.remove(HIDE) : nav.classList.add(HIDE);
+    });
+}
 
-//大图左右切换
+// 大图左右切换
 (function () {
-    let currentImgs = [];   // 当前 issue 的所有图片 src
-    let currentIdx = 0;    // 当前显示第几张
+    let currentImgs = [];
+    let currentIdx = 0;
     const modal = document.getElementById('myModal');
     const modalImg = document.getElementById('img01');
     const prevBtn = document.querySelector('.modal-prev');
     const nextBtn = document.querySelector('.modal-next');
-
-    // ✅ 修改：只绑定 #issue-content 内的图片，排除插画模块
+    if (!modal || !modalImg) return;
     document.addEventListener('click', function (e) {
         const img = e.target.closest('#issue-content .issue-body img');
         if (!img) return;
@@ -385,34 +351,26 @@ mainpart.addEventListener('scroll', () => {
         currentIdx = currentImgs.indexOf(img.src);
         openModal(img.src);
     });
-
     function openModal(src) {
         modal.style.display = 'block';
         modalImg.src = src;
         modalImg.style.opacity = 1;
-
-        // ✅ 单张图片隐藏左右箭头
         const arrowsVisible = currentImgs.length > 1;
-        prevBtn.style.display = arrowsVisible ? 'block' : 'none';
-        nextBtn.style.display = arrowsVisible ? 'block' : 'none';
+        if (prevBtn) prevBtn.style.display = arrowsVisible ? 'block' : 'none';
+        if (nextBtn) nextBtn.style.display = arrowsVisible ? 'block' : 'none';
     }
-
     function showPrev() {
         if (!currentImgs.length) return;
         currentIdx = (currentIdx - 1 + currentImgs.length) % currentImgs.length;
         modalImg.src = currentImgs[currentIdx];
     }
-
     function showNext() {
         if (!currentImgs.length) return;
         currentIdx = (currentIdx + 1) % currentImgs.length;
         modalImg.src = currentImgs[currentIdx];
     }
-
-    prevBtn.addEventListener('click', showPrev);
-    nextBtn.addEventListener('click', showNext);
-
-    // 键盘左右箭头也能切换
+    if (prevBtn) prevBtn.addEventListener('click', showPrev);
+    if (nextBtn) nextBtn.addEventListener('click', showNext);
     document.addEventListener('keydown', function (e) {
         if (modal.style.display !== 'block') return;
         if (e.key === 'ArrowLeft') showPrev();
@@ -420,91 +378,174 @@ mainpart.addEventListener('scroll', () => {
     });
 })();
 
+// ===================== Lottie 核心修复区 =====================
+const timestamp = Date.now();
+// 追加时间戳绕过缓存
 const animSrc = {
-    paint: "https://img.grayfen.cn/ip/paint_compressed.json",
-    daily: "https://img.grayfen.cn/ip/daily_compressed.json",
-    book: "https://img.grayfen.cn/ip/book_compressed.json",
-    guitar: "https://img.grayfen.cn/ip/guitar_compressed.json"
-}
-const ANIM_SPEED = 1.5
-// 改用对象带区分key：格式 key_元素下标，避免同名图标覆盖
+    paint: `https://img.grayfen.cn/ip/paint_compressed.json?t=${timestamp}`,
+    daily: `https://img.grayfen.cn/ip/daily_compressed.json?t=${timestamp}`,
+    book: `https://img.grayfen.cn/ip/book_compressed.json?t=${timestamp}`,
+    guitar: `https://img.grayfen.cn/ip/guitar_compressed.json?t=${timestamp}`
+};
+const ANIM_SPEED = 1.5;
 const animMap = {};
-// 同时选中【顶部tab + 右侧rightmenu菜单】两类按钮
-const allTabDom = document.querySelectorAll('.tab, .rightmenu .tab');
 
-// 初始化所有lottie（顶部+右侧菜单统一初始化）
-allTabDom.forEach((tab, idx) => {
-    const icon = tab.querySelector('.lottie-icon');
-    if (!icon || !icon.dataset.anim) return;
-    const animKey = icon.dataset.anim + '_' + idx; // 唯一key，防止同名覆盖
-    const anim = lottie.loadAnimation({
-        container: icon,
-        renderer: 'svg',
-        loop: true,
-        autoplay: false,
-        path: animSrc[icon.dataset.anim]
-    })
-    anim.setSpeed(ANIM_SPEED)
-    animMap[animKey] = { anim, dom: tab };
-})
-
-// 刷新所有：顶部tab + 右侧菜单一起更新active动画
+// 销毁单个Lottie实例
+function destroyLottieInstance(item) {
+    if (item?.anim) {
+        try { item.anim.destroy(); } catch (e) { }
+    }
+}
+// 销毁全部Tab动画
+function destroyAllTabLottie() {
+    Object.values(animMap).forEach(item => destroyLottieInstance(item));
+    Object.keys(animMap).forEach(key => delete animMap[key]);
+}
+// 刷新动画状态
 function refreshTabLottie() {
     Object.values(animMap).forEach(item => {
         const { anim, dom } = item;
+        if (!anim || typeof anim.play !== 'function') return;
         if (dom.classList.contains('active')) {
             anim.setSpeed(ANIM_SPEED);
             anim.play();
         } else {
             anim.pause();
+            anim.goToAndStop(0, true); // 停在首帧（解决空白）
         }
-    })
+    });
 }
 
-// 统一绑定hover（顶部+右侧菜单全部生效）
-Object.values(animMap).forEach(item => {
-    const { anim, dom } = item;
-    dom.addEventListener('mouseenter', () => {
-        anim.setSpeed(ANIM_SPEED);
-        anim.goToAndPlay(0, true); // hover从头播放
-    })
-    dom.addEventListener('mouseleave', () => {
-        // active保持播放，非active归零暂停
-        if (!dom.classList.contains('active')) {
-            anim.pause();
-            anim.goToAndStop(0, true);
+// 预加载所有JSON（解决首屏网络延迟）
+async function preloadAllLottieJson() {
+    const keys = Object.keys(animSrc);
+    for (const key of keys) {
+        const url = animSrc[key];
+        if (window.lottieJsonCache[key]) continue;
+        try {
+            const res = await fetch(url, { mode: 'cors' });
+            if (!res.ok) throw new Error('请求失败');
+            window.lottieJsonCache[key] = await res.json();
+        } catch (err) {
+            console.error(`预加载 ${key} 失败`, err);
         }
-    })
-})
+    }
+}
 
-// 初始化页面默认active动画
-refreshTabLottie()
+// 重建Tab图标动画（使用预加载数据，不再远程请求）
+async function initAllTabLottie() {
+    destroyAllTabLottie();
+    // 先确保JSON已预加载
+    await preloadAllLottieJson();
 
-// 点击标签延时刷新（左右菜单同步变更active）
-document.addEventListener('click', e => {
-    const tab = e.target.closest('.tab[data-tab]');
-    if (!tab) return;
-    setTimeout(refreshTabLottie, 300);
-})
+    const allTabDom = document.querySelectorAll('.tab, .rightmenu .tab');
+    allTabDom.forEach((tab, idx) => {
+        const icon = tab.querySelector('.lottie-icon');
+        const animType = icon.dataset.anim;
 
-// 页面切后台暂停动画
-document.addEventListener('visibilitychange', () => {
-    const isHide = document.hidden;
-    Object.values(animMap).forEach(({anim}) => isHide ? anim.pause() : anim.play())
-})
+        // JSON 预加载失败：直接保留静态图，不初始化动画
+        if (!icon || !animType || !window.lottieJsonCache[animType]) {
+            return;
+        }
 
-document.addEventListener('DOMContentLoaded', function () {
-    //ip形象动画切换
+        const animKey = animType + '_' + idx;
+        try {
+            const anim = lottie.loadAnimation({
+                container: icon,
+                renderer: 'svg',
+                loop: true,
+                autoplay: false,
+                animationData: window.lottieJsonCache[animType],
+                rendererSettings: {
+                    preserveAspectRatio: 'xMidYMid meet'
+                }
+            });
+            anim.setSpeed(ANIM_SPEED);
+            animMap[animKey] = { anim, dom: tab };
+            // 强制渲染动画首帧
+            anim.goToAndStop(0, true);
 
+            // ✅ 动画完全加载成功：添加 loaded 类，隐藏静态图
+            anim.addEventListener('DOMLoaded', () => {
+                icon.classList.add('loaded');
+            });
+
+            // ✅ 动画加载失败：销毁实例，永久保留静态图
+            anim.addEventListener('error', () => {
+                console.error(`【${animType}】动画加载失败，使用静态兜底`);
+                destroyLottieInstance(animMap[animKey]);
+            });
+        } catch (err) {
+            console.error(`【${animType}】动画初始化异常，保留静态图`, err);
+        }
+    });
+
+    // 绑定hover事件
+    Object.values(animMap).forEach(item => {
+        const { anim, dom } = item;
+        dom.onmouseenter = null;
+        dom.onmouseleave = null;
+        dom.addEventListener('mouseenter', () => {
+            if (anim) {
+                anim.setSpeed(ANIM_SPEED);
+                anim.goToAndPlay(0, true);
+            }
+        });
+        dom.addEventListener('mouseleave', () => {
+            if (anim && !dom.classList.contains('active')) {
+                anim.pause();
+                anim.goToAndStop(0, true);
+            }
+        });
+    });
+    refreshTabLottie();
+}
+
+// ========== 分阶段初始化（等待布局完成，彻底解决首屏空白） ==========
+document.addEventListener('DOMContentLoaded', async function () {
+    // 阶段1：立即预加载JSON
+    await preloadAllLottieJson();
+
+    // 阶段2：等待布局渲染完成（延迟300ms，解决容器未布局）
+    setTimeout(async () => {
+        await initAllTabLottie();
+    }, 300);
+
+    // 头像动画
+    const staticAvatar = document.querySelector('.avatar-static');
+    const avatarAnimContainer = document.getElementById('avatar-animation');
+    if (avatarAnimContainer) {
+        try {
+            const avatarAnim = lottie.loadAnimation({
+                container: avatarAnimContainer,
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: 'https://img.grayfen.cn/ip/avatar.json'
+            });
+            avatarAnim.addEventListener('DOMLoaded', () => {
+                avatarAnimContainer.style.transition = 'opacity 0.3s';
+                avatarAnimContainer.style.opacity = '1';
+            });
+            avatarAnim.addEventListener('error', () => {
+                avatarAnimContainer.style.opacity = '0';
+                if (staticAvatar) staticAvatar.style.opacity = '1';
+            });
+            setTimeout(() => avatarAnimContainer.style.opacity = '1', 1500);
+        } catch (e) {
+            if (staticAvatar) staticAvatar.style.opacity = '1';
+        }
+    }
+
+    // IP形象动画
     const mascot = document.getElementById('ipMascot');
     const bubble = document.getElementById('ipBubble');
-    const mascotimg = document.getElementById('ipMascotImg');
     const AUDIO_MAP = [
-        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%AD%AA%E5%98%B4%E7%AC%91.mp3?no-wait=on ', // 桀桀桀桀桀
-        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%94%BE%E7%8B%A0%E8%AF%9D.mp3?no-wait=on ', // 所有杀不死我的…
-        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D.mp3?no-wait=on ', // 在下鬼凤…
-        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%B1%82%E9%A5%B6.mp3?no-wait=on ', // 大侠饶命…
-        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E5%89%91.mp3?no-wait=on '  // 我手里这把剑…
+        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%AD%AA%E5%98%B4%E7%BB%91.mp3?no-wait=on ',
+        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%94%BE%E7%8B%A0%E8%AF%9D.mp3?no-wait=on ',
+        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D.mp3?no-wait=on ',
+        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%B1%82%E9%A5%B6.mp3?no-wait=on ',
+        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E5%89%91.mp3?no-wait=on '
     ];
     const slogans = [
         '（歪嘴）桀桀桀桀桀桀桀桀桀桀桀桀',
@@ -515,116 +556,125 @@ document.addEventListener('DOMContentLoaded', function () {
     ];
     let clickflag = true;
     let timer = null;
+    AUDIO_MAP.forEach(url => fetch(url, { mode: 'no-cors' }).catch(() => { }));
 
-    /* ========== 预加载 ========== */
-    AUDIO_MAP.forEach(url => {
-        // 先发一个无声音请求，把文件塞进浏览器缓存
-        fetch(url, { mode: 'no-cors' });   // no-cors 避免跨域报错
-    });
+    if (mascot) {
+        try {
+            const anim = lottie.loadAnimation({
+                container: mascot,
+                renderer: 'svg',
+                loop: false,
+                autoplay: false,
+                path: 'ip/ip.json'
+            });
+            window.ipAnimInstance = anim;
+            anim.addEventListener('DOMLoaded', () => playMarker('default', true));
+            anim.addEventListener('error', () => console.error('IP动画加载失败'));
 
-    // 加载 JSON 并播放
-    const anim = lottie.loadAnimation({
-        container: document.getElementById('ipMascot'), // 挂载点
-        renderer: 'svg',
-        loop: false,                                  // 渲染方式
-        autoplay: false,                                  // 先不自动播放
-        path: 'ip/ip.json'                          // JSON 文件路径（同目录）
-    });
-
-    /* 工具函数：按 marker 名播放 */
-    function playMarker(name, loop = false) {
-        const m = anim.animationData.markers.find(o => o.cm === name);
-        if (!m) return;
-        anim.loop = loop;
-        anim.playSegments([m.tm, m.tm + m.dr], true);
+            function playMarker(name, loop = false) {
+                const m = anim.animationData?.markers?.find(o => o.cm === name);
+                if (!m) return;
+                anim.loop = loop;
+                anim.playSegments([m.tm, m.tm + m.dr], true);
+            }
+            mascot.addEventListener('click', () => {
+                if (!clickflag) return;
+                clickflag = false;
+                const idx = Math.floor(Math.random() * slogans.length);
+                if (bubble) {
+                    bubble.textContent = slogans[idx];
+                    bubble.classList.add('show');
+                }
+                clearTimeout(timer);
+                const audio = new Audio(AUDIO_MAP[idx]);
+                audio.play().catch(() => { });
+                playMarker('talk', false);
+                audio.addEventListener('ended', () => {
+                    if (bubble) bubble.classList.remove('show');
+                    playMarker('default', true);
+                    clickflag = true;
+                }, { once: true });
+            });
+        } catch (e) { }
     }
-
-    /* 初始状态 */
-    anim.addEventListener('DOMLoaded', () => {
-        playMarker('default', true);          // 循环 idle 段
-    });
-
-    mascot.addEventListener('click', () => {
-        if (!clickflag) return;
-        clickflag = false;
-
-        const idx = Math.floor(Math.random() * slogans.length);
-        bubble.textContent = slogans[idx];
-        bubble.classList.add('show');
-        clearTimeout(timer);
-
-        /* 播放对应音频 再出现文字 */
-        const audio = new Audio(AUDIO_MAP[idx]);
-        audio.play().catch(() => { });
-
-        playMarker('talk', false);
-
-        /* 音频结束后切回默认状态 */
-        audio.addEventListener('ended', () => {
-            bubble.classList.remove('show');
-            playMarker('default', true);
-            clickflag = true;
-        }, { once: true });   // once:true 保证只触发一次
-    });
-
-
-    const staticAvatar = document.querySelector('.avatar-static');
-    const avatarAnimContainer = document.getElementById('avatar-animation');
-
-    const avatarAnim = lottie.loadAnimation({
-        container: avatarAnimContainer,
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: 'https://img.grayfen.cn/ip/avatar.json'
-    });
-
-    // lottie画面渲染完成再渐变浮现动画
-    avatarAnim.addEventListener('DOMLoaded', () => {
-        avatarAnimContainer.style.transition = 'opacity 0.3s';
-        avatarAnimContainer.style.opacity = '1';
-        // 静态图片永久保留在底层，不隐藏！永远兜底防空白
-    });
-
-    // 超时兜底
-    setTimeout(() => {
-        avatarAnimContainer.style.opacity = '1';
-    }, 3000)
 });
 
+// 页面从缓存恢复（后退/标签唤醒）强制重建
+window.addEventListener('pageshow', async function (e) {
+    if (e.persisted) {
+        setTimeout(async () => {
+            await initAllTabLottie();
+            // 重建IP动画
+            if (window.ipAnimInstance) {
+                try { window.ipAnimInstance.destroy(); } catch (e) { }
+            }
+            const mascot = document.getElementById('ipMascot');
+            if (mascot) {
+                const anim = lottie.loadAnimation({
+                    container: mascot,
+                    renderer: 'svg',
+                    loop: false,
+                    autoplay: false,
+                    path: 'ip/ip.json'
+                });
+                window.ipAnimInstance = anim;
+            }
+        }, 200);
+    }
+});
+
+// Tab点击刷新动画
+document.addEventListener('click', e => {
+    const tab = e.target.closest('.tab[data-tab]');
+    if (!tab) return;
+    setTimeout(refreshTabLottie, 300);
+});
+
+// 粒子动画
 function getParticleCount() {
-    // 检测是否为移动设备/低性能设备
     const isMobile = /Mobile|Android|iOS/.test(navigator.userAgent);
     const isLowEnd = isMobile && window.innerWidth < 768;
-    return isLowEnd ? 60 : 120; // 移动端低配60个，其他120个
+    return isLowEnd ? 60 : 120;
 }
-
-// 全局标记：防止重复初始化
 let isParticleLoaded = false;
-
 window.addEventListener('load', function () {
     if (isParticleLoaded) return;
     setTimeout(() => {
-        // 先销毁已有粒子（兜底防重复）
         if (window.pJSDom?.length > 0) {
             window.pJSDom.forEach(item => item.pJS.fn.vendors.destroypJS());
             window.pJSDom = [];
         }
-        // 统一走fetch动态修改配置，只初始化一次
         fetch('particlesjs-config.json')
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error('粒子配置请求失败');
+                return res.json();
+            })
             .then(config => {
                 config.particles.number.value = getParticleCount();
                 particlesJS('particles-js', config);
-                isParticleLoaded = true; // 标记初始化完毕
-                console.log('粒子配置加载完成');
-            });
-    }, 1000);
+                isParticleLoaded = true;
+            })
+            .catch(err => console.error('粒子动画加载失败', err));
+    }, 500);
 });
 
-// 页面休眠暂停所有动画
-document.addEventListener('visibilitychange', () => {
+// 页面显隐（切后台/前台）
+document.addEventListener('visibilitychange', async () => {
     const status = document.hidden;
-    Object.values(animMap).forEach(anim => status ? anim.pause() : anim.play());
-    if (anim) status ? anim.pause() : anim.play();
-})
+    let needRebuild = false;
+    Object.values(animMap).forEach(item => {
+        if (!item?.anim || typeof item.anim.play !== 'function') {
+            needRebuild = true;
+            return;
+        }
+        status ? item.anim.pause() : item.anim.play();
+    });
+    // 实例失效自动重建
+    if (needRebuild && !status) {
+        setTimeout(async () => await initAllTabLottie(), 200);
+    }
+    // IP动画
+    if (window.ipAnimInstance && typeof window.ipAnimInstance.play === 'function') {
+        status ? window.ipAnimInstance.pause() : window.ipAnimInstance.play();
+    }
+});
