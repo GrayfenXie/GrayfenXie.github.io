@@ -99,7 +99,7 @@ let typeTimer = null;
 document.addEventListener('click', e => {
     const tab = e.target.closest('.tab[data-tab]');
     if (!tab) return;
-    clearTimeout(typeTimer);
+    // clearTimeout(typeTimer);
     const targetTab = tab.dataset.tab;
     if (targetTab === currentTabType) return;
     const targetContent = document.getElementById(targetTab);
