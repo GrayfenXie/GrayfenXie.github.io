@@ -109,7 +109,7 @@ document.addEventListener('click', e => {
     if(targetTab === "issue-content" && !issueDataLoaded){
         issueDataLoaded = true;
         const listDom = document.getElementById('issue-list');
-        listDom.innerHTML = `<li class="loading-row">正在加载日常...</li>`;
+        listDom.innerHTML = `<li class="loading-row" style="padding:40px 0;">正在加载日常...</li>`;
         loadAllIssues()
         .catch(()=>{
             listDom.innerHTML = `<li class="failtoload">加载失败，点击重试</li>`;
