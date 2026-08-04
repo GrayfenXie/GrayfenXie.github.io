@@ -100,9 +100,12 @@ let issueDataLoaded = false; // 新增全局标记，防止重复请求
 document.addEventListener('click', e => {
     const tab = e.target.closest('.tab[data-tab]');
     if (!tab) return;
-    // clearTimeout(typeTimer);
     const targetTab = tab.dataset.tab;
-    // ==========新增：首次进入日常tab触发加载==========
+
+    // ✅ 第一步优先判断：点击当前激活tab，直接终止，不执行任何操作
+    if (targetTab === currentTabType) return;
+
+    // 首次进入日常tab触发加载
     if(targetTab === "issue-content" && !issueDataLoaded){
         issueDataLoaded = true;
         const listDom = document.getElementById('issue-list');
@@ -110,29 +113,30 @@ document.addEventListener('click', e => {
         loadAllIssues()
         .catch(()=>{
             listDom.innerHTML = `<li class="failtoload">加载失败，点击重试</li>`;
-            issueDataLoaded = false; // 失败允许再次尝试
+            issueDataLoaded = false;
         })
     }
-    // ==============================================
-    // 【第一步：先全部清除所有tab active，保证永远只有一个】
+
+    // ✅ 只执行一次：清空全部tab active
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    // 【第二步：给当前点击tab加上active】
-    tab.classList.add('active');
-    if (targetTab === currentTabType) return;
-    const targetContent = document.getElementById(targetTab);
-    if (!targetContent) {
-        console.error('Target content not found:', targetTab);
-        return;
-    }
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    // 给所有同data-tab的tab统一激活（侧边+移动端菜单一并处理）
     document.querySelectorAll(`.tab[data-tab="${targetTab}"]`).forEach(t => t.classList.add('active'));
+
+    // 切换内容面板
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    targetContent.classList.add('active');
+    const targetContent = document.getElementById(targetTab);
+    if (targetContent) {
+        targetContent.classList.add('active');
+    }
+
+    // 更新全局状态（唯一可信源！所有UI跟随currentTabType，不要反过来）
     currentTabType = targetTab;
+
     anime();
     pauseAllVideos();
     mainpart.scrollTo({ top: 0, behavior: 'smooth' });
     closeitfc();
+    setTimeout(refreshTabLottie, 300);
 });
 
 // 入场动画
@@ -640,12 +644,12 @@ window.addEventListener('pageshow', async function (e) {
     }
 });
 
-// Tab点击刷新动画
-document.addEventListener('click', e => {
-    const tab = e.target.closest('.tab[data-tab]');
-    if (!tab) return;
-    setTimeout(refreshTabLottie, 300);
-});
+// // Tab点击刷新动画
+// document.addEventListener('click', e => {
+//     const tab = e.target.closest('.tab[data-tab]');
+//     if (!tab) return;
+//     setTimeout(refreshTabLottie, 300);
+// });
 
 // 粒子动画
 function getParticleCount() {
