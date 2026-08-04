@@ -95,12 +95,29 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 let typeTimer = null;
+let issueDataLoaded = false; // 新增全局标记，防止重复请求
 // Tab 点击切换
 document.addEventListener('click', e => {
     const tab = e.target.closest('.tab[data-tab]');
     if (!tab) return;
     // clearTimeout(typeTimer);
     const targetTab = tab.dataset.tab;
+    // ==========新增：首次进入日常tab触发加载==========
+    if(targetTab === "issue-content" && !issueDataLoaded){
+        issueDataLoaded = true;
+        const listDom = document.getElementById('issue-list');
+        listDom.innerHTML = `<li class="loading-row">正在加载日常...</li>`;
+        loadAllIssues()
+        .catch(()=>{
+            listDom.innerHTML = `<li class="failtoload">加载失败，点击重试</li>`;
+            issueDataLoaded = false; // 失败允许再次尝试
+        })
+    }
+    // ==============================================
+    // 【第一步：先全部清除所有tab active，保证永远只有一个】
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    // 【第二步：给当前点击tab加上active】
+    tab.classList.add('active');
     if (targetTab === currentTabType) return;
     const targetContent = document.getElementById(targetTab);
     if (!targetContent) {

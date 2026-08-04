@@ -171,10 +171,10 @@ document.getElementById('more2').addEventListener('click', () => {
   renderIssues(window.currentPage, window.perPage, true);
 });
 
-// 初始化 
-document.addEventListener('DOMContentLoaded', () => {
-  loadAllIssues();
-});
+// // 初始化 
+// document.addEventListener('DOMContentLoaded', () => {
+//   loadAllIssues();
+// });
 
 // 全局 loading & toast 
 function toggleLoading(show = true) {
