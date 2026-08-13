@@ -699,3 +699,38 @@ document.addEventListener('visibilitychange', async () => {
         status ? window.ipAnimInstance.pause() : window.ipAnimInstance.play();
     }
 });
+
+// 头像弹窗：myInfo 底部上滑，不隐藏滚动、仅关闭按钮关闭遮罩
+document.addEventListener('DOMContentLoaded', function(){
+    const avatarWrap = document.getElementById('avatarWrap');
+    const myInfoPanel = document.getElementById('myInfo');
+    const infoCloseBtn = myInfoPanel?.querySelector('.close');
+
+    // 控制台打印调试，看是否拿到元素
+    console.log('头像容器', avatarWrap);
+    console.log('弹窗', myInfoPanel);
+    console.log('关闭按钮', infoCloseBtn);
+
+    if(!avatarWrap || !myInfoPanel || !infoCloseBtn){
+        console.error('缺失DOM元素，点击失效');
+        return;
+    }
+
+    function openMyInfo() {
+        myInfoPanel.classList.add('active');
+    }
+    function closeMyInfo() {
+        myInfoPanel.classList.remove('active');
+    }
+
+    // 头像打开
+    avatarWrap.addEventListener('click', openMyInfo);
+    // 仅关闭按钮关闭
+    infoCloseBtn.addEventListener('click', closeMyInfo);
+    // ESC 关闭
+    document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && myInfoPanel.classList.contains('active')) {
+            closeMyInfo();
+        }
+    })
+});

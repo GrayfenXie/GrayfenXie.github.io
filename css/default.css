@@ -307,28 +307,39 @@ a {
     padding: 4px;
     border-radius: 50%;
     transition: all .4s;
+    cursor: pointer;
 }
 
+.avatar {
+    position: relative;
+    width: 8rem;
+    height: 8rem;
+    margin: auto auto 14px auto;
+    padding: 4px;
+    border-radius: 50%;
+    transition: all .4s;
+    cursor: pointer;
+}
 .avatar img {
     width: 100%;
     height: 100%;
     border-radius: 100%;
 }
-
+/* 外圈动画伪元素，穿透点击 */
 .avatar::before {
     content: "";
     width: 110%;
     height: 110%;
     position: absolute;
     border: 4px solid var(--second-color);
-    ;
     left: -5%;
     top: -5%;
     box-sizing: border-box;
     border-radius: 50%;
     animation: identifier2 3s linear infinite;
+    pointer-events: none; /* 关键：点击穿透 */
 }
-
+/* 内层动画伪元素，穿透点击 */
 .avatar::after {
     content: "";
     left: 2%;
@@ -340,6 +351,15 @@ a {
     box-sizing: border-box;
     border-radius: 50%;
     animation: identifier 3s linear infinite;
+    pointer-events: none; /* 关键 */
+}
+/* 点击容器强制接收鼠标事件 */
+#avatarWrap {
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+    position: relative;
+    z-index: 1; /* 提升层级，高于伪元素 */
 }
 
 @keyframes identifier {
@@ -1387,6 +1407,36 @@ textarea {
     left: 0;
     background: url(../img/rightarrow.svg);
 }
+
+.myInfo{
+    background:var(--bg-color);
+    width:100vw;
+    height:100vh;
+    position:fixed;
+    top: 100vh;
+    left:0;
+    z-index:1000;
+    transition: top 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+    opacity: 0;
+    overflow-y: auto;
+    /* 新增：阻止滚动穿透底层页面 */
+    overscroll-behavior: contain;
+}
+/* 弹出激活类 */
+.myInfo.active {
+    top: 0;
+    opacity: 1;
+}
+.myInfo .close{
+    color:var(--second-color);
+}
+.myInfo .info-content {
+    width: 90%;
+    max-width: 800px;
+    margin: 100px auto;
+    color: var(--mainword);
+}
+
 
 @media screen and (max-width: 1400px) {
 
