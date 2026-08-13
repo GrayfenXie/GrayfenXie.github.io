@@ -954,6 +954,7 @@ textarea {
     background: var(--theme-color);
     color: var(--card-color);
     margin: 16px 0;
+    padding: 12px 0;
     opacity: 1;
     font-size: 1em;
 }
