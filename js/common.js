@@ -705,12 +705,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const avatarWrap = document.getElementById('avatarWrap');
     const myInfoPanel = document.getElementById('myInfo');
     const infoCloseBtn = myInfoPanel?.querySelector('.close');
-
-    // 控制台打印调试，看是否拿到元素
-    console.log('头像容器', avatarWrap);
-    console.log('弹窗', myInfoPanel);
-    console.log('关闭按钮', infoCloseBtn);
-
+    
     if(!avatarWrap || !myInfoPanel || !infoCloseBtn){
         console.error('缺失DOM元素，点击失效');
         return;
