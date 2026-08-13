@@ -562,7 +562,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const mascot = document.getElementById('ipMascot');
     const bubble = document.getElementById('ipBubble');
     const AUDIO_MAP = [
-        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%AD%AA%E5%98%B4%E7%BB%91.mp3?no-wait=on ',
+        'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%AD%AA%E5%98%B4%E7%AC%91.mp3?no-wait=on ',
         'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%94%BE%E7%8B%A0%E8%AF%9D.mp3?no-wait=on ',
         'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D.mp3?no-wait=on ',
         'https://img.grayfen.cn/ip/IP%E8%AF%AD%E9%9F%B3/%E6%B1%82%E9%A5%B6.mp3?no-wait=on ',
