@@ -1410,6 +1410,7 @@ textarea {
 }
 
 .myInfo{
+    /* display:none; */
     background:var(--bg-color);
     width:100vw;
     height:100vh;
@@ -1425,10 +1426,12 @@ textarea {
 }
 /* 弹出激活类 */
 .myInfo.active {
+    /* display: block; */
     top: 0;
     opacity: 1;
 }
 .myInfo .close{
+    display:none;
     color:var(--second-color);
 }
 .myInfo .info-content {

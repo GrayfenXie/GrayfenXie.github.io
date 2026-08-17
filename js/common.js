@@ -713,9 +713,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
     function openMyInfo() {
         myInfoPanel.classList.add('active');
+        infoCloseBtn.style.display = 'block';
     }
     function closeMyInfo() {
         myInfoPanel.classList.remove('active');
+        infoCloseBtn.style.display = 'none';
     }
 
     // 头像打开
