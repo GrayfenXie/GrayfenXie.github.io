@@ -234,21 +234,14 @@ var flag2 = true;
 var messagemodal = document.getElementById("message-content");
 if (messageboxbutton && messagemodal) {
     messageboxbutton.onclick = function () {
-        messagemodal.style.display = "block";
-        setTimeout(() => messagemodal.style.opacity = 1, 100);
-        freezeScroll();
+        messagemodal.classList.add('active');
         flag2 = true;
     }
 }
 var span2 = document.getElementsByClassName("close2")[0];
 if (span2 && messagemodal) {
     span2.onclick = function () {
-        messagemodal.style.opacity = 0;
-        setTimeout(() => {
-            messagemodal.style.display = "none";
-            unfreezeScroll();
-        }, 100);
-        document.body.classList.remove('no-scroll');
+        messagemodal.classList.remove('active');
         flag2 = false;
         const statusDom = document.getElementById("my-form-status");
         if (statusDom) statusDom.style.display = "none";
