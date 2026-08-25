@@ -717,10 +717,40 @@ document.addEventListener('DOMContentLoaded', function(){
     avatarWrap.addEventListener('click', openMyInfo);
     // 仅关闭按钮关闭
     infoCloseBtn.addEventListener('click', closeMyInfo);
-    // ESC 关闭
-    document.addEventListener('keydown', function(e){
-        if(e.key === 'Escape' && myInfoPanel.classList.contains('active')) {
-            closeMyInfo();
-        }
-    })
+});
+
+// ===================== ESC 统一关闭弹窗 =====================
+// 按 z-index 从高到低检查，每次只关闭最上层的浮层
+document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+
+    // 1. 个人简介弹窗
+    const myInfo = document.getElementById('myInfo');
+    if (myInfo && myInfo.classList.contains('active')) {
+        const btn = myInfo.querySelector('.close');
+        if (btn) btn.click();
+        return;
+    }
+
+    // 2. 私信弹窗
+    const msgModal = document.getElementById('message-content');
+    if (msgModal && msgModal.classList.contains('active')) {
+        const btn = document.querySelector('.close2');
+        if (btn) btn.click();
+        return;
+    }
+
+    // 3. 大图查看弹窗
+    const imgModal = document.getElementById('myModal');
+    if (imgModal && imgModal.style.display === 'block') {
+        const btn = imgModal.querySelector('.close');
+        if (btn) btn.click();
+        return;
+    }
+
+    // 4. 移动端菜单
+    const mobileMenu = document.getElementById('mobilemune');
+    if (mobileMenu && mobileMenu.style.display === 'flex') {
+        closeitfc();
+    }
 });
