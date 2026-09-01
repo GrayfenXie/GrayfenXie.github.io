@@ -116,12 +116,11 @@ function renderGuitars(page, perPage2, isAppend = false) {
             el: walineContainer,
             serverURL: 'https://waline.grayfen.cn/',
             emoji: [
-              '//unpkg.com/@waline/emojis@1.2.0/weibo',
-              '//unpkg.com/@waline/emojis@1.2.0/bmoji'
+              '//cdn.jsdelivr.net/npm/@waline/emojis@1.2.0/weibo',
+              '//cdn.jsdelivr.net/npm/@waline/emojis@1.2.0/bmoji'
             ],
             path: `/videos/${guitar.id}`,
             components: {
-              VInfo: ({ nick }) => h('span', { class: 'wl-nick' }, nick),
               MarkdownGuide: () => null
             },
             lang: 'zh-CN',

@@ -16,33 +16,33 @@ window.isLoading = false;
   };
 
   window.renderMarkdown = function (md) {
-  currentImages.length = 0;
+    currentImages.length = 0;
 
-  // 1. 先干掉 Markdown 末尾所有换行/空白
-  md = (md || '').replace(/\n\s*$/g, '');
+    // 1. 先干掉 Markdown 末尾所有换行/空白
+    md = (md || '').replace(/\n\s*$/g, '');
 
-  // 2. 再解析
-  const html = marked(md, {
-    renderer,
-    gfm: true,
-    breaks: true,
-    smartLists: true
-  });
+    // 2. 再解析
+    const html = marked(md, {
+      renderer,
+      gfm: true,
+      breaks: true,
+      smartLists: true
+    });
 
-  // 3. 再去掉 marked 可能产生的末尾空 <p></p> 或 <br>
-  const trimmed = html
-  .replace(/(?:\s*<p>(?:\s*<br\s*\/?>)+\s*<\/p>\s*)+$/gi, '')
-  .replace(/(?:\s*<p>\s*<\/p>\s*)+$/gi, '')   // 再清一遍纯空段落
-  .replace(/(<br\s*\/?>\s*){2,}(?=<\/p>)/gi, '')
-  .trimEnd();
+    // 3. 再去掉 marked 可能产生的末尾空 <p></p> 或 <br>
+    const trimmed = html
+      .replace(/(?:\s*<p>(?:\s*<br\s*\/?>)+\s*<\/p>\s*)+$/gi, '')
+      .replace(/(?:\s*<p>\s*<\/p>\s*)+$/gi, '')   // 再清一遍纯空段落
+      .replace(/(<br\s*\/?>\s*){2,}(?=<\/p>)/gi, '')
+      .trimEnd();
 
-  const gridHTML =
-    currentImages.length > 1
-      ? '<div class="issue-grid">' + currentImages.join('') + '</div>'
-      : currentImages.join('');
+    const gridHTML =
+      currentImages.length > 1
+        ? '<div class="issue-grid">' + currentImages.join('') + '</div>'
+        : currentImages.join('');
 
-  return trimmed + gridHTML;
-};
+    return trimmed + gridHTML;
+  };
 })();
 
 // 拉取全部 Issue 数据 
@@ -144,13 +144,12 @@ document.addEventListener('click', e => {
         el: container,
         serverURL: 'https://waline.grayfen.cn/',
         emoji: [
-          '//unpkg.com/@waline/emojis@1.2.0/weibo',
-          '//unpkg.com/@waline/emojis@1.2.0/bmoji',
+          '//cdn.jsdelivr.net/npm/@waline/emojis@1.2.0/weibo',
+          '//cdn.jsdelivr.net/npm/@waline/emojis@1.2.0/bmoji',
         ],
         path: `/issues/${issueId}`,
         components: {
-          VInfo: ({ nick }) => h('span', { class: 'wl-nick' }, nick),
-          MarkdownGuide: () => null,
+          MarkdownGuide: () => null
         },
         lang: 'zh-CN',
         dark: 'html[class="night"]',
@@ -160,6 +159,7 @@ document.addEventListener('click', e => {
         highlighter: false,
         meta: ['nick', 'mail']
       });
+
       container.setAttribute('data-waline-inited', '1');
     }
   }
@@ -192,26 +192,26 @@ function showToast(msg, duration = 2000) {
 (function () {
   /* 打包九宫格 */
   function packImagesToGrid() {
-  document.querySelectorAll('.issue-body').forEach(body => {
-    if (body.querySelector('.issue-grid')) return;   // 已处理过
+    document.querySelectorAll('.issue-body').forEach(body => {
+      if (body.querySelector('.issue-grid')) return;   // 已处理过
 
-    const imgs = [...body.querySelectorAll('img')];
-    if (imgs.length <= 1) return;                    // 单张不处理
+      const imgs = [...body.querySelectorAll('img')];
+      if (imgs.length <= 1) return;                    // 单张不处理
 
-    // 1. 创建九宫格
-    const grid = document.createElement('div');
-    grid.className = 'issue-grid';
-    imgs.forEach(img => grid.appendChild(img));
+      // 1. 创建九宫格
+      const grid = document.createElement('div');
+      grid.className = 'issue-grid';
+      imgs.forEach(img => grid.appendChild(img));
 
-    // 2. 把 grid 插到 body 末尾（或你想放的位置）
-    body.appendChild(grid);
+      // 2. 把 grid 插到 body 末尾（或你想放的位置）
+      body.appendChild(grid);
 
-    // 3. 关键：删掉因“搬家”而变空的 <p></p>
-    body.querySelectorAll('p').forEach(p => {
-      if (p.innerHTML.replace(/\s|<br\s*\/?>/gi, '') === '') p.remove();
+      // 3. 关键：删掉因“搬家”而变空的 <p></p>
+      body.querySelectorAll('p').forEach(p => {
+        if (p.innerHTML.replace(/\s|<br\s*\/?>/gi, '') === '') p.remove();
+      });
     });
-  });
-} 
+  }
 
   //播放动画：只针对带 [data-animate-new] 标记的新节点
   function playAnimeForNew() {
