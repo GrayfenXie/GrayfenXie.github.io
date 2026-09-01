@@ -1688,7 +1688,7 @@ textarea {
     visibility: hidden;
     transform: translateX(10px);
     transition: all .3s;
-    z-index: 9998;
+    z-index: 999;
 }
 
 /* 小三角 */
