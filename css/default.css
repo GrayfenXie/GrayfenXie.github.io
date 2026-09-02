@@ -1397,9 +1397,8 @@ textarea {
 /* 视频上的小播放图标：参考图样式（外层虚线圈 + 中间实心圆环 + 内层实心圆点），未播放显示，播放中隐藏 */
 .video-play-icon {
     position: absolute;
-    bottom: -4%;
-    right: -2%;
-    transform: translate(-50%, -50%);
+    top: 6%;
+    right: 3%;
     width: 26px;
     height: 26px;
     border: 2px dashed rgba(255, 255, 255, .9);

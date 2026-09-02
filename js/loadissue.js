@@ -261,6 +261,10 @@ function showToast(msg, duration = 2000) {
       if (v.dataset.videoReady) return;
       v.dataset.videoReady = '1';
 
+      // 统一：开启音量调节控件 + 播放默认静音（兼容历史/未来发布的视频标签）
+      v.setAttribute('controls', '');
+      v.muted = true;
+
       // 每个视频上的小播放图标
       const icon = v.parentElement?.querySelector('.video-play-icon');
       const setIcon = show => { if (icon) icon.classList.toggle('is-hidden', !show); };
