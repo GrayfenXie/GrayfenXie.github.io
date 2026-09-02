@@ -1391,13 +1391,14 @@ textarea {
     height: 100%;
     object-fit: contain;
     background: #000;
+    cursor: pointer;
 }
 
 /* 视频上的小播放图标：参考图样式（外层虚线圈 + 中间实心圆环 + 内层实心圆点），未播放显示，播放中隐藏 */
 .video-play-icon {
     position: absolute;
-    bottom: 10%;
-    right: 10%;
+    bottom: -4%;
+    right: -2%;
     transform: translate(-50%, -50%);
     width: 28px;
     height: 28px;
