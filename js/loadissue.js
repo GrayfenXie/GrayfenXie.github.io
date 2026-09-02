@@ -143,6 +143,9 @@ document.addEventListener('click', e => {
       Waline.init({
         el: container,
         serverURL: 'https://waline.grayfen.cn/',
+        gravatar: {
+          url: 'https://seccdn.libravatar.org/avatar/{{mail|md5}}?d=mp'
+        },
         emoji: [
           '//cdn.jsdelivr.net/npm/@waline/emojis@1.2.0/weibo',
           '//cdn.jsdelivr.net/npm/@waline/emojis@1.2.0/bmoji',
