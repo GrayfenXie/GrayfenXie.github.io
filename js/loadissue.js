@@ -49,9 +49,13 @@ window.isLoading = false;
         ? '<div class="issue-grid">' + currentImages.join('') + '</div>'
         : currentImages.join('');
 
-    // 视频放在正文后、图片九宫格前
+    // 视频放在正文后、图片九宫格前；每个视频包一层并叠加播放小图标
     const videoHTML = currentVideos.length
-      ? '\n<div class="issue-videos">' + currentVideos.join('\n') + '</div>'
+      ? '\n<div class="issue-videos">' + currentVideos.map(v =>
+          '<div class="issue-video-item">' + v +
+          '<span class="video-play-icon" aria-hidden="true"></span>' +
+          '</div>'
+        ).join('\n') + '</div>'
       : '';
 
     return trimmed + videoHTML + gridHTML;
@@ -250,19 +254,38 @@ function showToast(msg, duration = 2000) {
       }, { root: null, rootMargin: '300px 0px', threshold: 0 })
     : null;
 
-  // 初始化随笔中的视频：互斥播放 + 离屏暂停
+  // 初始化随笔中的视频：互斥播放 + 离屏暂停 + 播放小图标
   function setupDiaryVideos(container) {
     const videos = (container || document).querySelectorAll('.issue-videos video');
     videos.forEach(v => {
       if (v.dataset.videoReady) return;
       v.dataset.videoReady = '1';
-      // 播放时暂停其他所有视频
+
+      // 每个视频上的小播放图标
+      const icon = v.parentElement?.querySelector('.video-play-icon');
+      const setIcon = show => { if (icon) icon.classList.toggle('is-hidden', !show); };
+
+      // 播放时隐藏图标；暂停 / 播放结束恢复显示
       v.addEventListener('play', () => {
+        setIcon(false);
+        // 播放时暂停其他所有视频
         document.querySelectorAll('video').forEach(o => { if (o !== v) o.pause(); });
         if (window.videojs) {
           Object.values(videojs.getPlayers()).forEach(p => { if (!p.paused()) p.pause(); });
         }
       });
+      v.addEventListener('pause', () => setIcon(true));
+      v.addEventListener('ended', () => setIcon(true));
+
+      // 点击小图标触发播放
+      if (icon) {
+        icon.addEventListener('click', e => {
+          e.preventDefault();
+          e.stopPropagation();
+          v.play().catch(() => {});
+        });
+      }
+
       if (diaryVideoIO) diaryVideoIO.observe(v);
     });
   }
