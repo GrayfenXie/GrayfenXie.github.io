@@ -1648,6 +1648,9 @@ textarea {
         width: 100%;
         display: block;
     }
+    .issue-video-item{
+        width: 100%;
+    }
 
     .linktitle {
         margin-bottom: 12px;
