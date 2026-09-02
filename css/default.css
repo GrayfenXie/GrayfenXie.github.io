@@ -1400,14 +1400,15 @@ textarea {
     bottom: -4%;
     right: -2%;
     transform: translate(-50%, -50%);
-    width: 28px;
-    height: 28px;
-    border: 1.5px dashed rgba(255, 255, 255, .9); /* 外层虚线圈 */
+    width: 26px;
+    height: 26px;
+    border: 2px dashed rgba(255, 255, 255, .9);
     border-radius: 50%;
     display: flex;
     align-items: center;
+    border-width: 1px;
     justify-content: center;
-    color: #fff;
+  color: #fff;
     cursor: pointer;
     z-index: 2;
     transition: opacity .25s;
@@ -1417,8 +1418,8 @@ textarea {
 /* 中间实心圆环 */
 .video-play-icon::before {
     content: "";
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     border: 2px solid rgba(255, 255, 255, .95);
     border-radius: 50%;
     box-sizing: border-box;
@@ -1431,8 +1432,8 @@ textarea {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
     border-radius: 50%;
     background: #fff;
 }
