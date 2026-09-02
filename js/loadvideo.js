@@ -1,8 +1,8 @@
 // 缓存 & 分页 
 window.cachedIssues2 = [];
-window.currentPage2 = 1;
-window.perPage2 = 10;
-window.isLoading2 = false;
+window.currentPage2   = 1;
+window.perPage2       = 10;
+window.isLoading2     = false;
 
 // 入口：拉取全部吉他视频 
 async function loadAllGuitar() {
@@ -40,21 +40,21 @@ async function fetchCommentCount2(videoId) {
 function renderGuitars(page, perPage2, isAppend = false) {
   const guitarList = document.getElementById('guitar-list');
   const start2 = (page - 1) * perPage2;
-  const end2 = start2 + perPage2;
+  const end2   = start2 + perPage2;
   const pageIssues = window.cachedIssues2.slice(start2, end2);
 
   if (!isAppend) guitarList.innerHTML = '';
 
   pageIssues.forEach((guitar, idx) => {
     const body = guitar.body || '';
-    const urlMatch = body.match(/url:\s*(https:\/\/img\.grayfen\.cn\/[^\s\n\r]+)/i);
+    const urlMatch  = body.match(/url:\s*(https:\/\/img\.grayfen\.cn\/[^\s\n\r]+)/i);
     const nameMatch = body.match(/name:\s*([^\n\r]+)/i);
     if (!urlMatch || !nameMatch) return;
 
-    const videoSrc = decodeURIComponent(urlMatch[1]);
+    const videoSrc  = decodeURIComponent(urlMatch[1]);
     const videoName = nameMatch[1].trim();
     const posterSrc = `${videoSrc}?frame=5000&w=1000&cs=srgb`;
-    const date2 = new Date(guitar.created_at);
+    const date2     = new Date(guitar.created_at);
     const formattedDate2 = `${date2.toLocaleDateString()} ${date2.toLocaleString('en-US', { weekday: 'short' })} ${date2.toLocaleTimeString()}`;
 
     const li = document.createElement('li');
@@ -115,9 +115,6 @@ function renderGuitars(page, perPage2, isAppend = false) {
           Waline.init({
             el: walineContainer,
             serverURL: 'https://waline.grayfen.cn/',
-            gravatar: {
-              url: 'https://seccdn.libravatar.org/avatar/{{mail|md5}}?d=mp'
-            },
             emoji: [
               '//cdn.jsdelivr.net/npm/@waline/emojis@1.2.0/weibo',
               '//cdn.jsdelivr.net/npm/@waline/emojis@1.2.0/bmoji'
@@ -151,9 +148,9 @@ function renderGuitars(page, perPage2, isAppend = false) {
   }
   document.getElementById('loadpic3').innerText = Math.min(start2 + perPage2, window.cachedIssues2.length);
   // 强制触发动画，让元素显示
-  setTimeout(() => {
-    anime();
-  }, 10);
+setTimeout(() => {
+  anime();
+}, 10);
 }
 
 // 绑定「加载更多」按钮 
