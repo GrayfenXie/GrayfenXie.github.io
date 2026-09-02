@@ -261,9 +261,55 @@ function showToast(msg, duration = 2000) {
       if (v.dataset.videoReady) return;
       v.dataset.videoReady = '1';
 
-      // 统一：开启音量调节控件 + 播放默认静音（兼容历史/未来发布的视频标签）
-      v.setAttribute('controls', '');
+      // 统一：去除原生控制条，使用自定义音量条 + 播放默认静音
+      v.removeAttribute('controls');
       v.muted = true;
+
+      // 自定义音量条：视频画面右侧的小竖条，悬停显示，可点击/拖拽调音量
+      const volWrap = document.createElement('div');
+      volWrap.className = 'video-volume';
+      volWrap.innerHTML = '<div class="video-volume-fill"></div><div class="video-volume-thumb"></div>';
+      v.parentElement.appendChild(volWrap);
+      const volFill  = volWrap.querySelector('.video-volume-fill');
+      const volThumb = volWrap.querySelector('.video-volume-thumb');
+
+      const updateVolUI = () => {
+        const level = v.muted ? 0 : v.volume;
+        volFill.style.height  = (level * 100) + '%';
+        volThumb.style.bottom = (level * 100) + '%';
+      };
+      const setVolFromEvent = e => {
+        const rect = volWrap.getBoundingClientRect();
+        let pct = (rect.bottom - e.clientY) / rect.height;
+        pct = Math.min(1, Math.max(0, pct));
+        v.muted = false; // 手动调节即取消静音
+        v.volume = pct;
+        updateVolUI();
+      };
+      let volDragging = false;
+      volWrap.addEventListener('pointerdown', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        volDragging = true;
+        if (volWrap.setPointerCapture) volWrap.setPointerCapture(e.pointerId);
+        setVolFromEvent(e);
+      });
+      volWrap.addEventListener('pointermove', e => {
+        if (volDragging) setVolFromEvent(e);
+      });
+      const stopVolDrag = e => {
+        volDragging = false;
+        if (volWrap.releasePointerCapture) volWrap.releasePointerCapture(e.pointerId);
+      };
+      volWrap.addEventListener('pointerup', stopVolDrag);
+      volWrap.addEventListener('pointercancel', stopVolDrag);
+      v.addEventListener('volumechange', updateVolUI);
+      updateVolUI();
+
+      // 原生控制条已隐藏：点击视频画面切换播放/暂停
+      v.addEventListener('click', () => {
+        if (v.paused) v.play().catch(() => {}); else v.pause();
+      });
 
       // 每个视频上的小播放图标
       const icon = v.parentElement?.querySelector('.video-play-icon');
