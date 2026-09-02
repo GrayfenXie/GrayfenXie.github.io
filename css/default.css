@@ -1374,9 +1374,8 @@ textarea {
 
 .issue-videos video {
     display: block;
-    width: 100%;
+    width: 24%;
     max-width: 640px;
-    margin: 8px auto;
     background: #000;
     border-radius: var(--border-radius);
     aspect-ratio: 16 / 9;
