@@ -1367,6 +1367,22 @@ textarea {
     aspect-ratio: 1 / 1;
 }
 
+/* 随笔视频 */
+.issue-videos {
+    margin: 12px 0;
+}
+
+.issue-videos video {
+    display: block;
+    width: 100%;
+    max-width: 640px;
+    margin: 8px auto;
+    background: #000;
+    border-radius: var(--border-radius);
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+}
+
 .modal-nav {
     position: absolute;
     top: 50%;

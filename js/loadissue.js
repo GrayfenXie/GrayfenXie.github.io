@@ -7,6 +7,7 @@ window.isLoading = false;
 // marked 渲染器：把多张图收进九宫格 
 (function () {
   const currentImages = [];
+  const currentVideos = [];
   const renderer = new marked.Renderer();
   const originImage = renderer.image.bind(renderer);
 
@@ -17,9 +18,16 @@ window.isLoading = false;
 
   window.renderMarkdown = function (md) {
     currentImages.length = 0;
+    currentVideos.length = 0;
 
     // 1. 先干掉 Markdown 末尾所有换行/空白
     md = (md || '').replace(/\n\s*$/g, '');
+
+    // 1.5 抽出 <video> 标签（发布端拼的 HTML），marked 不需要处理它
+    md = md.replace(/<video[^>]*>[\s\S]*?<\/video>|<video[^>]*\/>/gi, m => {
+      currentVideos.push(m);
+      return '\n\n';
+    });
 
     // 2. 再解析
     const html = marked(md, {
@@ -41,7 +49,12 @@ window.isLoading = false;
         ? '<div class="issue-grid">' + currentImages.join('') + '</div>'
         : currentImages.join('');
 
-    return trimmed + gridHTML;
+    // 视频放在正文后、图片九宫格前
+    const videoHTML = currentVideos.length
+      ? '\n<div class="issue-videos">' + currentVideos.join('\n') + '</div>'
+      : '';
+
+    return trimmed + videoHTML + gridHTML;
   };
 })();
 
@@ -223,6 +236,37 @@ function showToast(msg, duration = 2000) {
     });
   }
 
+  // 随笔视频增强：离屏自动暂停 + 进入视口预加载元数据
+  const diaryVideoIO = ('IntersectionObserver' in window)
+    ? new IntersectionObserver(entries => {
+        entries.forEach(en => {
+          const v = en.target;
+          if (!en.isIntersecting) {
+            if (!v.paused) v.pause();
+          } else if (v.getAttribute('preload') === 'none') {
+            v.setAttribute('preload', 'metadata');
+          }
+        });
+      }, { root: null, rootMargin: '300px 0px', threshold: 0 })
+    : null;
+
+  // 初始化随笔中的视频：互斥播放 + 离屏暂停
+  function setupDiaryVideos(container) {
+    const videos = (container || document).querySelectorAll('.issue-videos video');
+    videos.forEach(v => {
+      if (v.dataset.videoReady) return;
+      v.dataset.videoReady = '1';
+      // 播放时暂停其他所有视频
+      v.addEventListener('play', () => {
+        document.querySelectorAll('video').forEach(o => { if (o !== v) o.pause(); });
+        if (window.videojs) {
+          Object.values(videojs.getPlayers()).forEach(p => { if (!p.paused()) p.pause(); });
+        }
+      });
+      if (diaryVideoIO) diaryVideoIO.observe(v);
+    });
+  }
+
   //拦截 renderIssues
   const oldRenderIssues = window.renderIssues;
   window.renderIssues = function (page, perPage, isAppend = false) {
@@ -241,6 +285,7 @@ function showToast(msg, duration = 2000) {
     requestAnimationFrame(() => {
       packImagesToGrid();      // 搬运 <img>
       playAnimeForNew();       // 统一播放
+      setupDiaryVideos();      // 初始化随笔视频（互斥播放/离屏暂停）
     });
   };
 })();
