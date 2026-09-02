@@ -1437,9 +1437,9 @@ textarea {
     background: #fff;
 }
 
-.video-play-icon:hover {
+/* .video-play-icon:hover {
     border-style: solid;
-}
+} */
 
 .video-play-icon.is-hidden {
     opacity: 0;
