@@ -1396,11 +1396,11 @@ textarea {
 /* 视频上的小播放图标：参考图样式（外层虚线圈 + 中间实心圆环 + 内层实心圆点），未播放显示，播放中隐藏 */
 .video-play-icon {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    bottom: 10%;
+    right: 10%;
     transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
+    width: 28px;
+    height: 28px;
     border: 1.5px dashed rgba(255, 255, 255, .9); /* 外层虚线圈 */
     border-radius: 50%;
     display: flex;
