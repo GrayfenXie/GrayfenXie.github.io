@@ -1770,6 +1770,10 @@ textarea {
     .close,.close2 {
         right: 20px;
     }
+
+    .issue-video-item {
+        max-width: max-content;
+    }
 }
 
 .anime-in {
