@@ -410,6 +410,44 @@ function showToast(msg, duration = 2000) {
         if (player.paused) player.play().catch(() => {}); else player.pause();
       });
     }
+    // 右侧音量条：点击/拖动调音量
+    const volWrap = modal.querySelector('.video-modal-volume');
+    if (volWrap) {
+      const volFill = volWrap.querySelector('.video-modal-volume-fill');
+      const volThumb = volWrap.querySelector('.video-modal-volume-thumb');
+      const updateVolUI = () => {
+        const level = player.muted ? 0 : player.volume;
+        volFill.style.height = (level * 100) + '%';
+        volThumb.style.bottom = (level * 100) + '%';
+      };
+      const setVolFromEvent = e => {
+        const rect = volWrap.getBoundingClientRect();
+        let pct = (rect.bottom - e.clientY) / rect.height;
+        pct = Math.min(1, Math.max(0, pct));
+        player.muted = false;
+        player.volume = pct;
+        updateVolUI();
+      };
+      let volDragging = false;
+      volWrap.addEventListener('pointerdown', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        volDragging = true;
+        if (volWrap.setPointerCapture) volWrap.setPointerCapture(e.pointerId);
+        setVolFromEvent(e);
+      });
+      volWrap.addEventListener('pointermove', e => {
+        if (volDragging) setVolFromEvent(e);
+      });
+      const stopVolDrag = e => {
+        volDragging = false;
+        if (volWrap.releasePointerCapture) volWrap.releasePointerCapture(e.pointerId);
+      };
+      volWrap.addEventListener('pointerup', stopVolDrag);
+      volWrap.addEventListener('pointercancel', stopVolDrag);
+      player.addEventListener('volumechange', updateVolUI);
+      updateVolUI();
+    }
   });
 
   //拦截 renderIssues
