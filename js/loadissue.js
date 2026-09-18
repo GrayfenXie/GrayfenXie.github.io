@@ -354,6 +354,7 @@ function showToast(msg, duration = 2000) {
   }
 
   // ===== 随笔视频放大弹窗 =====
+  let modalSourceVideo = null;
   function openVideoModal(v) {
     const modal = document.getElementById('videoModal');
     const player = document.getElementById('videoModalPlayer');
@@ -363,8 +364,11 @@ function showToast(msg, duration = 2000) {
     const src = v.currentSrc || (v.querySelector('source') && v.querySelector('source').src) || v.src;
     if (!src) return;
     const t = v.currentTime || 0;
+    modalSourceVideo = v;
     player.src = src;
-    player.muted = false;
+    // 继承放大前预览视频的音量/静音状态
+    player.volume = v.volume;
+    player.muted = v.muted;
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
     player.addEventListener('loadedmetadata', function seekOnce(){
@@ -378,6 +382,7 @@ function showToast(msg, duration = 2000) {
     const player = document.getElementById('videoModalPlayer');
     if (!modal) return;
     modal.classList.remove('show');
+    modalSourceVideo = null;
     document.body.style.overflow = '';
     if (player) { player.pause(); player.removeAttribute('src'); player.load(); }
     const wrap = document.querySelector('#videoModal .video-modal-wrap');
@@ -419,6 +424,11 @@ function showToast(msg, duration = 2000) {
         const level = player.muted ? 0 : player.volume;
         volFill.style.height = (level * 100) + '%';
         volThumb.style.bottom = (level * 100) + '%';
+        // 同步回列表里的原预览视频，保持音量一致
+        if (modalSourceVideo) {
+          modalSourceVideo.volume = player.volume;
+          modalSourceVideo.muted = player.muted;
+        }
       };
       const setVolFromEvent = e => {
         const rect = volWrap.getBoundingClientRect();
