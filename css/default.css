@@ -1537,6 +1537,7 @@ textarea {
     display: flex;
 }
 .video-modal-wrap {
+    position: relative;
     width: 92vw;
     max-width: 1100px;
     aspect-ratio: 16 / 9;
@@ -1562,6 +1563,48 @@ textarea {
 .video-modal-close:hover {
     color: #bbb;
 }
+
+/* 弹窗视频中央 播放/暂停 切换按钮：悬停视频时显示 */
+.video-modal-toggle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, .5);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s, background .2s;
+}
+.video-modal-wrap:hover .video-modal-toggle {
+    opacity: 1;
+    pointer-events: auto;
+}
+/* 暂停时常显，方便点击继续播放 */
+.video-modal-wrap.is-paused .video-modal-toggle {
+    opacity: 1;
+    pointer-events: auto;
+}
+.video-modal-toggle:hover {
+    background: rgba(0, 0, 0, .75);
+}
+.video-modal-toggle svg {
+    width: 28px;
+    height: 28px;
+    display: block;
+}
+.video-modal-toggle .ic-pause { display: none; }
+.video-modal-wrap.is-playing .video-modal-toggle .ic-play { display: none; }
+.video-modal-wrap.is-playing .video-modal-toggle .ic-pause { display: block; }
 
 .modal-nav {
     position: absolute;

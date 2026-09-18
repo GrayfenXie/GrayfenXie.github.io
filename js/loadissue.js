@@ -380,6 +380,8 @@ function showToast(msg, duration = 2000) {
     modal.classList.remove('show');
     document.body.style.overflow = '';
     if (player) { player.pause(); player.removeAttribute('src'); player.load(); }
+    const wrap = document.querySelector('#videoModal .video-modal-wrap');
+    if (wrap) wrap.classList.remove('is-playing', 'is-paused');
   }
   window.closeVideoModal = closeVideoModal;
   // 绑定一次关闭事件：关闭按钮 / 点击遮罩 / Esc
@@ -390,6 +392,24 @@ function showToast(msg, duration = 2000) {
     modal.querySelector('.video-modal-close').addEventListener('click', closeVideoModal);
     modal.addEventListener('click', e => { if (e.target === modal) closeVideoModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideoModal(); });
+    // 中央 播放/暂停 切换按钮
+    const wrap = modal.querySelector('.video-modal-wrap');
+    const player = document.getElementById('videoModalPlayer');
+    const toggleBtn = modal.querySelector('.video-modal-toggle');
+    const syncModalState = () => {
+      if (!wrap || !player) return;
+      wrap.classList.toggle('is-playing', !player.paused);
+      wrap.classList.toggle('is-paused', player.paused);
+    };
+    player.addEventListener('play', syncModalState);
+    player.addEventListener('pause', syncModalState);
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (player.paused) player.play().catch(() => {}); else player.pause();
+      });
+    }
   });
 
   //拦截 renderIssues
