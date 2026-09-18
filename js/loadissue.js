@@ -336,9 +336,61 @@ function showToast(msg, duration = 2000) {
         });
       }
 
+      // 右下角放大按钮：点击弹窗放大播放
+      const expandBtn = document.createElement('button');
+      expandBtn.type = 'button';
+      expandBtn.className = 'video-expand-btn';
+      expandBtn.title = '放大播放';
+      expandBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/></svg>';
+      v.parentElement.appendChild(expandBtn);
+      expandBtn.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        openVideoModal(v);
+      });
+
       if (diaryVideoIO) diaryVideoIO.observe(v);
     });
   }
+
+  // ===== 随笔视频放大弹窗 =====
+  function openVideoModal(v) {
+    const modal = document.getElementById('videoModal');
+    const player = document.getElementById('videoModalPlayer');
+    if (!modal || !player) return;
+    // 暂停页面上所有随笔视频
+    document.querySelectorAll('.issue-videos video').forEach(o => o.pause());
+    const src = v.currentSrc || (v.querySelector('source') && v.querySelector('source').src) || v.src;
+    if (!src) return;
+    const t = v.currentTime || 0;
+    player.src = src;
+    player.muted = false;
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    player.addEventListener('loadedmetadata', function seekOnce(){
+      try { player.currentTime = t; } catch(e) {}
+      player.removeEventListener('loadedmetadata', seekOnce);
+    });
+    player.play().catch(() => {});
+  }
+  function closeVideoModal() {
+    const modal = document.getElementById('videoModal');
+    const player = document.getElementById('videoModalPlayer');
+    if (!modal) return;
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+    if (player) { player.pause(); player.removeAttribute('src'); player.load(); }
+  }
+  window.closeVideoModal = closeVideoModal;
+  // 绑定一次关闭事件：关闭按钮 / 点击遮罩 / Esc
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('videoModal');
+    if (!modal || modal.dataset.bound) return;
+    modal.dataset.bound = '1';
+    modal.querySelector('.video-modal-close').addEventListener('click', closeVideoModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeVideoModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideoModal(); });
+  });
 
   //拦截 renderIssues
   const oldRenderIssues = window.renderIssues;

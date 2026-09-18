@@ -1488,6 +1488,81 @@ textarea {
     pointer-events: none;
 }
 
+/* 视频右下角放大按钮 */
+.video-expand-btn {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, .45);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+    opacity: 0;
+    border: none;
+    padding: 0;
+    transition: opacity .2s, background .2s;
+}
+.issue-video-item:hover .video-expand-btn {
+    opacity: 1;
+}
+.video-expand-btn:hover {
+    background: rgba(0, 0, 0, .72);
+}
+.video-expand-btn svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+/* 视频放大弹窗 */
+.video-modal {
+    display: none;
+    position: fixed;
+    z-index: 3000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .9);
+    align-items: center;
+    justify-content: center;
+}
+.video-modal.show {
+    display: flex;
+}
+.video-modal-wrap {
+    width: 92vw;
+    max-width: 1100px;
+    aspect-ratio: 16 / 9;
+    max-height: 86vh;
+}
+.video-modal-wrap video {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: block;
+}
+.video-modal-close {
+    position: fixed;
+    top: 14px;
+    right: 22px;
+    color: #fff;
+    font-size: 42px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 3001;
+    user-select: none;
+}
+.video-modal-close:hover {
+    color: #bbb;
+}
+
 .modal-nav {
     position: absolute;
     top: 50%;
@@ -1692,6 +1767,9 @@ textarea {
     }
     .issue-video-item{
         width: 100%;
+    }
+    .video-expand-btn {
+        opacity: 1;
     }
 
     .linktitle {
