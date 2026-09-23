@@ -1646,6 +1646,84 @@ textarea {
     pointer-events: none;
 }
 
+/* 弹窗视频底部进度条 + 时长显示：悬停/暂停时显示，可点击或拖动跳转 */
+.video-modal-progress {
+    position: absolute;
+    left: 20px;
+    right: 86px;
+    bottom: 16px;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, .28);
+    cursor: pointer;
+    z-index: 6;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s;
+}
+.video-modal-wrap:hover .video-modal-progress,
+.video-modal-wrap.is-paused .video-modal-progress {
+    opacity: 1;
+    pointer-events: auto;
+}
+.video-modal-progress:hover {
+    height: 8px;
+    background: rgba(255, 255, 255, .4);
+}
+.video-modal-progress-buffer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, .38);
+}
+.video-modal-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, .95);
+}
+.video-modal-progress-thumb {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .45);
+    pointer-events: none;
+}
+.video-modal-time {
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+    font-size: 12px;
+    line-height: 1;
+    color: #fff;
+    background: rgba(0, 0, 0, .55);
+    padding: 5px 9px;
+    border-radius: 10px;
+    letter-spacing: .5px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    z-index: 6;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s;
+}
+.video-modal-wrap:hover .video-modal-time,
+.video-modal-wrap.is-paused .video-modal-time {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 .modal-nav {
     position: absolute;
     top: 50%;

@@ -458,6 +458,63 @@ function showToast(msg, duration = 2000) {
       player.addEventListener('volumechange', updateVolUI);
       updateVolUI();
     }
+
+    // 底部进度条 + 时长显示：可点击或拖动跳转
+    const progressWrap = modal.querySelector('.video-modal-progress');
+    if (progressWrap) {
+      const pFill   = progressWrap.querySelector('.video-modal-progress-fill');
+      const pBuffer = progressWrap.querySelector('.video-modal-progress-buffer');
+      const pThumb  = progressWrap.querySelector('.video-modal-progress-thumb');
+      const timeEl  = modal.querySelector('.video-modal-time');
+      const fmt = s => {
+        if (!isFinite(s) || s < 0) s = 0;
+        s = Math.floor(s);
+        const m = Math.floor(s / 60), sec = s % 60;
+        return (m < 10 ? '0' + m : '' + m) + ':' + (sec < 10 ? '0' + sec : '' + sec);
+      };
+      const updateProgress = () => {
+        const dur = player.duration || 0;
+        const cur = player.currentTime || 0;
+        const pct = dur ? Math.min(1, cur / dur) : 0;
+        if (pFill)  pFill.style.width  = (pct * 100) + '%';
+        if (pThumb) pThumb.style.left  = (pct * 100) + '%';
+        if (pBuffer && player.buffered && player.buffered.length && dur) {
+          const end = player.buffered.end(player.buffered.length - 1);
+          pBuffer.style.width = (Math.min(1, end / dur) * 100) + '%';
+        }
+        if (timeEl) timeEl.textContent = fmt(cur) + ' / ' + fmt(dur);
+      };
+      const seekFromEvent = e => {
+        const dur = player.duration;
+        if (!dur || !isFinite(dur)) return;
+        const rect = progressWrap.getBoundingClientRect();
+        const pct = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+        try { player.currentTime = pct * dur; } catch (err) {}
+        updateProgress();
+      };
+      let pDragging = false;
+      progressWrap.addEventListener('pointerdown', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        pDragging = true;
+        if (progressWrap.setPointerCapture) progressWrap.setPointerCapture(e.pointerId);
+        seekFromEvent(e);
+      });
+      progressWrap.addEventListener('pointermove', e => {
+        if (pDragging) seekFromEvent(e);
+      });
+      const stopPDrag = e => {
+        pDragging = false;
+        if (progressWrap.releasePointerCapture) progressWrap.releasePointerCapture(e.pointerId);
+      };
+      progressWrap.addEventListener('pointerup', stopPDrag);
+      progressWrap.addEventListener('pointercancel', stopPDrag);
+      player.addEventListener('timeupdate', updateProgress);
+      player.addEventListener('durationchange', updateProgress);
+      player.addEventListener('progress', updateProgress);
+      player.addEventListener('loadedmetadata', updateProgress);
+      updateProgress();
+    }
   });
 
   //拦截 renderIssues

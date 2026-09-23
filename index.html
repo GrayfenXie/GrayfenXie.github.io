@@ -372,7 +372,7 @@
     <div id="videoModal" class="video-modal">
         <span class="video-modal-close" aria-label="关闭">&times;</span>
         <div class="video-modal-wrap">
-            <video id="videoModalPlayer" controls playsinline preload="metadata"></video>
+            <video id="videoModalPlayer" playsinline preload="metadata"></video>
             <button class="video-modal-toggle" aria-label="播放/暂停">
                 <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                 <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
@@ -381,6 +381,12 @@
                 <div class="video-modal-volume-fill"></div>
                 <div class="video-modal-volume-thumb"></div>
             </div>
+            <div class="video-modal-progress" title="播放进度（点击或拖动跳转）">
+                <div class="video-modal-progress-buffer"></div>
+                <div class="video-modal-progress-fill"></div>
+                <div class="video-modal-progress-thumb"></div>
+            </div>
+            <div class="video-modal-time">00:00 / 00:00</div>
         </div>
     </div>
     <script>
