@@ -515,7 +515,6 @@ a {
 
 #issue-list .issue-id {
     color: var(--theme-color);
-    font-weight: 600;
     font-variant-numeric: tabular-nums;
     letter-spacing: .5px;
 }
