@@ -108,9 +108,17 @@ function renderGuitars(page, perPage2, isAppend = false) {
       const isVisible = walineContainer.style.display !== 'none';
       if (isVisible) {
         walineContainer.style.display = 'none';
+        li.classList.remove('waline-open');
       } else {
-        document.querySelectorAll('.waline-container').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.waline-container').forEach(el => {
+          el.style.display = 'none';
+          const owner = el.closest('li');
+          if (owner) owner.classList.remove('waline-open');
+        });
         walineContainer.style.display = 'block';
+        // 卡片本身是 transform 生成的层叠上下文，内部弹层的 z-index 出不去，
+        // 必须把整张卡片抬起来；同时取消 overflow:hidden，否则弹层会被卡片裁掉
+        li.classList.add('waline-open');
         if (!walineContainer.hasAttribute('data-waline-inited')) {
           Waline.init({
             el: walineContainer,

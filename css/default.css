@@ -470,6 +470,13 @@ a {
     transition: all 1s;
     transform: scale(0.8);
     opacity: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* 展开评论区的那条随笔提升层级，避免 Waline 的 emoji 弹层被后面的 .aissue 盖住 */
+#issue-list .aissue.waline-open {
+    z-index: 99;
 }
 
 #issue-list .issue-body {
@@ -1035,6 +1042,14 @@ textarea {
     background: var(--card-color);
     padding: 32px 40px;
     border-radius: var(--border-radius);
+    position: relative;
+    z-index: 1;
+}
+
+/* 展开评论区的视频卡片：抬高层级 + 放开裁剪，避免 Waline 弹层被后面的卡片盖住或被自身裁掉 */
+.guitar-item.waline-open {
+    z-index: 99;
+    overflow: visible;
 }
 
 .guitar-item video {

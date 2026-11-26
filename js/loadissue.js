@@ -150,15 +150,24 @@ document.addEventListener('click', e => {
   const btn = e.target.closest('.comment-toggle');
   if (!btn) return;
   const issueId = btn.dataset.issueId;
-  const container = btn.closest('li').querySelector(`.waline-container[data-issue-id="${issueId}"]`);
+  const li = btn.closest('li');
+  const container = li.querySelector(`.waline-container[data-issue-id="${issueId}"]`);
   if (!container) return;
 
   const isVisible = container.style.display !== 'none';
   if (isVisible) {
     container.style.display = 'none';
+    li.classList.remove('waline-open');
   } else {
-    document.querySelectorAll('.waline-container').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.waline-container').forEach(el => {
+      el.style.display = 'none';
+      const owner = el.closest('li');
+      if (owner) owner.classList.remove('waline-open');
+    });
     container.style.display = 'block';
+    // 提升当前卡片的层级：卡片自身是 transform 生成的层叠上下文，
+    // 其内部弹层的 z-index 只能在卡片内比较，必须把整张卡片抬起来
+    li.classList.add('waline-open');
 
     if (!container.hasAttribute('data-waline-inited')) {
       Waline.init({
