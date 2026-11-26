@@ -99,16 +99,20 @@ function renderIssues(page, perPage, isAppend = false) {
 
   if (!isAppend) issueList.innerHTML = '';
 
-  pageIssues.forEach(issue => {
+  const total = window.cachedIssues.length;
+
+  pageIssues.forEach((issue, i) => {
     const date = new Date(issue.created_at);
     const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleString('en-US', { weekday: 'short' })} ${date.toLocaleTimeString()}`;
     const bodyHTML = window.renderMarkdown(issue.body || '');
+    // 随笔编号：#N，按发布时间从旧到新计数（最早的一条为 #1）
+    const issueSeq = total - (start + i);
 
     const li = document.createElement('li');
     li.innerHTML = `
       <div class="issue-body">${bodyHTML}</div>
       <div class="issue-footer">
-          <div class="issue-date">${formattedDate}</div>
+          <div class="issue-date"><span class="issue-id">#${issueSeq}</span>${formattedDate}</div>
           <button class="comment-toggle" data-issue-id="${issue.id}" title="显示/隐藏评论">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a 2 2 0 0 1 2 2z"></path>
