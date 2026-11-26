@@ -103,7 +103,9 @@ function renderIssues(page, perPage, isAppend = false) {
 
   pageIssues.forEach((issue, i) => {
     const date = new Date(issue.created_at);
-    const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleString('en-US', { weekday: 'short' })} ${date.toLocaleTimeString()}`;
+    const hh = String(date.getHours()).padStart(2, '0');
+    const mm = String(date.getMinutes()).padStart(2, '0');
+    const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleString('en-US', { weekday: 'short' })} ${hh}:${mm}`;
     const bodyHTML = window.renderMarkdown(issue.body || '');
     // 随笔编号：#N，按发布时间从旧到新计数（最早的一条为 #1）
     const issueSeq = total - (start + i);

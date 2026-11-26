@@ -45,6 +45,13 @@ function renderGuitars(page, perPage2, isAppend = false) {
 
   if (!isAppend) guitarList.innerHTML = '';
 
+  // 弹棉花编号：只统计能解析出视频的有效条目，最早的一条为 #1
+  const validGuitars = window.cachedIssues2.filter(g => {
+    const b = g.body || '';
+    return /url:\s*(https:\/\/img\.grayfen\.cn\/[^\s\n\r]+)/i.test(b) && /name:\s*([^\n\r]+)/i.test(b);
+  });
+  const guitarTotal = validGuitars.length;
+
   pageIssues.forEach((guitar, idx) => {
     const body = guitar.body || '';
     const urlMatch  = body.match(/url:\s*(https:\/\/img\.grayfen\.cn\/[^\s\n\r]+)/i);
@@ -55,7 +62,10 @@ function renderGuitars(page, perPage2, isAppend = false) {
     const videoName = nameMatch[1].trim();
     const posterSrc = `${videoSrc}?frame=5000&w=1000&cs=srgb`;
     const date2     = new Date(guitar.created_at);
-    const formattedDate2 = `${date2.toLocaleDateString()} ${date2.toLocaleString('en-US', { weekday: 'short' })} ${date2.toLocaleTimeString()}`;
+    const hh2 = String(date2.getHours()).padStart(2, '0');
+    const mm2 = String(date2.getMinutes()).padStart(2, '0');
+    const formattedDate2 = `${date2.toLocaleDateString()} ${date2.toLocaleString('en-US', { weekday: 'short' })} ${hh2}:${mm2}`;
+    const guitarSeq = guitarTotal - validGuitars.findIndex(g => g.id === guitar.id);
 
     const li = document.createElement('li');
     const vid = `guitar-${guitar.id}-${idx}`;
@@ -69,7 +79,7 @@ function renderGuitars(page, perPage2, isAppend = false) {
         <h3 class="video-title">${videoName}</h3>
       </div>
       <div class="issue-footer">
-        <div class="video-date">${formattedDate2}</div>
+        <div class="video-date"><span class="issue-id">#${guitarSeq}</span><span>-</span>${formattedDate2}</div>
         <button class="comment-toggle" data-video-id="${guitar.id}" title="显示/隐藏评论">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
