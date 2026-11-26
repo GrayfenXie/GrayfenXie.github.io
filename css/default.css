@@ -518,6 +518,7 @@ a {
     align-items: center;
     justify-content: flex-end;
     gap: 4px;
+    font-size: 0.9rem;
 }
 
 #guitar-list .video-date {
