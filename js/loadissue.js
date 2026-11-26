@@ -112,7 +112,7 @@ function renderIssues(page, perPage, isAppend = false) {
     li.innerHTML = `
       <div class="issue-body">${bodyHTML}</div>
       <div class="issue-footer">
-          <div class="issue-date"><span class="issue-id">#${issueSeq}</span>${formattedDate}</div>
+          <div class="issue-date"><span class="issue-id">#${issueSeq}</span><span>-</span>${formattedDate}</div>
           <button class="comment-toggle" data-issue-id="${issue.id}" title="显示/隐藏评论">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a 2 2 0 0 1 2 2z"></path>
